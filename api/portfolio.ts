@@ -85,62 +85,88 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return items;
     };
 
-    // My Portfolio / Category / Project / files
+    // Supported structures:
+    // 1) My Portfolio / Category / Project / files
+    // 2) My Portfolio / Videos / Subcategory / Project / files
     const categoryFolders = await listChildren(rootId, true);
     const projects: any[] = [];
+    const subcategories: any[] = [];
+
+    const buildProject = async (
+      projectFolder: any,
+      categoryFolder: any,
+      subcategoryFolder?: any,
+    ) => {
+      if (!projectFolder?.id || !projectFolder?.name) return;
+      const rawFiles = await listChildren(projectFolder.id, false);
+
+      const media = rawFiles
+        .filter((file) => file.id && file.name)
+        .map((file) => {
+          const extension = extensionOf(file.name!);
+          const type = mediaTypeOf(file.mimeType || "", extension);
+          const version = encodeURIComponent(file.modifiedTime || "");
+          return {
+            id: file.id,
+            name: file.name,
+            mimeType: file.mimeType || "",
+            extension,
+            type,
+            size: formatSize(file.size),
+            modifiedTime: file.modifiedTime || "",
+            isCover: isCoverName(file.name!),
+            url: `/api/portfolio-file?id=${encodeURIComponent(file.id!)}&v=${version}`,
+            webViewLink: file.webViewLink || "",
+          };
+        })
+        .filter((item) => item.type !== "other");
+
+      const cover =
+        media.find((item) => item.isCover && item.type === "image") ||
+        media.find((item) => item.isCover && item.type === "video") ||
+        media.find((item) => item.type === "image") ||
+        media.find((item) => item.type === "video") ||
+        media[0] ||
+        null;
+
+      const latestModified = media
+        .map((item) => item.modifiedTime)
+        .filter(Boolean)
+        .sort()
+        .at(-1) || projectFolder.modifiedTime || "";
+
+      projects.push({
+        id: projectFolder.id,
+        name: projectFolder.name,
+        category: categoryFolder.name,
+        categoryId: categoryFolder.id,
+        subcategory: subcategoryFolder?.name || "",
+        subcategoryId: subcategoryFolder?.id || "",
+        modifiedTime: latestModified,
+        cover,
+        media,
+      });
+    };
 
     for (const categoryFolder of categoryFolders) {
       if (!categoryFolder.id || !categoryFolder.name) continue;
-      const projectFolders = await listChildren(categoryFolder.id, true);
+      const firstLevelFolders = await listChildren(categoryFolder.id, true);
 
-      for (const projectFolder of projectFolders) {
-        if (!projectFolder.id || !projectFolder.name) continue;
-        const rawFiles = await listChildren(projectFolder.id, false);
+      // Videos uses one extra level: Videos / Motion Graphics|AI Videos|Other Videos / Project / files
+      if (categoryFolder.name.trim().toLowerCase() === "videos") {
+        for (const subcategoryFolder of firstLevelFolders) {
+          if (!subcategoryFolder.id || !subcategoryFolder.name) continue;
+          subcategories.push({ id: subcategoryFolder.id, name: subcategoryFolder.name, category: categoryFolder.name, categoryId: categoryFolder.id });
+          const projectFolders = await listChildren(subcategoryFolder.id, true);
+          for (const projectFolder of projectFolders) {
+            await buildProject(projectFolder, categoryFolder, subcategoryFolder);
+          }
+        }
+        continue;
+      }
 
-        const media = rawFiles
-          .filter((file) => file.id && file.name)
-          .map((file) => {
-            const extension = extensionOf(file.name!);
-            const type = mediaTypeOf(file.mimeType || "", extension);
-            const version = encodeURIComponent(file.modifiedTime || "");
-            return {
-              id: file.id,
-              name: file.name,
-              mimeType: file.mimeType || "",
-              extension,
-              type,
-              size: formatSize(file.size),
-              modifiedTime: file.modifiedTime || "",
-              isCover: isCoverName(file.name!),
-              url: `/api/portfolio-file?id=${encodeURIComponent(file.id!)}&v=${version}`,
-              webViewLink: file.webViewLink || "",
-            };
-          })
-          .filter((item) => item.type !== "other");
-
-        const cover =
-          media.find((item) => item.isCover && item.type === "image") ||
-          media.find((item) => item.isCover && item.type === "video") ||
-          media.find((item) => item.type === "image") ||
-          media.find((item) => item.type === "video") ||
-          media[0] ||
-          null;
-
-        const latestModified = media
-          .map((item) => item.modifiedTime)
-          .filter(Boolean)
-          .sort()
-          .at(-1) || projectFolder.modifiedTime || "";
-
-        projects.push({
-          id: projectFolder.id,
-          name: projectFolder.name,
-          category: categoryFolder.name,
-          categoryId: categoryFolder.id,
-          modifiedTime: latestModified,
-          cover,
-          media,
-        });
+      for (const projectFolder of firstLevelFolders) {
+        await buildProject(projectFolder, categoryFolder);
       }
     }
 
@@ -153,6 +179,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       categories: categoryFolders
         .filter((folder) => folder.id && folder.name)
         .map((folder) => ({ id: folder.id, name: folder.name })),
+      subcategories,
       projects,
     });
   } catch (error) {

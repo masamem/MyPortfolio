@@ -18,6 +18,8 @@ export interface DrivePortfolioProject {
   name: string;
   category: string;
   categoryId: string;
+  subcategory?: string;
+  subcategoryId?: string;
   modifiedTime: string;
   cover: PortfolioMedia | null;
   media: PortfolioMedia[];
@@ -27,6 +29,7 @@ export interface DrivePortfolioResponse {
   source: string;
   updatedAt: string;
   categories: Array<{ id: string; name: string }>;
+  subcategories?: Array<{ id: string; name: string; category: string; categoryId: string }>;
   projects: DrivePortfolioProject[];
 }
 

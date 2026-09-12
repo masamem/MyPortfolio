@@ -72,7 +72,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
           <div className="flex flex-wrap items-center gap-2.5 mb-4">
             <span className="inline-flex items-center gap-2 rounded-full bg-[#f46c38]/15 border border-[#f46c38]/30 text-[#f46c38] px-3 py-1 text-xs font-bold uppercase tracking-wider">
               <FolderOpen className="w-3.5 h-3.5" />
-              {project.category}
+              {project.subcategory ? `${project.category} · ${project.subcategory}` : project.category}
             </span>
             {modifiedYear && (
               <span className="inline-flex items-center gap-1.5 text-xs text-gray-400">

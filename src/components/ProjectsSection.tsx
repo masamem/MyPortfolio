@@ -10,12 +10,14 @@ interface ProjectsSectionProps {
   lang: Language;
 }
 
-const CATEGORY_ORDER = ['Branding', 'Motion Graphic', 'Motion Graphics', 'Social Media', '3D', 'Other Work'];
+const CATEGORY_ORDER = ['Branding', 'Videos', 'Social Media', '3D', 'Other Work'];
 
 const CATEGORY_LABELS: Record<string, { en: string; ar: string }> = {
   'Branding': { en: 'Branding', ar: 'الهوية البصرية' },
-  'Motion Graphic': { en: 'Motion Graphic', ar: 'موشن جرافيك' },
+  'Videos': { en: 'Videos', ar: 'فيديوهات' },
   'Motion Graphics': { en: 'Motion Graphics', ar: 'موشن جرافيك' },
+  'AI Videos': { en: 'AI Videos', ar: 'فيديوهات الذكاء الاصطناعي' },
+  'Other Videos': { en: 'Other Videos', ar: 'فيديوهات أخرى' },
   'Social Media': { en: 'Social Media', ar: 'سوشيال ميديا' },
   '3D': { en: '3D', ar: 'ثلاثي الأبعاد' },
   'Other Work': { en: 'Other Work', ar: 'أعمال أخرى' },
@@ -29,9 +31,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
   const t = contentData[lang];
   const isRTL = lang === 'ar';
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('all');
   const [activeProject, setActiveProject] = useState<DrivePortfolioProject | null>(null);
   const [projects, setProjects] = useState<DrivePortfolioProject[]>([]);
   const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([]);
+  const [subcategories, setSubcategories] = useState<Array<{ id: string; name: string; category: string; categoryId: string }>>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,6 +47,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
     try {
       const data = await fetchPortfolioFromDrive(forceRefresh);
       setProjects(data.projects);
+      setSubcategories(data.subcategories || []);
       setCategories([...data.categories].sort((a, b) => {
         const ai = CATEGORY_ORDER.indexOf(a.name);
         const bi = CATEGORY_ORDER.indexOf(b.name);
@@ -62,6 +67,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
     fetchPortfolioFromDrive(false, controller.signal)
       .then((data) => {
         setProjects(data.projects);
+        setSubcategories(data.subcategories || []);
         setCategories([...data.categories].sort((a, b) => {
           const ai = CATEGORY_ORDER.indexOf(a.name);
           const bi = CATEGORY_ORDER.indexOf(b.name);
@@ -77,10 +83,36 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
     return () => controller.abort();
   }, []);
 
-  const filteredProjects = useMemo(
-    () => selectedCategory === 'all' ? projects : projects.filter((project) => project.category === selectedCategory),
-    [projects, selectedCategory]
-  );
+  const videoSubcategories = useMemo(() => {
+    const names = Array.from(new Set(
+      subcategories
+        .filter((subcategory) => subcategory.category === 'Videos')
+        .map((subcategory) => subcategory.name)
+    ));
+    const order = ['Motion Graphics', 'AI Videos', 'Other Videos'];
+    return names.sort((a, b) => {
+      const ai = order.indexOf(a);
+      const bi = order.indexOf(b);
+      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi) || a.localeCompare(b);
+    });
+  }, [subcategories]);
+
+  const filteredProjects = useMemo(() => {
+    let result = selectedCategory === 'all'
+      ? projects
+      : projects.filter((project) => project.category === selectedCategory);
+
+    if (selectedCategory === 'Videos' && selectedSubcategory !== 'all') {
+      result = result.filter((project) => project.subcategory === selectedSubcategory);
+    }
+
+    return result;
+  }, [projects, selectedCategory, selectedSubcategory]);
+
+  const selectCategory = (category: string) => {
+    setSelectedCategory(category);
+    setSelectedSubcategory('all');
+  };
 
   return (
     <section id="work" className="py-24 sm:py-32 border-t border-white/10 relative bg-[#0d0c0b]">
@@ -121,7 +153,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
 
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 sm:mb-14 border-b border-white/10">
           <button
-            onClick={() => setSelectedCategory('all')}
+            onClick={() => selectCategory('all')}
             className={`text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full transition-all whitespace-nowrap ${selectedCategory === 'all' ? 'bg-[#f46c38] text-white border border-[#f46c38]' : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'}`}
           >
             {t.filterAll}
@@ -129,13 +161,33 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
           {categories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setSelectedCategory(category.name)}
+              onClick={() => selectCategory(category.name)}
               className={`text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full transition-all whitespace-nowrap ${selectedCategory === category.name ? 'bg-[#f46c38] text-white border border-[#f46c38]' : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'}`}
             >
               {categoryLabel(category.name, lang)}
             </button>
           ))}
         </div>
+
+        {selectedCategory === 'Videos' && videoSubcategories.length > 0 && (
+          <div className="flex items-center gap-2 overflow-x-auto -mt-7 mb-10 sm:mb-12 pb-2">
+            <button
+              onClick={() => setSelectedSubcategory('all')}
+              className={`text-[11px] sm:text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap ${selectedSubcategory === 'all' ? 'bg-white text-black border border-white' : 'bg-transparent text-gray-400 border border-white/10 hover:text-white hover:border-white/25'}`}
+            >
+              {isRTL ? 'كل الفيديوهات' : 'All Videos'}
+            </button>
+            {videoSubcategories.map((subcategory) => (
+              <button
+                key={subcategory}
+                onClick={() => setSelectedSubcategory(subcategory)}
+                className={`text-[11px] sm:text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap ${selectedSubcategory === subcategory ? 'bg-white text-black border border-white' : 'bg-transparent text-gray-400 border border-white/10 hover:text-white hover:border-white/25'}`}
+              >
+                {categoryLabel(subcategory, lang)}
+              </button>
+            ))}
+          </div>
+        )}
 
         {loading ? (
           <div className="min-h-72 flex flex-col items-center justify-center gap-3 text-gray-400 border border-white/10 rounded-2xl bg-white/[0.02]">
@@ -160,7 +212,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
             <p className="text-sm max-w-xl">{isRTL ? 'أنشئ مجلد مشروع جديد داخل القسم في Google Drive وسيظهر هنا تلقائيًا.' : 'Create a new project folder inside this category in Google Drive and it will appear here automatically.'}</p>
           </div>
         ) : (
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, index) => {
                 const cover = project.cover;
@@ -174,9 +226,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                     transition={{ duration: 0.35, ease: 'easeOut' }}
                     key={project.id}
                     onClick={() => setActiveProject(project)}
-                    className={`group relative bg-[#141211] border border-white/10 hover:border-[#f46c38]/60 rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer shadow-xl ${index === 0 && selectedCategory === 'all' ? 'md:col-span-2' : ''}`}
+                    className="group relative bg-[#141211] border border-white/10 hover:border-[#f46c38]/60 rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer shadow-xl"
                   >
-                    <div className={`relative overflow-hidden bg-black/60 ${index === 0 && selectedCategory === 'all' ? 'aspect-[21/9] min-h-[300px]' : 'aspect-[16/10]'}`}>
+                    <div className="relative overflow-hidden bg-black/60 aspect-[4/3]">
                       {cover?.type === 'image' ? (
                         <img src={cover.url} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
                       ) : cover?.type === 'video' ? (
@@ -190,7 +242,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                       <div className="absolute inset-0 bg-gradient-to-t from-[#141211] via-black/20 to-transparent opacity-80" />
                       <div className="absolute top-4 start-4">
                         <span className="text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-white border border-white/20">
-                          {categoryLabel(project.category, lang)}
+                          {project.subcategory ? categoryLabel(project.subcategory, lang) : categoryLabel(project.category, lang)}
                         </span>
                       </div>
                       {cover?.type === 'video' && (
@@ -204,12 +256,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                       </div>
                     </div>
 
-                    <div className="p-6 sm:p-7 border-t border-white/5">
+                    <div className="p-5 border-t border-white/5">
                       <div className="flex items-center gap-2 mb-2 text-xs">
-                        <span className="font-bold text-[#f46c38] uppercase tracking-wider">{categoryLabel(project.category, lang)}</span>
+                        <span className="font-bold text-[#f46c38] uppercase tracking-wider">{project.subcategory ? categoryLabel(project.subcategory, lang) : categoryLabel(project.category, lang)}</span>
                         {year && <><span className="text-gray-600">•</span><span className="text-gray-400">{year}</span></>}
                       </div>
-                      <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 group-hover:text-[#f46c38] transition-colors">{project.name}</h3>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3 group-hover:text-[#f46c38] transition-colors">{project.name}</h3>
                       <div className="flex items-center justify-between gap-4 pt-4 border-t border-white/5">
                         <span className="text-xs text-gray-400">{project.media.length} {isRTL ? 'ملف' : project.media.length === 1 ? 'file' : 'files'}</span>
                         <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-400 group-hover:text-white transition-colors">
