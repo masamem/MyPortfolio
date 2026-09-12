@@ -1,20 +1,31 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Mugahed Al-Maari Portfolio
 
-# Run and deploy your AI Studio app
+React + Vite + TypeScript portfolio with a live **My Work / أعمالي** section powered by Google Drive.
 
-This contains everything you need to run your app locally.
+## Live Drive structure
 
-View your app in AI Studio: https://ai.studio/apps/b1eed142-4263-4948-b0c2-ac6a893f4387
+```text
+My Portfolio
+├── Branding
+├── Motion Graphic
+├── Social Media
+├── 3D
+└── Other Work
+```
 
-## Run Locally
+Each folder inside a category is treated as one project. See `GOOGLE-DRIVE-SETUP.md` for deployment and Drive permissions.
 
-**Prerequisites:**  Node.js
+## Local development
 
+```bash
+npm install
+npm run dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+The frontend can run locally, but the Drive-backed `/api/*` routes are Vercel Serverless Functions. For a full local serverless test, use the Vercel CLI or deploy a preview to Vercel with the required environment variables.
+
+## Build
+
+```bash
+npm run build
+```

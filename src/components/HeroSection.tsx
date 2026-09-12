@@ -110,6 +110,15 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
                 <Download className="w-4 h-4 text-white" />
                 <span>{downloadingResume ? (isRTL ? 'جاري التحميل...' : 'Downloading...') : t.ctaResume}</span>
               </a>
+
+              <a
+                href="#work"
+                onClick={(e) => scrollToSection(e, '#work')}
+                className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#f46c38]/60 rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 transition-all transform hover:-translate-y-0.5"
+              >
+                <span>{t.cta}</span>
+                {isRTL ? <ArrowLeft className="w-4 h-4 text-[#f46c38]" /> : <ArrowRight className="w-4 h-4 text-[#f46c38]" />}
+              </a>
             </div>
 
             {/* 5. Desktop Information Cards (Mobile Order: 6) */}

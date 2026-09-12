@@ -16,8 +16,9 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
 
   const navLinks = [
     { label: t.navLinks[0], target: '#hero' },
-    { label: t.navLinks[1], target: '#capabilities' },
-    { label: t.navLinks[2], target: '#contact' },
+    { label: t.navLinks[1], target: '#work' },
+    { label: t.navLinks[2], target: '#capabilities' },
+    { label: t.navLinks[3], target: '#contact' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {

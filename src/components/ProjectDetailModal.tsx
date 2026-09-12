@@ -1,132 +1,133 @@
 import React from 'react';
-import { ProjectItem, Language } from '../types';
-import { contentData } from '../data/portfolioData';
-import { X, Sparkles, CheckCircle, Calendar, User, ExternalLink, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Language } from '../types';
+import { DrivePortfolioProject, PortfolioMedia } from '../lib/portfolioDrive';
+import { X, Calendar, FolderOpen, ExternalLink, FileText, Box, Play } from 'lucide-react';
 
 interface ProjectDetailModalProps {
-  project: ProjectItem | null;
+  project: DrivePortfolioProject | null;
   lang: Language;
   onClose: () => void;
 }
 
-export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, lang, onClose }) => {
-  if (!project) return null;
-  const t = contentData[lang];
-  const isRTL = lang === 'ar';
+const MediaPreview: React.FC<{ item: PortfolioMedia; title: string }> = ({ item, title }) => {
+  if (item.type === 'image') {
+    return <img src={item.url} alt={`${title} - ${item.name}`} className="w-full h-full object-cover" loading="lazy" />;
+  }
+
+  if (item.type === 'video') {
+    return (
+      <video
+        src={item.url}
+        controls
+        playsInline
+        preload="metadata"
+        className="w-full h-full object-contain bg-black"
+      />
+    );
+  }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
-      {/* Modal Container */}
-      <div 
-        className="relative w-full max-w-3xl bg-[#1a1817] border border-white/15 rounded-2xl shadow-2xl p-6 sm:p-8 text-white overflow-hidden my-auto"
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full h-full min-h-52 flex flex-col items-center justify-center gap-3 bg-white/[0.04] text-gray-300 hover:text-white transition-colors"
+    >
+      {item.type === 'pdf' ? <FileText className="w-10 h-10 text-[#f46c38]" /> : <Box className="w-10 h-10 text-[#f46c38]" />}
+      <span className="font-bold text-sm">{item.name}</span>
+      <span className="text-xs text-gray-500">{item.size}</span>
+      <ExternalLink className="w-4 h-4" />
+    </a>
+  );
+};
+
+export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, lang, onClose }) => {
+  if (!project) return null;
+  const isRTL = lang === 'ar';
+  const visibleMedia = [...project.media].sort((a, b) => Number(b.isCover) - Number(a.isCover));
+  const modifiedYear = project.modifiedTime ? new Date(project.modifiedTime).getFullYear() : '';
+
+  return (
+    <div
+      className="fixed inset-0 z-[70] bg-black/85 backdrop-blur-md overflow-y-auto p-3 sm:p-6"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={project.name}
+    >
+      <div
+        className="relative w-full max-w-6xl mx-auto my-4 sm:my-8 bg-[#151312] border border-white/15 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Accent Line */}
-        <div 
-          className="absolute top-0 left-0 right-0 h-1.5"
-          style={{ backgroundColor: project.accentColor || '#f46c38' }}
-        />
-
-        {/* Close Button */}
+        <div className="h-1.5 bg-[#f46c38]" />
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all"
-          aria-label={t.closeModal}
+          className="absolute top-5 end-5 z-20 p-2.5 rounded-full bg-black/60 border border-white/15 text-gray-300 hover:text-white hover:bg-black/80 transition-all"
+          aria-label={isRTL ? 'إغلاق' : 'Close'}
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Header Content */}
-        <div className="pt-2 mb-6">
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span 
-              className="text-xs font-bold px-3 py-1 rounded-full text-white bg-white/10 border border-white/15 uppercase tracking-wider"
-              style={{ color: project.accentColor || '#f46c38' }}
-            >
-              ✦ {project.category.toUpperCase()}
+        <div className="p-5 sm:p-8 lg:p-10 border-b border-white/10">
+          <div className="flex flex-wrap items-center gap-2.5 mb-4">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#f46c38]/15 border border-[#f46c38]/30 text-[#f46c38] px-3 py-1 text-xs font-bold uppercase tracking-wider">
+              <FolderOpen className="w-3.5 h-3.5" />
+              {project.category}
             </span>
-            {project.year && (
-              <span className="text-xs text-gray-400 flex items-center gap-1">
+            {modifiedYear && (
+              <span className="inline-flex items-center gap-1.5 text-xs text-gray-400">
                 <Calendar className="w-3.5 h-3.5" />
-                {project.year}
+                {modifiedYear}
               </span>
             )}
-            {project.client && (
-              <span className="text-xs text-gray-400 flex items-center gap-1 ms-2">
-                <User className="w-3.5 h-3.5" />
-                {project.client}
-              </span>
-            )}
+            <span className="text-xs text-gray-500">
+              {project.media.length} {isRTL ? 'ملف' : project.media.length === 1 ? 'file' : 'files'}
+            </span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
-            {project.title[lang]}
-          </h2>
-          <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-            {project.fullDesc[lang]}
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight pe-12">{project.name}</h2>
+          <p className="mt-3 text-sm sm:text-base text-gray-400 max-w-2xl">
+            {isRTL
+              ? 'هذا المشروع يتم تحميله مباشرة من مجلد Google Drive الخاص بك. أي تحديث للملفات سيظهر تلقائيًا في البورتفوليو.'
+              : 'This project is loaded directly from your Google Drive folder. Updates to the folder appear automatically in the portfolio.'}
           </p>
         </div>
 
-        {/* Key Outcomes / Stats Highlight */}
-        {project.stats && (
-          <div className="mb-6 p-4 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-between">
-            <div>
-              <span className="text-xs text-gray-400 font-medium block">
-                {project.stats.label[lang]}
-              </span>
-              <span className="text-2xl sm:text-3xl font-black text-[#f46c38]">
-                {project.stats.value}
-              </span>
+        <div className="p-5 sm:p-8 lg:p-10">
+          {visibleMedia.length === 0 ? (
+            <div className="py-20 text-center border border-dashed border-white/15 rounded-2xl text-gray-400">
+              {isRTL ? 'هذا المشروع لا يحتوي ملفات مدعومة حتى الآن.' : 'This project does not contain supported media yet.'}
             </div>
-            <Sparkles className="w-8 h-8 text-[#f46c38]/40" />
-          </div>
-        )}
-
-        {/* Deliverables List */}
-        <div className="mb-8">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-[#f46c38]" />
-            <span>{isRTL ? 'المخرجات والخدمات المقدمة:' : 'Deliverables & Services:'}</span>
-          </h3>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {project.deliverables[lang].map((item, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-sm text-gray-200 bg-white/5 p-3 rounded-lg border border-white/5">
-                <span className="text-[#f46c38] font-bold">•</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Tags */}
-        <div className="mb-8 flex flex-wrap gap-2">
-          {project.tags.map((tag, idx) => (
-            <span key={idx} className="text-xs font-semibold px-3 py-1.5 rounded-md bg-white/5 border border-white/10 text-gray-300">
-              #{tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
-          <a
-            href="https://behance.net/mugahedalmaari"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-bold text-gray-300 hover:text-white transition-colors"
-          >
-            <span>{t.ctaSecondary}</span>
-            <ExternalLink className="w-4 h-4 text-[#f46c38]" />
-          </a>
-
-          <a
-            href="#contact"
-            onClick={onClose}
-            className="inline-flex items-center gap-2 text-sm font-bold text-white bg-[#f46c38] hover:bg-[#e05a26] px-6 py-3 rounded-xl shadow-md transition-all"
-          >
-            <span>{isRTL ? 'طلب مشروع مشابه' : 'Request Similar Project'}</span>
-            {isRTL ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-          </a>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-7">
+              {visibleMedia.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`group overflow-hidden rounded-2xl border border-white/10 bg-[#0d0c0b] ${index === 0 ? 'md:col-span-2' : ''}`}
+                >
+                  <div className={index === 0 ? 'aspect-video max-h-[70vh]' : 'aspect-[4/3]'}>
+                    <MediaPreview item={item} title={project.name} />
+                  </div>
+                  <div className="flex items-center justify-between gap-4 p-4 border-t border-white/10">
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">{item.name}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{item.extension.toUpperCase()} · {item.size}</p>
+                    </div>
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#f46c38] hover:text-white transition-colors"
+                    >
+                      {item.type === 'video' && <Play className="w-3.5 h-3.5" />}
+                      <span>{isRTL ? 'فتح' : 'Open'}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Language } from './types';
 import { contentData } from './data/portfolioData';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { ProjectsSection } from './components/ProjectsSection';
 import { ToolsSection } from './components/ToolsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -32,6 +33,7 @@ export default function App() {
       <Navbar lang={lang} onToggleLang={toggleLanguage} />
       <main>
         <HeroSection lang={lang} />
+        <ProjectsSection lang={lang} />
         <ToolsSection lang={lang} />
         <ContactSection lang={lang} />
       </main>

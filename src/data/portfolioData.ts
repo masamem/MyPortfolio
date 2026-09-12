@@ -16,10 +16,10 @@ export const contentData = {
     ctaResume: 'Download Resume ↓',
     ctaSecondary: 'View Behance',
     toggleLabel: '🇸🇦 عربي',
-    sectionProjects: 'SELECTED WORK',
-    sectionProjectsEyebrow: 'PORTFOLIO / SELECTED PROJECTS',
+    sectionProjects: 'MY WORK',
+    sectionProjectsEyebrow: 'PORTFOLIO / LIVE PROJECTS',
     sectionProjectsSubtitle:
-      'A selection of campaigns, product visuals, motion, and digital experiences created for brands and businesses.',
+      'A live collection of branding, motion, social, 3D, and other creative work synced directly from Google Drive.',
     sectionTools: 'CAPABILITIES & TOOLS',
     sectionToolsEyebrow: 'WHAT I DO',
     sectionToolsSubtitle:
@@ -28,7 +28,7 @@ export const contentData = {
     sectionContact: "LET'S WORK TOGETHER",
     contactSubtitle:
       "Have a project in mind? Let's create something great together.",
-    navLinks: ['About', 'Capabilities', 'Contact'],
+    navLinks: ['About', 'My Work', 'Capabilities', 'Contact'],
     education:
       'BSc (Hons) Multimedia Technology · Asia Pacific University, KL (2016–2020)',
     footerText: '© 2025 Mugahed Al-Maari · All rights reserved',
@@ -66,10 +66,10 @@ export const contentData = {
     ctaResume: 'تحميل السيرة الذاتية ↓',
     ctaSecondary: 'معرض بيهانس',
     toggleLabel: '🇺🇸 English',
-    sectionProjects: 'أعمال مختارة',
-    sectionProjectsEyebrow: 'معرض الأعمال / مشاريع مختارة',
+    sectionProjects: 'أعمالي',
+    sectionProjectsEyebrow: 'معرض الأعمال / مشاريع مباشرة',
     sectionProjectsSubtitle:
-      'مجموعة مختارة من الحملات الإعلانية، بصريات المنتجات، الموشن، والتجارب الرقمية لعلامات تجارية وشركات.',
+      'مجموعة أعمال محدثة تلقائيًا تشمل الهوية البصرية، الموشن، السوشيال ميديا، أعمال 3D وغيرها، مباشرة من Google Drive.',
     sectionTools: 'القدرات والأدوات',
     sectionToolsEyebrow: 'ما أقدمه',
     sectionToolsSubtitle:
@@ -77,7 +77,7 @@ export const contentData = {
     toolkitTitle: 'الأدوات الإبداعية',
     sectionContact: 'تواصل معي',
     contactSubtitle: 'لديك مشروع في ذهنك؟ لنصنع شيئاً رائعاً معاً.',
-    navLinks: ['عنّي', 'القدرات والمهارات', 'تواصل'],
+    navLinks: ['عنّي', 'أعمالي', 'القدرات والمهارات', 'تواصل'],
     education:
       'بكالوريوس تقنية الوسائط المتعددة · جامعة آسيا باسيفيك، كوالالمبور (٢٠١٦–٢٠٢٠)',
     footerText: '© ٢٠٢٥ مجاهد المعاري · جميع الحقوق محفوظة',
