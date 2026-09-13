@@ -118,7 +118,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
               <div className="group bg-white/[0.04] border border-white/10 hover:border-[#f46c38] rounded-2xl p-5 sm:p-6 transition-all">
                 <div className="flex items-center justify-between">
                   <a
-                    href="tel:+966508362894"
+                    href="tel:+966500582126"
                     className="flex items-center gap-4 text-white hover:text-[#f46c38] transition-colors"
                   >
                     <div className="w-12 h-12 rounded-xl bg-[#f46c38]/15 border border-[#f46c38]/30 flex items-center justify-center text-[#f46c38]">
@@ -131,7 +131,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   </a>
 
                   <button
-                    onClick={() => handleCopy('+966508362894', 'phone')}
+                    onClick={() => handleCopy('+966500582126', 'phone')}
                     className="p-2.5 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all cursor-pointer"
                     title={t.quickCopyPhone}
                   >
