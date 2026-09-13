@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Language } from './types';
 import { contentData } from './data/portfolioData';
 import { Navbar } from './components/Navbar';
@@ -7,9 +7,13 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { ToolsSection } from './components/ToolsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { ServicesPage } from './components/ServicesPage';
 
 export default function App() {
-  const [lang, setLang] = useState<Language>('en');
+  const [lang, setLang] = useState<Language>(() => {
+    const saved = localStorage.getItem('portfolio-lang');
+    return saved === 'ar' ? 'ar' : 'en';
+  });
 
   const toggleLanguage = () => {
     setLang((prev) => (prev === 'en' ? 'ar' : 'en'));
@@ -17,26 +21,32 @@ export default function App() {
 
   const currentContent = contentData[lang];
   const isRTL = lang === 'ar';
+  const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
 
   useEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = currentContent.dir;
+    localStorage.setItem('portfolio-lang', lang);
   }, [lang, currentContent.dir]);
 
   return (
-    <div 
+    <div
       className={`min-h-screen bg-[#151312] text-white selection:bg-[#f46c38] selection:text-white ${
         isRTL ? 'font-["Cairo",sans-serif]' : 'font-["Poppins",sans-serif]'
       }`}
       style={{ direction: currentContent.dir as 'ltr' | 'rtl' }}
     >
       <Navbar lang={lang} onToggleLang={toggleLanguage} />
-      <main>
-        <HeroSection lang={lang} />
-        <ProjectsSection lang={lang} />
-        <ToolsSection lang={lang} />
-        <ContactSection lang={lang} />
-      </main>
+      {isServicesPage ? (
+        <ServicesPage lang={lang} />
+      ) : (
+        <main>
+          <HeroSection lang={lang} />
+          <ProjectsSection lang={lang} />
+          <ToolsSection lang={lang} />
+          <ContactSection lang={lang} />
+        </main>
+      )}
       <Footer lang={lang} />
     </div>
   );

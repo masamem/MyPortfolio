@@ -28,7 +28,7 @@ export const contentData = {
     sectionContact: "LET'S WORK TOGETHER",
     contactSubtitle:
       "Have a project in mind? Let's create something great together.",
-    navLinks: ['About', 'My Work', 'Capabilities', 'Contact'],
+    navLinks: ['About', 'My Work', 'Services', 'Capabilities', 'Contact'],
     education:
       'BSc (Hons) Multimedia Technology · Asia Pacific University, KL (2016–2020)',
     footerText: '© 2025 Mugahed Al-Maari · All rights reserved',
@@ -77,7 +77,7 @@ export const contentData = {
     toolkitTitle: 'الأدوات الإبداعية',
     sectionContact: 'تواصل معي',
     contactSubtitle: 'لديك مشروع في ذهنك؟ لنصنع شيئاً رائعاً معاً.',
-    navLinks: ['عنّي', 'أعمالي', 'القدرات والمهارات', 'تواصل'],
+    navLinks: ['عنّي', 'أعمالي', 'الخدمات', 'القدرات والمهارات', 'تواصل'],
     education:
       'بكالوريوس تقنية الوسائط المتعددة · جامعة آسيا باسيفيك، كوالالمبور (٢٠١٦–٢٠٢٠)',
     footerText: '© ٢٠٢٥ مجاهد المعاري · جميع الحقوق محفوظة',

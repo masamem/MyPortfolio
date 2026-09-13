@@ -29,3 +29,13 @@ The frontend can run locally, but the Drive-backed `/api/*` routes are Vercel Se
 ```bash
 npm run build
 ```
+
+## Services page
+
+A bilingual Services page is available at `/services` and uses the existing portfolio visual system. It includes:
+- Creative service cards
+- Video editing packages in SAR
+- Arabic/English language support
+- Contact CTAs that return to the homepage contact section
+
+`vercel.json` includes a rewrite so `/services` works when opened directly on Vercel.
