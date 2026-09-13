@@ -189,9 +189,9 @@ Preferred start date:`;
               {t.titleA} <span className="text-[#f46c38]">{t.titleB}</span>
             </h1>
             <p className="mt-8 text-lg sm:text-xl text-gray-300 leading-relaxed max-w-2xl">{t.intro}</p>
-            <button onClick={goContact} className="mt-9 inline-flex items-center gap-2 bg-[#f46c38] text-white font-bold rounded-full px-7 py-3.5 hover:bg-[#ff7b46] transition-all hover:-translate-y-0.5 cursor-pointer">
+            <a href="/#contact" className="mt-9 inline-flex items-center gap-2 bg-[#f46c38] text-white font-bold rounded-full px-7 py-3.5 hover:bg-[#ff7b46] transition-all hover:-translate-y-0.5 cursor-pointer">
               {t.cta} <ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} />
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>
