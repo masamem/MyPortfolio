@@ -2,6 +2,11 @@ import React from 'react';
 import {
   ArrowRight,
   BadgeCheck,
+  CirclePlay,
+  Clock3,
+  MessageCircle,
+  Play,
+  Check,
   Clapperboard,
   Layers3,
   MonitorPlay,
@@ -80,6 +85,17 @@ const copy = {
     includes: 'Every package includes',
     includedItems: ['Professional editing', 'Titles & typography', 'Visual elements & graphics', 'Transitions & motion', 'Sound & music treatment', 'High-quality final export', '2 revision rounds per video'],
     extra: '+150 SAR for each additional minute beyond the included duration.',
+    featuredEyebrow: 'VIDEO EDITING',
+    featuredTitle: 'Editing built around the story, not just the timeline.',
+    featuredText: 'From raw footage to a polished final cut: pacing, typography, supporting visuals, motion details and sound are shaped into one clear piece of content.',
+    featuredPoints: ['Up to 2 minutes per video', '2 revision rounds included', 'Ready for social & digital platforms'],
+    featuredCta: 'View Packages',
+    processEyebrow: 'HOW IT WORKS',
+    processTitle: 'Simple process. Thoughtful execution.',
+    process: [['01', 'Brief', 'Share the goal, footage, references and deadline.'], ['02', 'Edit', 'I shape the story, pacing, visuals, motion and sound.'], ['03', 'Review', 'You receive a preview and up to two revision rounds.'], ['04', 'Deliver', 'Final files are exported and ready to publish.']],
+    faqEyebrow: 'FAQ',
+    faqTitle: 'Before we start',
+    faqs: [['What counts as a revision?', 'A revision is an adjustment to the approved direction, such as text, timing, shot choices or small visual changes. A new concept or major restructure is quoted separately.'], ['Can unused monthly videos roll over?', 'Monthly packages are reserved production capacity for that month, so unused videos do not automatically roll over.'], ['Do you offer longer videos?', 'Yes. The listed packages cover videos up to 2 minutes each. Additional duration is priced at 150 SAR per extra minute.'], ['Can I request a custom package?', 'Absolutely. If your project has a different volume, format or motion requirement, I can quote a custom scope.']],
     finalTitle: 'Have a project in mind?',
     finalText: 'Tell me what you’re building, how many videos you need, and the style you’re after. I’ll help shape the right scope.',
     finalCta: 'Let’s Work Together',
@@ -106,6 +122,17 @@ const copy = {
     includes: 'تشمل جميع الباقات',
     includedItems: ['مونتاج احترافي', 'العناوين وتنسيق النصوص', 'الجرافيكس والعناصر البصرية', 'الانتقالات والحركة', 'معالجة الصوت والموسيقى', 'تصدير نهائي بجودة عالية', 'جولتان من التعديلات لكل فيديو'],
     extra: '+150 ريال لكل دقيقة إضافية بعد المدة المشمولة في الباقة.',
+    featuredEyebrow: 'مونتاج الفيديو',
+    featuredTitle: 'مونتاج مبني حول القصة، وليس مجرد ترتيب لقطات.',
+    featuredText: 'من الملفات الخام إلى النسخة النهائية: يتم بناء الإيقاع، النصوص، العناصر الداعمة، تفاصيل الحركة والصوت لتخرج كقطعة محتوى واحدة واضحة ومتماسكة.',
+    featuredPoints: ['حتى دقيقتين لكل فيديو', 'جولتان من التعديلات مشمولة', 'جاهز للنشر على المنصات الرقمية'],
+    featuredCta: 'شاهد الباقات',
+    processEyebrow: 'آلية العمل',
+    processTitle: 'خطوات واضحة. وتنفيذ مدروس.',
+    process: [['01', 'التفاصيل', 'ترسل الهدف، الملفات، المراجع والموعد المطلوب.'], ['02', 'التنفيذ', 'أبني القصة والإيقاع والعناصر والحركة والصوت.'], ['03', 'المراجعة', 'تستلم نسخة للمعاينة مع جولتين من التعديلات.'], ['04', 'التسليم', 'تصدير الملفات النهائية وتجهيزها للنشر.']],
+    faqEyebrow: 'الأسئلة الشائعة',
+    faqTitle: 'قبل ما نبدأ',
+    faqs: [['ما المقصود بجولة تعديل؟', 'هي تعديلات ضمن الاتجاه المعتمد مثل النص، التوقيت، اختيار اللقطات أو تغييرات بصرية بسيطة. تغيير الفكرة بالكامل أو إعادة الهيكلة يتم تسعيره بشكل منفصل.'], ['هل تنتقل الفيديوهات غير المستخدمة للشهر التالي؟', 'الباقة الشهرية تحجز وقت إنتاج مخصص خلال الشهر، لذلك الفيديوهات غير المستخدمة لا تنتقل تلقائيًا للشهر التالي.'], ['هل يمكن تنفيذ فيديو أطول من دقيقتين؟', 'نعم. الباقات المعروضة تشمل حتى دقيقتين للفيديو، وتضاف 150 ريال لكل دقيقة إضافية.'], ['هل يمكن عمل باقة مخصصة؟', 'بالتأكيد. إذا كان لديك عدد مختلف من الفيديوهات أو متطلبات موشن وإنتاج خاصة، يتم تجهيز عرض مخصص للمشروع.']],
     finalTitle: 'عندك مشروع في بالك؟',
     finalText: 'شارك معي فكرة المشروع، عدد الفيديوهات والأسلوب المطلوب، ونحدد معًا نطاق العمل الأنسب.',
     finalCta: 'خلّنا نبدأ',
@@ -165,7 +192,32 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-black/15">
+      <section className="border-y border-white/10 bg-[#11100f]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div className="relative aspect-video rounded-[2rem] overflow-hidden border border-white/10 bg-gradient-to-br from-[#26211e] to-[#121110] flex items-center justify-center group">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(244,108,56,.22),transparent_35%)]" />
+              <div className="relative w-20 h-20 rounded-full border border-white/15 bg-white/10 backdrop-blur flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Play className="w-8 h-8 text-[#f46c38] fill-[#f46c38] translate-x-0.5" />
+              </div>
+              <div className="absolute left-6 bottom-6 right-6 flex items-center justify-between text-xs font-bold tracking-widest text-gray-400 uppercase">
+                <span>Selected Editing Work</span><span>01:33</span>
+              </div>
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-bold tracking-[0.2em] text-[#f46c38] uppercase">{t.featuredEyebrow}</div>
+              <h2 className="mt-4 text-3xl sm:text-5xl font-black tracking-tight leading-[1.05]">{t.featuredTitle}</h2>
+              <p className="mt-5 text-gray-400 text-lg leading-relaxed">{t.featuredText}</p>
+              <div className="mt-7 space-y-3">
+                {t.featuredPoints.map((point) => <div key={point} className="flex items-center gap-3 text-gray-200"><Check className="w-5 h-5 text-[#c5ff41] shrink-0" /><span>{point}</span></div>)}
+              </div>
+              <a href="#video-packages" className="mt-8 inline-flex items-center gap-2 text-[#f46c38] font-bold hover:text-[#ff8658] transition-colors">{t.featuredCta}<ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} /></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="video-packages" className="border-b border-white/10 bg-black/15 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="max-w-3xl mb-12">
             <div className="text-xs sm:text-sm font-bold tracking-[0.2em] text-[#c5ff41] uppercase">{t.pricingEyebrow}</div>
