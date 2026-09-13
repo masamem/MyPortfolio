@@ -3,7 +3,7 @@ import { Language } from '../types';
 import { contentData } from '../data/portfolioData';
 import { ArrowRight, ArrowLeft, Mail, Check, Sparkles, MapPin, Briefcase, Award, Download, Linkedin, ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
-import { HeroVisualShowcase } from './HeroVisualShowcase';
+import heroPortrait from '../assets/mugahed-hero.webp';
 
 interface HeroSectionProps {
   lang: Language;
@@ -175,10 +175,36 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
 
           </div>
 
-          {/* Right Side Visual Showcase Container (Mobile Order: 5, Desktop: 5 Cols ~ 42% Width) */}
-          <div className="order-5 lg:order-none lg:col-span-5 mt-10 lg:mt-0">
-            <HeroVisualShowcase lang={lang} />
-          </div>
+          {/* Portrait-led visual: personal, recognizable, and aligned with the portfolio palette */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, x: isRTL ? -24 : 24 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
+            className="order-5 lg:order-none lg:col-span-5 mt-10 lg:mt-0"
+          >
+            <div className="relative mx-auto max-w-[430px]">
+              <div className="absolute -inset-5 rounded-[2.75rem] bg-gradient-to-br from-[#f46c38]/35 via-transparent to-[#c5ff41]/15 blur-2xl" />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] border border-white/15 bg-[#201b19] shadow-2xl shadow-black/50">
+                <img
+                  src={heroPortrait}
+                  alt={isRTL ? 'مجاهد المعاري، مصمم وسائط متعددة' : 'Mugahed Al-Maari, Multimedia Designer'}
+                  className="h-full w-full object-cover object-[50%_28%] transition-transform duration-700 hover:scale-[1.025]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#151312] via-transparent to-transparent opacity-70" />
+                <div className="absolute inset-x-5 bottom-5 flex flex-wrap gap-2">
+                  {['Motion', 'Design', 'Video', 'AI'].map((skill) => (
+                    <span key={skill} className="rounded-full border border-white/15 bg-black/45 px-3 py-1.5 text-[11px] font-bold tracking-wide text-white backdrop-blur-md">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="absolute -end-4 top-8 rounded-2xl border border-[#f46c38]/35 bg-[#151312]/90 px-4 py-3 shadow-xl backdrop-blur-md">
+                <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-gray-400">{isRTL ? 'خبرة إبداعية' : 'Creative experience'}</div>
+                <div className="mt-1 text-xl font-black text-[#f46c38]">6+ {isRTL ? 'سنوات' : 'years'}</div>
+              </div>
+            </div>
+          </motion.div>
 
         </div>
       </motion.div>
