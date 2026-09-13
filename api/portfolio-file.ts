@@ -10,9 +10,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const fileId = String(req.query.id || "");
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const rawKey = process.env.GOOGLE_PRIVATE_KEY;
+  const rootId = process.env.GOOGLE_PORTFOLIO_FOLDER_ID || process.env.GOOGLE_DRIVE_FOLDER_ID;
 
   if (!fileId) return res.status(400).json({ error: "missing_file_id" });
-  if (!email || !rawKey) return res.status(500).json({ error: "missing_credentials" });
+  if (!email || !rawKey || !rootId) {
+    return res.status(500).json({ error: "missing_credentials" });
+  }
 
   try {
     const auth = new google.auth.JWT({
@@ -21,6 +24,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       scopes: ["https://www.googleapis.com/auth/drive.readonly"],
     });
     const drive = google.drive({ version: "v3", auth });
+
+    const isInsidePortfolio = async (candidateId: string): Promise<boolean> => {
+      const visited = new Set<string>();
+      let pending = [candidateId];
+
+      // Portfolio files currently have at most four levels. Keep a bounded
+      // traversal to prevent malformed Drive relationships from causing loops.
+      for (let depth = 0; depth < 10 && pending.length > 0; depth += 1) {
+        const next: string[] = [];
+
+        for (const id of pending) {
+          if (id === rootId) return true;
+          if (visited.has(id)) continue;
+          visited.add(id);
+
+          const item = await drive.files.get({
+            fileId: id,
+            fields: "id,parents",
+            supportsAllDrives: true,
+          });
+
+          next.push(...(item.data.parents || []));
+        }
+
+        pending = next;
+      }
+
+      return false;
+    };
+
+    if (!(await isInsidePortfolio(fileId))) {
+      return res.status(403).json({ error: "file_not_in_portfolio" });
+    }
 
     const meta = await drive.files.get({
       fileId,
