@@ -147,6 +147,32 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
     window.location.href = '/#contact';
   };
 
+  const goWhatsApp = (plan: (typeof plans)[number]) => {
+    const planName = t.planNames[plan.key as keyof typeof t.planNames];
+    const billing = plan.key === 'single' ? t.oneTime : t.perMonth;
+    const message = isAr
+      ? `مرحبًا مجاهد، أرغب في باقة ${planName} لمونتاج الفيديو:
+• ${plan.videos} ${plan.videos === '1' ? t.video : t.videos}
+• ${plan.minutes} ${t.total}
+• ${plan.price} ريال ${billing}
+
+تفاصيل مشروعي:
+موعد البدء المفضل:`
+      : `Hi Mugahed, I'm interested in the ${planName} video editing package:
+• ${plan.videos} ${plan.videos === '1' ? t.video : t.videos}
+• ${plan.minutes} ${t.total}
+• ${plan.price} SAR ${billing}
+
+My project:
+Preferred start date:`;
+
+    window.open(
+      `https://wa.me/966500582126?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer',
+    );
+  };
+
   return (
     <main>
       <section className="relative overflow-hidden border-b border-white/10">
@@ -241,7 +267,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
                   <div className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-[#c5ff41]" /><strong>{plan.minutes}</strong> {t.total}</div>
                   <div className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-[#c5ff41]" /><strong>{plan.average}</strong> {t.avg}</div>
                 </div>
-                <button onClick={goContact} className={`mt-7 w-full rounded-full px-5 py-3 text-sm font-bold cursor-pointer transition-all ${plan.popular ? 'bg-[#f46c38] text-white hover:bg-[#ff7b46]' : 'bg-white text-[#151312] hover:bg-gray-200'}`}>{t.cta}</button>
+                <button onClick={() => goWhatsApp(plan)} className={`mt-7 w-full rounded-full px-5 py-3 text-sm font-bold cursor-pointer transition-all ${plan.popular ? 'bg-[#f46c38] text-white hover:bg-[#ff7b46]' : 'bg-white text-[#151312] hover:bg-gray-200'}`}>{t.cta}</button>
               </article>
             ))}
           </div>
