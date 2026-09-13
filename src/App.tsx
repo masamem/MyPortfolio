@@ -29,6 +29,17 @@ export default function App() {
     localStorage.setItem('portfolio-lang', lang);
   }, [lang, currentContent.dir]);
 
+  useEffect(() => {
+    if (isServicesPage || !window.location.hash) return;
+
+    const sectionId = decodeURIComponent(window.location.hash.slice(1));
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [isServicesPage]);
+
   return (
     <div
       className={`min-h-screen bg-[#151312] text-white selection:bg-[#f46c38] selection:text-white ${
