@@ -144,7 +144,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
   const isAr = lang === 'ar';
 
   const goContact = () => {
-    window.location.href = '/#contact';
+    const message = isAr
+      ? 'مرحبًا مجاهد، لدي مشروع وأرغب في مناقشة التفاصيل معك.\n\nنوع المشروع:\nالميزانية التقريبية:\nالموعد المطلوب:'
+      : 'Hi Mugahed, I have a project and would like to discuss the details with you.\n\nProject type:\nEstimated budget:\nPreferred deadline:';
+
+    window.open(
+      `https://wa.me/966500582126?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer',
+    );
   };
 
   const goWhatsApp = (plan: (typeof plans)[number]) => {
@@ -189,9 +197,9 @@ Preferred start date:`;
               {t.titleA} <span className="text-[#f46c38]">{t.titleB}</span>
             </h1>
             <p className="mt-8 text-lg sm:text-xl text-gray-300 leading-relaxed max-w-2xl">{t.intro}</p>
-            <a href="/#contact" className="mt-9 inline-flex items-center gap-2 bg-[#f46c38] text-white font-bold rounded-full px-7 py-3.5 hover:bg-[#ff7b46] transition-all hover:-translate-y-0.5 cursor-pointer">
+            <button onClick={goContact} className="mt-9 inline-flex items-center gap-2 bg-[#f46c38] text-white font-bold rounded-full px-7 py-3.5 hover:bg-[#ff7b46] transition-all hover:-translate-y-0.5 cursor-pointer">
               {t.cta} <ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} />
-            </a>
+            </button>
           </motion.div>
         </div>
       </section>
