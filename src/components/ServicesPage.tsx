@@ -144,15 +144,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
   const isAr = lang === 'ar';
 
   const goContact = () => {
-    const message = isAr
-      ? 'مرحبًا مجاهد، لدي مشروع وأرغب في مناقشة التفاصيل معك.\n\nنوع المشروع:\nالميزانية التقريبية:\nالموعد المطلوب:'
-      : 'Hi Mugahed, I have a project and would like to discuss the details with you.\n\nProject type:\nEstimated budget:\nPreferred deadline:';
-
-    window.open(
-      `https://wa.me/966500582126?text=${encodeURIComponent(message)}`,
-      '_blank',
-      'noopener,noreferrer',
-    );
+    window.location.assign(`${window.location.origin}/#contact`);
   };
 
   const goWhatsApp = (plan: (typeof plans)[number]) => {
