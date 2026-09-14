@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Language } from '../types';
 import { contentData } from '../data/portfolioData';
-import { Menu, X, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { Sparkles, UserRound, BriefcaseBusiness, Grid2X2, Zap, MessageCircle } from 'lucide-react';
+
 import { BrandIcon } from './BrandIcon';
 
 interface NavbarProps {
@@ -12,19 +12,44 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
   const t = contentData[lang];
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeMobileSection, setActiveMobileSection] = useState(onServicesPage ? 'services' : 'hero');
   const onServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
 
   const navLinks = [
-    { label: t.navLinks[0], href: '/#hero', target: '#hero' },
-    { label: t.navLinks[1], href: '/#work', target: '#work' },
-    { label: t.navLinks[2], href: '/services', route: true },
-    { label: t.navLinks[3], href: '/#capabilities', target: '#capabilities' },
-    { label: t.navLinks[4], href: '/#contact', target: '#contact' },
+    { key: 'hero', label: t.navLinks[0], mobileLabel: lang === 'ar' ? 'عني' : 'About', href: '/#hero', target: '#hero', icon: UserRound },
+    { key: 'work', label: t.navLinks[1], mobileLabel: lang === 'ar' ? 'أعمالي' : 'Work', href: '/#work', target: '#work', icon: BriefcaseBusiness },
+    { key: 'services', label: t.navLinks[2], mobileLabel: lang === 'ar' ? 'الخدمات' : 'Services', href: '/services', route: true, icon: Grid2X2 },
+    { key: 'capabilities', label: t.navLinks[3], mobileLabel: lang === 'ar' ? 'المهارات' : 'Skills', href: '/#capabilities', target: '#capabilities', icon: Zap },
+    { key: 'contact', label: t.navLinks[4], mobileLabel: lang === 'ar' ? 'تواصل' : 'Contact', href: '/#contact', target: '#contact', icon: MessageCircle },
   ];
 
+  useEffect(() => {
+    if (onServicesPage) {
+      setActiveMobileSection('services');
+      return;
+    }
+
+    const sectionIds = ['hero', 'work', 'capabilities', 'contact'];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target.id) setActiveMobileSection(visible.target.id);
+      },
+      { rootMargin: '-25% 0px -55% 0px', threshold: [0.05, 0.25, 0.5] },
+    );
+
+    sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, [onServicesPage]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, target?: string, route?: boolean) => {
-    setMobileMenuOpen(false);
     if (route || onServicesPage || !target) return;
 
     e.preventDefault();
@@ -33,7 +58,8 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#151312]/90 backdrop-blur-md border-b border-white/10 transition-colors">
+    <>
+      <nav className="sticky top-0 z-50 bg-[#151312]/90 backdrop-blur-md border-b border-white/10 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
         <a href="/" className="group min-w-0 font-bold text-base sm:text-2xl text-white tracking-tight hover:text-[#f46c38] transition-colors flex items-center gap-2 sm:gap-3">
           <BrandIcon className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-full ring-2 ring-white/10 group-hover:ring-[#f46c38]/50 transition-all" />
@@ -62,27 +88,45 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
           </button>
         </div>
 
-        <div className="flex md:hidden items-center gap-2">
-          <button onClick={onToggleLang} className="min-h-11 text-xs font-bold text-white bg-[#f46c38]/20 border border-[#f46c38]/50 rounded-full px-3 py-2 cursor-pointer active:scale-95" aria-label="Toggle language">
+        <div className="flex md:hidden items-center">
+          <button
+            onClick={onToggleLang}
+            className="min-h-11 text-xs font-bold text-white bg-[#f46c38]/20 border border-[#f46c38]/50 rounded-full px-4 py-2 cursor-pointer active:scale-95"
+            aria-label="Toggle language"
+          >
             {t.toggleLabel}
-          </button>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="min-h-11 min-w-11 p-2 text-gray-300 hover:text-white rounded-xl bg-white/5 border border-white/10 active:scale-95" aria-label="Toggle Navigation Menu" aria-expanded={mobileMenuOpen}>
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
+      </nav>
 
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3, ease: 'easeInOut' }} className="md:hidden bg-[#151312] border-b border-white/10 px-4 pt-3 pb-5 space-y-2 overflow-hidden shadow-2xl">
-            {navLinks.map((item, idx) => (
-              <a key={idx} href={item.href} onClick={(e) => handleNavClick(e, item.target, item.route)} className="block min-h-12 px-4 py-3 rounded-xl text-base font-medium text-gray-200 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all">
-                {item.label}
+      <nav
+        className="fixed z-50 md:hidden left-3 right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] rounded-2xl border border-white/10 bg-[#1b1918]/95 px-1.5 py-1.5 shadow-2xl shadow-black/60 backdrop-blur-xl"
+        aria-label={lang === 'ar' ? 'التنقل الرئيسي' : 'Primary navigation'}
+      >
+        <div className="grid grid-cols-5 gap-1">
+          {navLinks.map((item) => {
+            const Icon = item.icon;
+            const active = activeMobileSection === item.key;
+
+            return (
+              <a
+                key={item.key}
+                href={item.href}
+                onClick={(event) => {
+                  setActiveMobileSection(item.key);
+                  handleNavClick(event, item.target, item.route);
+                }}
+                aria-current={active ? 'page' : undefined}
+                className={`relative flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 transition-all active:scale-95 ${active ? 'bg-[#f46c38] text-white shadow-lg shadow-[#f46c38]/20' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+              >
+                <Icon className="h-5 w-5 shrink-0" strokeWidth={active ? 2.5 : 2} />
+                <span className="max-w-full truncate text-[10px] font-bold leading-none">{item.mobileLabel}</span>
               </a>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+            );
+          })}
+        </div>
+      </nav>
+    </>
   );
 };
