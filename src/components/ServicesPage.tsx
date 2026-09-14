@@ -199,6 +199,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
     window.location.assign(`${window.location.origin}/#contact`);
   };
 
+  const chooseService = (index: number) => {
+    setSelectedService(index);
+    window.requestAnimationFrame(() => {
+      document.getElementById('service-packages')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
+
   const goWhatsApp = (plan: ServicePlan) => {
     const serviceName = services[activePackageGroup.serviceIndex][lang].title;
     const planName = plan.name[lang];
@@ -222,48 +229,52 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
           <div className="absolute -top-36 -right-24 h-96 w-96 rounded-full bg-[#f46c38]/15 blur-3xl" />
           <div className="absolute -bottom-48 left-0 h-96 w-96 rounded-full bg-[#c5ff41]/10 blur-3xl" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-28 lg:py-36">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.2em] text-[#f46c38] uppercase mb-6">
               <Sparkles className="w-4 h-4" /> {t.eyebrow}
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black tracking-[-0.04em] leading-[0.95]">
+            <h1 className="text-4xl min-[390px]:text-5xl sm:text-6xl lg:text-8xl font-black tracking-[-0.04em] leading-[0.98] sm:leading-[0.95]">
               {t.titleA} <span className="text-[#f46c38]">{t.titleB}</span>
             </h1>
-            <p className="mt-8 text-lg sm:text-xl text-gray-300 leading-relaxed max-w-2xl">{t.intro}</p>
-            <button onClick={goContact} className="mt-9 inline-flex items-center gap-2 bg-[#f46c38] text-white font-bold rounded-full px-7 py-3.5 hover:bg-[#ff7b46] transition-all hover:-translate-y-0.5 cursor-pointer">
+            <p className="mt-6 sm:mt-8 text-base sm:text-xl text-gray-300 leading-relaxed max-w-2xl">{t.intro}</p>
+            <button onClick={goContact} className="mt-8 sm:mt-9 inline-flex w-full sm:w-auto min-h-12 items-center justify-center gap-2 bg-[#f46c38] text-white font-bold rounded-full px-7 py-3.5 hover:bg-[#ff7b46] transition-all hover:-translate-y-0.5 cursor-pointer">
               {t.cta} <ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} />
             </button>
           </motion.div>
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="max-w-2xl mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="max-w-2xl mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight">{t.servicesTitle}</h2>
           <p className="mt-4 text-gray-400 text-lg">{t.servicesSub}</p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="flex gap-4 overflow-x-auto -mx-4 px-4 pb-4 snap-x snap-mandatory sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible">
           {services.map((service, index) => {
             const Icon = service.icon;
             const item = service[lang];
             return (
-              <motion.article key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="group rounded-3xl border border-white/10 bg-white/[0.025] p-7 hover:border-[#f46c38]/45 hover:bg-white/[0.045] transition-all">
+              <motion.button type="button" onClick={() => chooseService(index)} key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="group min-w-[84vw] sm:min-w-0 snap-center text-start rounded-3xl border border-white/10 bg-white/[0.025] p-6 sm:p-7 hover:border-[#f46c38]/45 hover:bg-white/[0.045] active:scale-[0.99] transition-all cursor-pointer">
                 <div className="w-12 h-12 rounded-2xl bg-[#f46c38]/12 border border-[#f46c38]/20 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
                   <Icon className="w-6 h-6 text-[#f46c38]" />
                 </div>
                 <h3 className="text-xl font-bold">{item.title}</h3>
                 <p className="mt-3 text-gray-400 leading-relaxed">{item.desc}</p>
-              </motion.article>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f46c38]">
+                  {isAr ? 'عرض الباقات' : 'View packages'}
+                  <ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} />
+                </span>
+              </motion.button>
             );
           })}
         </div>
       </section>
 
       <section className="border-y border-white/10 bg-[#11100f]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div className="relative aspect-video rounded-[2rem] overflow-hidden border border-white/10 bg-gradient-to-br from-[#26211e] to-[#121110] flex items-center justify-center group">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
+            <div className="relative aspect-video rounded-3xl sm:rounded-[2rem] overflow-hidden border border-white/10 bg-gradient-to-br from-[#26211e] to-[#121110] flex items-center justify-center group">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(244,108,56,.22),transparent_35%)]" />
               <div className="relative w-20 h-20 rounded-full border border-white/15 bg-white/10 backdrop-blur flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Play className="w-8 h-8 text-[#f46c38] fill-[#f46c38] translate-x-0.5" />
@@ -286,8 +297,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
       </section>
 
       <section id="service-packages" className="border-b border-white/10 bg-black/15 scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="max-w-3xl mb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="max-w-3xl mb-8 sm:mb-10">
             <div className="text-xs sm:text-sm font-bold tracking-[0.2em] text-[#c5ff41] uppercase">
               {isAr ? 'باقات الخدمات بالدولار' : 'SERVICE PACKAGES · USD'}
             </div>
@@ -299,7 +310,23 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
             </p>
           </div>
 
-          <div className="flex gap-3 overflow-x-auto pb-4 mb-8 snap-x">
+          <div className="sm:hidden mb-8">
+            <label htmlFor="mobile-service-selector" className="block mb-2 text-xs font-bold uppercase tracking-[0.16em] text-gray-400">
+              {isAr ? 'اختر الخدمة' : 'Select a service'}
+            </label>
+            <select
+              id="mobile-service-selector"
+              value={selectedService}
+              onChange={(event) => setSelectedService(Number(event.target.value))}
+              className="w-full min-h-12 rounded-2xl border border-[#f46c38]/50 bg-[#1b1918] px-4 py-3 text-base font-bold text-white outline-none focus:border-[#f46c38] focus:ring-2 focus:ring-[#f46c38]/20"
+            >
+              {services.map((service, index) => (
+                <option key={service.en.title} value={index}>{service[lang].title}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="hidden sm:flex gap-3 overflow-x-auto pb-4 mb-8 snap-x">
             {services.map((service, index) => {
               const Icon = service.icon;
               const active = selectedService === index;
@@ -307,7 +334,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
                 <button
                   key={service.en.title}
                   onClick={() => setSelectedService(index)}
-                  className={`snap-start shrink-0 inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-bold transition-all cursor-pointer ${active ? 'border-[#f46c38] bg-[#f46c38] text-white' : 'border-white/10 bg-white/[0.035] text-gray-300 hover:border-[#f46c38]/50'}`}
+                  className={`snap-start shrink-0 inline-flex min-h-12 items-center gap-2 rounded-full border px-4 py-3 text-sm font-bold transition-all cursor-pointer ${active ? 'border-[#f46c38] bg-[#f46c38] text-white' : 'border-white/10 bg-white/[0.035] text-gray-300 hover:border-[#f46c38]/50'}`}
                 >
                   <Icon className="w-4 h-4" />
                   {service[lang].title}
@@ -327,9 +354,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
               <h3 className="text-2xl sm:text-3xl font-black">{services[activePackageGroup.serviceIndex][lang].title}</h3>
             </div>
 
-            <div className={`grid gap-5 items-stretch ${activePackageGroup.plans.length === 1 ? 'max-w-2xl' : 'md:grid-cols-3'}`}>
+            <div className={`grid gap-4 sm:gap-5 items-stretch ${activePackageGroup.plans.length === 1 ? 'max-w-2xl' : 'md:grid-cols-3'}`}>
               {activePackageGroup.plans.map((plan) => (
-                <article key={plan.name.en} className={`relative rounded-3xl p-7 border flex flex-col ${plan.popular ? 'border-[#f46c38] bg-[#f46c38]/[0.07] shadow-[0_0_0_1px_rgba(244,108,56,0.15)]' : 'border-white/10 bg-[#1b1918]'}`}>
+                <article key={plan.name.en} className={`relative rounded-3xl p-6 sm:p-7 border flex flex-col ${plan.popular ? 'border-[#f46c38] bg-[#f46c38]/[0.07] shadow-[0_0_0_1px_rgba(244,108,56,0.15)]' : 'border-white/10 bg-[#1b1918]'}`}>
                   {plan.popular && activePackageGroup.plans.length > 1 && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#f46c38] px-4 py-1.5 text-[10px] font-black tracking-[0.14em] text-white">
                       {isAr ? 'الخيار الأنسب' : 'RECOMMENDED'}
@@ -356,7 +383,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => goWhatsApp(plan)} className={`mt-7 w-full rounded-full px-5 py-3 text-sm font-bold cursor-pointer transition-all ${plan.popular ? 'bg-[#f46c38] text-white hover:bg-[#ff7b46]' : 'bg-white text-[#151312] hover:bg-gray-200'}`}>
+                  <button onClick={() => goWhatsApp(plan)} className={`mt-7 min-h-12 w-full rounded-full px-5 py-3 text-sm font-bold cursor-pointer transition-all ${plan.popular ? 'bg-[#f46c38] text-white hover:bg-[#ff7b46]' : 'bg-white text-[#151312] hover:bg-gray-200'}`}>
                     {isAr ? 'استفسر عن الباقة' : 'Ask About This Package'}
                   </button>
                 </article>
@@ -370,13 +397,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#f46c38] px-7 py-12 sm:px-12 sm:py-16 text-white">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-28">
+        <div className="relative overflow-hidden rounded-3xl sm:rounded-[2rem] border border-white/10 bg-[#f46c38] px-6 py-10 sm:px-12 sm:py-16 text-white">
           <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 blur-3xl rounded-full" />
           <div className="relative max-w-3xl">
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight">{t.finalTitle}</h2>
             <p className="mt-4 text-white/80 text-lg leading-relaxed">{t.finalText}</p>
-            <button onClick={goContact} className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#151312] px-7 py-3.5 font-bold hover:bg-black transition-colors cursor-pointer">
+            <button onClick={goContact} className="mt-8 inline-flex w-full sm:w-auto min-h-12 items-center justify-center gap-2 rounded-full bg-[#151312] px-7 py-3.5 font-bold hover:bg-black transition-colors cursor-pointer">
               {t.finalCta} <ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} />
             </button>
           </div>
