@@ -34,10 +34,10 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
 
   return (
     <nav className="sticky top-0 z-50 bg-[#151312]/90 backdrop-blur-md border-b border-white/10 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-        <a href="/" className="group font-bold text-xl sm:text-2xl text-white tracking-tight hover:text-[#f46c38] transition-colors flex items-center gap-3">
-          <BrandIcon className="w-8 h-8 rounded-full ring-2 ring-white/10 group-hover:ring-[#f46c38]/50 transition-all" />
-          <span>{t.name}</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
+        <a href="/" className="group min-w-0 font-bold text-base sm:text-2xl text-white tracking-tight hover:text-[#f46c38] transition-colors flex items-center gap-2 sm:gap-3">
+          <BrandIcon className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-full ring-2 ring-white/10 group-hover:ring-[#f46c38]/50 transition-all" />
+          <span className="truncate max-w-[150px] min-[390px]:max-w-[190px] sm:max-w-none">{t.name}</span>
         </a>
 
         <div className="hidden md:flex items-center gap-7">
@@ -62,11 +62,11 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
           </button>
         </div>
 
-        <div className="flex md:hidden items-center gap-3">
-          <button onClick={onToggleLang} className="text-xs font-bold text-white bg-[#f46c38]/20 border border-[#f46c38]/50 rounded-full px-3 py-1.5 cursor-pointer active:scale-95">
+        <div className="flex md:hidden items-center gap-2">
+          <button onClick={onToggleLang} className="min-h-11 text-xs font-bold text-white bg-[#f46c38]/20 border border-[#f46c38]/50 rounded-full px-3 py-2 cursor-pointer active:scale-95" aria-label="Toggle language">
             {t.toggleLabel}
           </button>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-300 hover:text-white rounded-lg bg-white/5 border border-white/10" aria-label="Toggle Navigation Menu">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="min-h-11 min-w-11 p-2 text-gray-300 hover:text-white rounded-xl bg-white/5 border border-white/10 active:scale-95" aria-label="Toggle Navigation Menu" aria-expanded={mobileMenuOpen}>
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
@@ -74,9 +74,9 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3, ease: 'easeInOut' }} className="md:hidden bg-[#151312] border-b border-white/10 px-4 pt-3 pb-6 space-y-3 overflow-hidden">
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3, ease: 'easeInOut' }} className="md:hidden bg-[#151312] border-b border-white/10 px-4 pt-3 pb-5 space-y-2 overflow-hidden shadow-2xl">
             {navLinks.map((item, idx) => (
-              <a key={idx} href={item.href} onClick={(e) => handleNavClick(e, item.target, item.route)} className="block px-3 py-2.5 rounded-lg text-base font-medium text-gray-200 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all">
+              <a key={idx} href={item.href} onClick={(e) => handleNavClick(e, item.target, item.route)} className="block min-h-12 px-4 py-3 rounded-xl text-base font-medium text-gray-200 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all">
                 {item.label}
               </a>
             ))}
