@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ArrowRight,
   BadgeCheck,
@@ -55,11 +55,61 @@ const services = [
   },
 ];
 
-const plans = [
-  { key: 'single', videos: '1', minutes: '2', price: '400', average: '400' },
-  { key: 'starter', videos: '4', minutes: '8', price: '1,500', average: '375' },
-  { key: 'pro', videos: '8', minutes: '16', price: '2,800', average: '350', popular: true },
-  { key: 'studio', videos: '12', minutes: '24', price: '3,900', average: '325' },
+interface ServicePlan {
+  name: { en: string; ar: string };
+  price: string;
+  note: { en: string; ar: string };
+  features: { en: string[]; ar: string[] };
+  popular?: boolean;
+}
+
+const servicePackages: Array<{ serviceIndex: number; plans: ServicePlan[] }> = [
+  {
+    serviceIndex: 0,
+    plans: [
+      { name: { en: 'Single Video', ar: 'فيديو منفرد' }, price: '$110', note: { en: 'one-time', ar: 'مرة واحدة' }, features: { en: ['1 video up to 2 minutes', 'Professional edit and sound', '2 revision rounds'], ar: ['فيديو واحد حتى دقيقتين', 'مونتاج ومعالجة صوتية', 'جولتان من التعديلات'] } },
+      { name: { en: 'Creator', ar: 'صانع المحتوى' }, price: '$400', note: { en: 'per month', ar: 'شهريًا' }, features: { en: ['4 videos up to 2 minutes each', 'Titles and visual elements', 'Platform-ready exports'], ar: ['4 فيديوهات حتى دقيقتين لكل فيديو', 'عناوين وعناصر بصرية', 'تصدير جاهز للمنصات'] }, popular: true },
+      { name: { en: 'Studio', ar: 'الاستوديو' }, price: '$750', note: { en: 'per month', ar: 'شهريًا' }, features: { en: ['8 videos up to 2 minutes each', 'Priority production schedule', 'Consistent branded style'], ar: ['8 فيديوهات حتى دقيقتين لكل فيديو', 'أولوية في جدول الإنتاج', 'أسلوب بصري موحد للعلامة'] } },
+    ],
+  },
+  {
+    serviceIndex: 1,
+    plans: [
+      { name: { en: 'Motion Starter', ar: 'موشن أساسي' }, price: '$180', note: { en: 'one-time', ar: 'مرة واحدة' }, features: { en: ['Up to 15 seconds', 'Logo or text animation', '2 revision rounds'], ar: ['حتى 15 ثانية', 'تحريك شعار أو نص', 'جولتان من التعديلات'] } },
+      { name: { en: 'Brand Motion', ar: 'موشن للعلامة' }, price: '$450', note: { en: 'starting at', ar: 'يبدأ من' }, features: { en: ['Up to 30 seconds', 'Custom branded graphics', 'Sound design included'], ar: ['حتى 30 ثانية', 'جرافيكس مخصص للعلامة', 'يشمل التصميم الصوتي'] }, popular: true },
+      { name: { en: 'Motion Campaign', ar: 'حملة موشن' }, price: '$900', note: { en: 'starting at', ar: 'يبدأ من' }, features: { en: ['Up to 60 seconds', 'Storyboard and visual direction', 'Multiple platform formats'], ar: ['حتى 60 ثانية', 'ستوري بورد واتجاه بصري', 'مقاسات متعددة للمنصات'] } },
+    ],
+  },
+  {
+    serviceIndex: 2,
+    plans: [
+      { name: { en: 'Social Starter', ar: 'سوشيال أساسي' }, price: '$180', note: { en: 'one-time', ar: 'مرة واحدة' }, features: { en: ['6 social media designs', 'Platform-ready sizes', '2 revision rounds'], ar: ['6 تصاميم سوشيال ميديا', 'مقاسات جاهزة للمنصات', 'جولتان من التعديلات'] } },
+      { name: { en: 'Monthly Growth', ar: 'النمو الشهري' }, price: '$420', note: { en: 'per month', ar: 'شهريًا' }, features: { en: ['12 social designs', '4 animated stories or posts', 'Monthly visual consistency'], ar: ['12 تصميم سوشيال', '4 ستوري أو منشورات متحركة', 'اتساق بصري شهري'] }, popular: true },
+      { name: { en: 'Content Engine', ar: 'محرك المحتوى' }, price: '$850', note: { en: 'starting per month', ar: 'يبدأ شهريًا من' }, features: { en: ['16 social designs', '8 short-form videos', 'Campaign visual direction'], ar: ['16 تصميم سوشيال', '8 فيديوهات قصيرة', 'اتجاه بصري للحملة'] } },
+    ],
+  },
+  {
+    serviceIndex: 3,
+    plans: [
+      { name: { en: 'Design Essentials', ar: 'أساسيات التصميم' }, price: '$150', note: { en: 'one-time', ar: 'مرة واحدة' }, features: { en: ['3 branded design assets', 'Digital-ready files', '2 revision rounds'], ar: ['3 تصاميم متوافقة مع الهوية', 'ملفات جاهزة للاستخدام الرقمي', 'جولتان من التعديلات'] } },
+      { name: { en: 'Campaign Kit', ar: 'حزمة الحملة' }, price: '$400', note: { en: 'starting at', ar: 'يبدأ من' }, features: { en: ['1 campaign key visual', '6 format adaptations', 'Organized source files'], ar: ['تصميم رئيسي للحملة', '6 مقاسات وتطبيقات', 'ملفات مصدر منظمة'] }, popular: true },
+      { name: { en: 'Brand Support', ar: 'دعم العلامة' }, price: '$750', note: { en: 'starting per month', ar: 'يبدأ شهريًا من' }, features: { en: ['12 design assets', 'Priority design support', 'Consistent brand execution'], ar: ['12 مادة تصميمية', 'أولوية في دعم التصميم', 'تطبيق متسق للهوية'] } },
+    ],
+  },
+  {
+    serviceIndex: 4,
+    plans: [
+      { name: { en: 'Product Starter', ar: 'منتج أساسي' }, price: '$180', note: { en: 'one-time', ar: 'مرة واحدة' }, features: { en: ['5 product visuals', 'Clean feature callouts', 'Store-ready exports'], ar: ['5 تصاميم للمنتج', 'إبراز واضح للمميزات', 'ملفات جاهزة للمتجر'] } },
+      { name: { en: 'Listing Growth', ar: 'تطوير صفحة المنتج' }, price: '$420', note: { en: 'one-time', ar: 'مرة واحدة' }, features: { en: ['10 product visuals', 'Feature and benefit graphics', '2 storefront banners'], ar: ['10 تصاميم للمنتج', 'جرافيكس للمميزات والفوائد', 'بنران للمتجر'] }, popular: true },
+      { name: { en: 'Storefront System', ar: 'نظام المتجر' }, price: '$850', note: { en: 'starting at', ar: 'يبدأ من' }, features: { en: ['20 product and category visuals', 'Storefront banner system', 'Reusable visual templates'], ar: ['20 تصميمًا للمنتجات والتصنيفات', 'نظام بنرات للمتجر', 'قوالب بصرية قابلة لإعادة الاستخدام'] } },
+    ],
+  },
+  {
+    serviceIndex: 5,
+    plans: [
+      { name: { en: 'Custom Creative Scope', ar: 'نطاق إبداعي مخصص' }, price: 'Quote', note: { en: 'built around your project', ar: 'حسب احتياج المشروع' }, features: { en: ['Mix design, motion, video and digital production', 'Clear scope and delivery schedule', 'Tailored quotation before work begins'], ar: ['دمج التصميم والموشن والفيديو والإنتاج الرقمي', 'نطاق وجدول تسليم واضحان', 'عرض سعر مخصص قبل بدء العمل'] }, popular: true },
+    ],
+  },
 ];
 
 const copy = {
@@ -142,29 +192,21 @@ const copy = {
 export const ServicesPage: React.FC<ServicesPageProps> = ({ lang }) => {
   const t = copy[lang];
   const isAr = lang === 'ar';
+  const [selectedService, setSelectedService] = useState(0);
+  const activePackageGroup = servicePackages[selectedService];
 
   const goContact = () => {
     window.location.assign(`${window.location.origin}/#contact`);
   };
 
-  const goWhatsApp = (plan: (typeof plans)[number]) => {
-    const planName = t.planNames[plan.key as keyof typeof t.planNames];
-    const billing = plan.key === 'single' ? t.oneTime : t.perMonth;
+  const goWhatsApp = (plan: ServicePlan) => {
+    const serviceName = services[activePackageGroup.serviceIndex][lang].title;
+    const planName = plan.name[lang];
+    const planNote = plan.note[lang];
+    const featureList = plan.features[lang].map((feature) => `• ${feature}`).join('\n');
     const message = isAr
-      ? `مرحبًا مجاهد، أرغب في باقة ${planName} لمونتاج الفيديو:
-• ${plan.videos} ${plan.videos === '1' ? t.video : t.videos}
-• ${plan.minutes} ${t.total}
-• ${plan.price} ريال ${billing}
-
-تفاصيل مشروعي:
-موعد البدء المفضل:`
-      : `Hi Mugahed, I'm interested in the ${planName} video editing package:
-• ${plan.videos} ${plan.videos === '1' ? t.video : t.videos}
-• ${plan.minutes} ${t.total}
-• ${plan.price} SAR ${billing}
-
-My project:
-Preferred start date:`;
+      ? `مرحبًا مجاهد، أرغب في الاستفسار عن خدمة ${serviceName} — باقة ${planName}.\nالسعر: ${plan.price} USD (${planNote})\n\nتشمل الباقة:\n${featureList}\n\nتفاصيل مشروعي:\nموعد البدء المفضل:`
+      : `Hi Mugahed, I'm interested in ${serviceName} — ${planName}.\nPrice: ${plan.price} USD (${planNote})\n\nPackage includes:\n${featureList}\n\nMy project details:\nPreferred start date:`;
 
     window.open(
       `https://wa.me/966500582126?text=${encodeURIComponent(message)}`,
@@ -237,48 +279,94 @@ Preferred start date:`;
               <div className="mt-7 space-y-3">
                 {t.featuredPoints.map((point) => <div key={point} className="flex items-center gap-3 text-gray-200"><Check className="w-5 h-5 text-[#c5ff41] shrink-0" /><span>{point}</span></div>)}
               </div>
-              <a href="#video-packages" className="mt-8 inline-flex items-center gap-2 text-[#f46c38] font-bold hover:text-[#ff8658] transition-colors">{t.featuredCta}<ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} /></a>
+              <a href="#service-packages" className="mt-8 inline-flex items-center gap-2 text-[#f46c38] font-bold hover:text-[#ff8658] transition-colors">{t.featuredCta}<ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} /></a>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="video-packages" className="border-b border-white/10 bg-black/15 scroll-mt-24">
+      <section id="service-packages" className="border-b border-white/10 bg-black/15 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="max-w-3xl mb-12">
-            <div className="text-xs sm:text-sm font-bold tracking-[0.2em] text-[#c5ff41] uppercase">{t.pricingEyebrow}</div>
-            <h2 className="mt-4 text-3xl sm:text-5xl font-black tracking-tight">{t.pricingTitle}</h2>
-            <p className="mt-4 text-gray-400 text-lg">{t.pricingSub}</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
-            {plans.map((plan) => (
-              <article key={plan.key} className={`relative rounded-3xl p-7 border flex flex-col ${plan.popular ? 'border-[#f46c38] bg-[#f46c38]/[0.07] shadow-[0_0_0_1px_rgba(244,108,56,0.15)]' : 'border-white/10 bg-[#1b1918]'}`}>
-                {plan.popular && <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#f46c38] px-4 py-1.5 text-[10px] font-black tracking-[0.14em] text-white">{t.popular}</div>}
-                <div className="text-lg font-bold">{t.planNames[plan.key as keyof typeof t.planNames]}</div>
-                <div className="mt-5 flex items-end gap-2">
-                  <span className="text-4xl sm:text-5xl font-black tracking-tight">{plan.price}</span>
-                  <span className="text-gray-400 pb-1">SAR</span>
-                </div>
-                <div className="mt-1 text-sm text-gray-500">{plan.key === 'single' ? t.oneTime : t.perMonth}</div>
-                <div className="h-px bg-white/10 my-6" />
-                <div className="space-y-3 text-sm text-gray-300 flex-1">
-                  <div className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-[#c5ff41]" /><strong>{plan.videos}</strong> {plan.videos === '1' ? t.video : t.videos}</div>
-                  <div className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-[#c5ff41]" /><strong>{plan.minutes}</strong> {t.total}</div>
-                  <div className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-[#c5ff41]" /><strong>{plan.average}</strong> {t.avg}</div>
-                </div>
-                <button onClick={() => goWhatsApp(plan)} className={`mt-7 w-full rounded-full px-5 py-3 text-sm font-bold cursor-pointer transition-all ${plan.popular ? 'bg-[#f46c38] text-white hover:bg-[#ff7b46]' : 'bg-white text-[#151312] hover:bg-gray-200'}`}>{t.cta}</button>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.025] p-7 sm:p-9">
-            <h3 className="text-xl font-bold">{t.includes}</h3>
-            <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3">
-              {t.includedItems.map((item) => <div key={item} className="flex gap-2 text-sm text-gray-300"><BadgeCheck className="w-4 h-4 mt-0.5 shrink-0 text-[#c5ff41]" /><span>{item}</span></div>)}
+          <div className="max-w-3xl mb-10">
+            <div className="text-xs sm:text-sm font-bold tracking-[0.2em] text-[#c5ff41] uppercase">
+              {isAr ? 'باقات الخدمات بالدولار' : 'SERVICE PACKAGES · USD'}
             </div>
-            <p className="mt-6 text-sm text-[#f4a17d]">{t.extra}</p>
+            <h2 className="mt-4 text-3xl sm:text-5xl font-black tracking-tight">
+              {isAr ? 'اختر الخدمة وشاهد أسعارها.' : 'Choose a service. See clear pricing.'}
+            </h2>
+            <p className="mt-4 text-gray-400 text-lg">
+              {isAr ? 'أسعار ثابتة للخدمات المحددة، وأسعار تبدأ من للمشاريع التي يختلف نطاقها.' : 'Fixed prices for defined deliverables and starting prices where the creative scope can vary.'}
+            </p>
           </div>
+
+          <div className="flex gap-3 overflow-x-auto pb-4 mb-8 snap-x">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              const active = selectedService === index;
+              return (
+                <button
+                  key={service.en.title}
+                  onClick={() => setSelectedService(index)}
+                  className={`snap-start shrink-0 inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-bold transition-all cursor-pointer ${active ? 'border-[#f46c38] bg-[#f46c38] text-white' : 'border-white/10 bg-white/[0.035] text-gray-300 hover:border-[#f46c38]/50'}`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {service[lang].title}
+                </button>
+              );
+            })}
+          </div>
+
+          <motion.div
+            key={selectedService}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="mb-7 flex items-center gap-3">
+              {React.createElement(services[activePackageGroup.serviceIndex].icon, { className: 'w-7 h-7 text-[#f46c38]' })}
+              <h3 className="text-2xl sm:text-3xl font-black">{services[activePackageGroup.serviceIndex][lang].title}</h3>
+            </div>
+
+            <div className={`grid gap-5 items-stretch ${activePackageGroup.plans.length === 1 ? 'max-w-2xl' : 'md:grid-cols-3'}`}>
+              {activePackageGroup.plans.map((plan) => (
+                <article key={plan.name.en} className={`relative rounded-3xl p-7 border flex flex-col ${plan.popular ? 'border-[#f46c38] bg-[#f46c38]/[0.07] shadow-[0_0_0_1px_rgba(244,108,56,0.15)]' : 'border-white/10 bg-[#1b1918]'}`}>
+                  {plan.popular && activePackageGroup.plans.length > 1 && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#f46c38] px-4 py-1.5 text-[10px] font-black tracking-[0.14em] text-white">
+                      {isAr ? 'الخيار الأنسب' : 'RECOMMENDED'}
+                    </div>
+                  )}
+                  <div className="text-lg font-bold">{plan.name[lang]}</div>
+                  <div className="mt-5 flex items-end gap-2">
+                    {plan.price === 'Quote' ? (
+                      <span className="text-4xl font-black tracking-tight">{isAr ? 'عرض سعر' : 'Custom quote'}</span>
+                    ) : (
+                      <>
+                        <span className="text-4xl sm:text-5xl font-black tracking-tight">{plan.price}</span>
+                        <span className="text-gray-400 pb-1">USD</span>
+                      </>
+                    )}
+                  </div>
+                  <div className="mt-1 text-sm text-gray-500">{plan.note[lang]}</div>
+                  <div className="h-px bg-white/10 my-6" />
+                  <div className="space-y-3 text-sm text-gray-300 flex-1">
+                    {plan.features[lang].map((feature) => (
+                      <div key={feature} className="flex items-start gap-2">
+                        <BadgeCheck className="w-4 h-4 mt-0.5 text-[#c5ff41] shrink-0" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <button onClick={() => goWhatsApp(plan)} className={`mt-7 w-full rounded-full px-5 py-3 text-sm font-bold cursor-pointer transition-all ${plan.popular ? 'bg-[#f46c38] text-white hover:bg-[#ff7b46]' : 'bg-white text-[#151312] hover:bg-gray-200'}`}>
+                    {isAr ? 'استفسر عن الباقة' : 'Ask About This Package'}
+                  </button>
+                </article>
+              ))}
+            </div>
+          </motion.div>
+
+          <p className="mt-8 text-sm text-gray-500">
+            {isAr ? 'الأسعار لا تشمل شراء المواد المدفوعة أو التصوير أو التعليق الصوتي ما لم يُذكر خلاف ذلك.' : 'Prices exclude paid stock assets, filming and voice-over unless specifically included in the agreed scope.'}
+          </p>
         </div>
       </section>
 
