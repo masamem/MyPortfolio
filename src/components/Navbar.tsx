@@ -12,8 +12,8 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
   const t = contentData[lang];
-  const [activeMobileSection, setActiveMobileSection] = useState(onServicesPage ? 'services' : 'hero');
   const onServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
+  const [activeMobileSection, setActiveMobileSection] = useState(onServicesPage ? 'services' : 'hero');
 
   const navLinks = [
     { key: 'hero', label: t.navLinks[0], mobileLabel: lang === 'ar' ? 'عني' : 'About', href: '/#hero', target: '#hero', icon: UserRound },
