@@ -42,7 +42,7 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen overflow-x-hidden bg-[#151312] text-white selection:bg-[#f46c38] selection:text-white ${
+      className={`min-h-screen overflow-x-hidden pb-24 md:pb-0 bg-[#151312] text-white selection:bg-[#f46c38] selection:text-white ${
         isRTL ? 'font-["Cairo",sans-serif]' : 'font-["Poppins",sans-serif]'
       }`}
       style={{ direction: currentContent.dir as 'ltr' | 'rtl' }}
