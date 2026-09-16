@@ -136,7 +136,7 @@ export const projectsData: ProjectItem[] = [
       label: { en: 'Campaign Reach', ar: 'انتشار الحملة' },
       value: '3.8M+',
     },
-    accentColor: '#f46c38',
+    accentColor: '#ccf52b',
   },
   {
     id: 'rebune-social-motion',
@@ -278,7 +278,7 @@ export const projectsData: ProjectItem[] = [
       label: { en: 'Conversion Rate', ar: 'معدل التحويل' },
       value: '+180%',
     },
-    accentColor: '#f46c38',
+    accentColor: '#ccf52b',
   },
   {
     id: 'rebune-product-styling',
@@ -313,7 +313,7 @@ export const projectsData: ProjectItem[] = [
       label: { en: 'Retail Outlets', ar: 'منافذ البيع' },
       value: '500+',
     },
-    accentColor: '#e05a26',
+    accentColor: '#b8df20',
   },
 ];
 

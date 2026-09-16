@@ -70,8 +70,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
         
         {/* Section Heading */}
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#f46c38] mb-2">
-            <span className="w-2 h-2 rounded-full bg-[#f46c38]" />
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#ccf52b] mb-2">
+            <span className="w-2 h-2 rounded-full bg-[#ccf52b]" />
             <span>{isRTL ? 'بدء التعاون' : 'GET IN TOUCH'}</span>
           </div>
           <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-none mb-6">
@@ -89,13 +89,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
             <div className="space-y-4">
               
               {/* Email Card */}
-              <div className="group bg-white/[0.04] border border-white/10 hover:border-[#f46c38] rounded-2xl p-5 sm:p-6 transition-all">
+              <div className="group bg-white/[0.04] border border-white/10 hover:border-[#ccf52b] rounded-2xl p-5 sm:p-6 transition-all">
                 <div className="flex items-center justify-between">
                   <a
                     href="mailto:mugahedalmaari@gmail.com"
-                    className="flex items-center gap-4 text-white hover:text-[#f46c38] transition-colors"
+                    className="flex items-center gap-4 text-white hover:text-[#ccf52b] transition-colors"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-[#f46c38]/15 border border-[#f46c38]/30 flex items-center justify-center text-[#f46c38]">
+                    <div className="w-12 h-12 rounded-xl bg-[#ccf52b]/15 border border-[#ccf52b]/30 flex items-center justify-center text-[#ccf52b]">
                       <Mail className="w-6 h-6" />
                     </div>
                     <div>
@@ -115,13 +115,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
               </div>
 
               {/* Phone / WhatsApp Card */}
-              <div className="group bg-white/[0.04] border border-white/10 hover:border-[#f46c38] rounded-2xl p-5 sm:p-6 transition-all">
+              <div className="group bg-white/[0.04] border border-white/10 hover:border-[#ccf52b] rounded-2xl p-5 sm:p-6 transition-all">
                 <div className="flex items-center justify-between">
                   <a
                     href="tel:+966500582126"
-                    className="flex items-center gap-4 text-white hover:text-[#f46c38] transition-colors"
+                    className="flex items-center gap-4 text-white hover:text-[#ccf52b] transition-colors"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-[#f46c38]/15 border border-[#f46c38]/30 flex items-center justify-center text-[#f46c38]">
+                    <div className="w-12 h-12 rounded-xl bg-[#ccf52b]/15 border border-[#ccf52b]/30 flex items-center justify-center text-[#ccf52b]">
                       <Phone className="w-6 h-6" />
                     </div>
                     <div>
@@ -152,13 +152,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     href="https://behance.net/mugahedalmaari"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#f46c38] text-white transition-all cursor-pointer"
+                    className="group flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#ccf52b] text-white transition-all cursor-pointer"
                   >
                     <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-sm shrink-0 group-hover:scale-105 transition-transform">
                       <BehanceIcon className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="text-sm font-bold text-white group-hover:text-[#f46c38] transition-colors truncate">Behance</div>
+                      <div className="text-sm font-bold text-white group-hover:text-[#ccf52b] transition-colors truncate">Behance</div>
                       <div className="text-[11px] text-gray-400 truncate">mugahedalmaari</div>
                     </div>
                     <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-white shrink-0" />
@@ -169,13 +169,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     href="https://linkedin.com/in/mugahedalmaari"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#f46c38] text-white transition-all cursor-pointer"
+                    className="group flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#ccf52b] text-white transition-all cursor-pointer"
                   >
                     <div className="w-9 h-9 rounded-xl bg-sky-600/20 border border-sky-500/30 text-sky-400 flex items-center justify-center font-bold text-sm shrink-0 group-hover:scale-105 transition-transform">
                       <LinkedinIcon className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="text-sm font-bold text-white group-hover:text-[#f46c38] transition-colors truncate">LinkedIn</div>
+                      <div className="text-sm font-bold text-white group-hover:text-[#ccf52b] transition-colors truncate">LinkedIn</div>
                       <div className="text-[11px] text-gray-400 truncate">mugahedalmaari</div>
                     </div>
                     <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-white shrink-0" />
@@ -186,13 +186,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     href="https://instagram.com/mugahedalmaari"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#f46c38] text-white transition-all cursor-pointer"
+                    className="group flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#ccf52b] text-white transition-all cursor-pointer"
                   >
                     <div className="w-9 h-9 rounded-xl bg-pink-600/20 border border-pink-500/30 text-pink-400 flex items-center justify-center font-bold text-sm shrink-0 group-hover:scale-105 transition-transform">
                       <InstagramIcon className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="text-sm font-bold text-white group-hover:text-[#f46c38] transition-colors truncate">Instagram</div>
+                      <div className="text-sm font-bold text-white group-hover:text-[#ccf52b] transition-colors truncate">Instagram</div>
                       <div className="text-[11px] text-gray-400 truncate">mugahedalmaari</div>
                     </div>
                     <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-white shrink-0" />
@@ -205,7 +205,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
           {/* Right Column: Direct Inquiry Form (7 Cols) */}
           <div className="lg:col-span-7 bg-white/[0.03] border border-white/10 rounded-2xl p-6 sm:p-8">
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#f46c38]" />
+              <Sparkles className="w-5 h-5 text-[#ccf52b]" />
               <span>{t.contactFormTitle}</span>
             </h3>
 
@@ -221,7 +221,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     placeholder={t.formNamePlaceholder}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#f46c38] transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ccf52b] transition-colors"
                   />
                 </div>
 
@@ -235,7 +235,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     placeholder={t.formEmailPlaceholder}
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#f46c38] transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ccf52b] transition-colors"
                   />
                 </div>
               </div>
@@ -248,7 +248,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   <select
                     value={formData.projectType}
                     onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                    className="w-full bg-[#151312] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#f46c38] transition-colors"
+                    className="w-full bg-[#151312] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ccf52b] transition-colors"
                   >
                     <option value="Motion Graphics">Motion Graphics & Animation</option>
                     <option value="Brand Identity">Brand Identity & Visual Design</option>
@@ -265,7 +265,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   <select
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full bg-[#151312] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#f46c38] transition-colors"
+                    className="w-full bg-[#151312] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ccf52b] transition-colors"
                   >
                     <option value="< $1,000">&lt; $1,000</option>
                     <option value="$1,000 - $3,000">$1,000 - $3,000</option>
@@ -285,13 +285,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   placeholder={t.formMessagePlaceholder}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#f46c38] transition-colors resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ccf52b] transition-colors resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 font-bold text-sm text-white bg-[#f46c38] hover:bg-[#e05a26] py-3.5 rounded-xl transition-all shadow-md shadow-[#f46c38]/20 cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 font-bold text-sm text-[#151312] bg-[#ccf52b] hover:bg-[#b8df20] py-3.5 rounded-xl transition-all shadow-md shadow-[#ccf52b]/20 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>{t.formSubmit}</span>

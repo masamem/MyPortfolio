@@ -125,8 +125,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16"
         >
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#f46c38] mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#f46c38] animate-pulse" />
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#ccf52b] mb-3">
+              <span className="w-2 h-2 rounded-full bg-[#ccf52b] animate-pulse" />
               <span>{t.sectionProjectsEyebrow}</span>
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-none uppercase">
@@ -141,7 +141,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
               <button
                 onClick={() => load(true)}
                 disabled={refreshing}
-                className="inline-flex items-center gap-1.5 text-[#f46c38] hover:text-white disabled:opacity-50 transition-colors"
+                className="inline-flex items-center gap-1.5 text-[#ccf52b] hover:text-white disabled:opacity-50 transition-colors"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
                 {isRTL ? 'تحديث' : 'Refresh'}
@@ -154,7 +154,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 sm:mb-14 border-b border-white/10">
           <button
             onClick={() => selectCategory('all')}
-            className={`text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full transition-all whitespace-nowrap ${selectedCategory === 'all' ? 'bg-[#f46c38] text-white border border-[#f46c38]' : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'}`}
+            className={`text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full transition-all whitespace-nowrap ${selectedCategory === 'all' ? 'bg-[#ccf52b] text-[#151312] border border-[#ccf52b]' : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'}`}
           >
             {t.filterAll}
           </button>
@@ -162,7 +162,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
             <button
               key={category.id}
               onClick={() => selectCategory(category.name)}
-              className={`text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full transition-all whitespace-nowrap ${selectedCategory === category.name ? 'bg-[#f46c38] text-white border border-[#f46c38]' : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'}`}
+              className={`text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full transition-all whitespace-nowrap ${selectedCategory === category.name ? 'bg-[#ccf52b] text-[#151312] border border-[#ccf52b]' : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'}`}
             >
               {categoryLabel(category.name, lang)}
             </button>
@@ -191,23 +191,23 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
 
         {loading ? (
           <div className="min-h-72 flex flex-col items-center justify-center gap-3 text-gray-400 border border-white/10 rounded-2xl bg-white/[0.02]">
-            <LoaderCircle className="w-7 h-7 animate-spin text-[#f46c38]" />
+            <LoaderCircle className="w-7 h-7 animate-spin text-[#ccf52b]" />
             <span>{isRTL ? 'جاري تحميل أعمالك من Google Drive...' : 'Loading your work from Google Drive...'}</span>
           </div>
         ) : error ? (
-          <div className="min-h-72 flex flex-col items-center justify-center gap-4 text-center border border-[#f46c38]/30 rounded-2xl bg-[#f46c38]/5 px-6">
-            <TriangleAlert className="w-8 h-8 text-[#f46c38]" />
+          <div className="min-h-72 flex flex-col items-center justify-center gap-4 text-center border border-[#ccf52b]/30 rounded-2xl bg-[#ccf52b]/5 px-6">
+            <TriangleAlert className="w-8 h-8 text-[#ccf52b]" />
             <div>
               <p className="font-bold text-white">{isRTL ? 'لم يتم ربط Google Drive بعد' : 'Google Drive is not connected yet'}</p>
               <p className="text-sm text-gray-400 mt-2 max-w-2xl">{error}</p>
             </div>
-            <button onClick={() => load(true)} className="rounded-xl bg-[#f46c38] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#e05a26] transition-colors">
+            <button onClick={() => load(true)} className="rounded-xl bg-[#ccf52b] px-5 py-2.5 text-sm font-bold text-[#151312] hover:bg-[#b8df20] transition-colors">
               {isRTL ? 'إعادة المحاولة' : 'Try again'}
             </button>
           </div>
         ) : filteredProjects.length === 0 ? (
           <div className="min-h-72 flex flex-col items-center justify-center gap-3 text-center border border-dashed border-white/15 rounded-2xl text-gray-400 px-6">
-            <FolderOpen className="w-9 h-9 text-[#f46c38]" />
+            <FolderOpen className="w-9 h-9 text-[#ccf52b]" />
             <p className="font-semibold text-white">{isRTL ? 'لا توجد مشاريع داخل هذا القسم حتى الآن' : 'No projects in this category yet'}</p>
             <p className="text-sm max-w-xl">{isRTL ? 'أنشئ مجلد مشروع جديد داخل القسم في Google Drive وسيظهر هنا تلقائيًا.' : 'Create a new project folder inside this category in Google Drive and it will appear here automatically.'}</p>
           </div>
@@ -226,7 +226,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                     transition={{ duration: 0.35, ease: 'easeOut' }}
                     key={project.id}
                     onClick={() => setActiveProject(project)}
-                    className="group relative bg-[#141211] border border-white/10 hover:border-[#f46c38]/60 rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer shadow-xl"
+                    className="group relative bg-[#141211] border border-white/10 hover:border-[#ccf52b]/60 rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer shadow-xl"
                   >
                     <div className="relative overflow-hidden bg-black/60 aspect-[4/3]">
                       {cover?.type === 'image' ? (
@@ -247,21 +247,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                       </div>
                       {cover?.type === 'video' && (
                         <div className="absolute top-4 end-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 text-white flex items-center gap-1.5 text-xs font-semibold">
-                          <Play className="w-3 h-3 text-[#f46c38] fill-[#f46c38]" />
+                          <Play className="w-3 h-3 text-[#ccf52b] fill-[#ccf52b]" />
                           <span>{isRTL ? 'فيديو' : 'Video'}</span>
                         </div>
                       )}
-                      <div className="absolute bottom-4 end-4 w-11 h-11 rounded-full bg-[#f46c38] text-white flex items-center justify-center shadow-lg translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">
+                      <div className="absolute bottom-4 end-4 w-11 h-11 rounded-full bg-[#ccf52b] text-[#151312] flex items-center justify-center shadow-lg translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">
                         <ArrowUpRight className="w-5 h-5" />
                       </div>
                     </div>
 
                     <div className="p-5 border-t border-white/5">
                       <div className="flex items-center gap-2 mb-2 text-xs">
-                        <span className="font-bold text-[#f46c38] uppercase tracking-wider">{project.subcategory ? categoryLabel(project.subcategory, lang) : categoryLabel(project.category, lang)}</span>
+                        <span className="font-bold text-[#ccf52b] uppercase tracking-wider">{project.subcategory ? categoryLabel(project.subcategory, lang) : categoryLabel(project.category, lang)}</span>
                         {year && <><span className="text-gray-600">•</span><span className="text-gray-400">{year}</span></>}
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3 group-hover:text-[#f46c38] transition-colors">{project.name}</h3>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3 group-hover:text-[#ccf52b] transition-colors">{project.name}</h3>
                       <div className="flex items-center justify-between gap-4 pt-4 border-t border-white/5">
                         <span className="text-xs text-gray-400">{project.media.length} {isRTL ? 'ملف' : project.media.length === 1 ? 'file' : 'files'}</span>
                         <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-400 group-hover:text-white transition-colors">

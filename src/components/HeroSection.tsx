@@ -57,7 +57,7 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
   return (
     <section id="hero" className="relative pt-8 sm:pt-16 pb-12 sm:pb-20 overflow-hidden min-h-[85vh] flex items-center">
       {/* Subtle Background Glows */}
-      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 w-[500px] h-[300px] bg-[#f46c38]/10 blur-[140px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 w-[500px] h-[300px] bg-[#ccf52b]/10 blur-[140px] rounded-full pointer-events-none -z-10" />
       <div className="absolute top-10 right-10 w-[250px] h-[250px] bg-[#c5ff41]/5 blur-[100px] rounded-full pointer-events-none -z-10" />
 
       <motion.div 
@@ -88,7 +88,7 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
             <div className="order-2 mb-6">
               <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tight leading-[1.08]">
                 <span className="block">{t.role}</span>
-                {t.roleLine2 && <span className="block text-[#f46c38]">{t.roleLine2}</span>}
+                {t.roleLine2 && <span className="block text-[#ccf52b]">{t.roleLine2}</span>}
               </h1>
             </div>
 
@@ -105,7 +105,7 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
               <a
                 href="#"
                 onClick={handleDownloadResume}
-                className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-white bg-[#f46c38] hover:bg-[#e05a26] rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 shadow-lg shadow-[#f46c38]/25 hover:shadow-[#f46c38]/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-[#151312] bg-[#ccf52b] hover:bg-[#b8df20] rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 shadow-lg shadow-[#ccf52b]/25 hover:shadow-[#ccf52b]/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
               >
                 <Download className="w-4 h-4 text-white" />
                 <span>{downloadingResume ? (isRTL ? 'جاري التحميل...' : 'Downloading...') : t.ctaResume}</span>
@@ -114,30 +114,30 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
               <a
                 href="#work"
                 onClick={(e) => scrollToSection(e, '#work')}
-                className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#f46c38]/60 rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 transition-all transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#ccf52b]/60 rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 transition-all transform hover:-translate-y-0.5"
               >
                 <span>{t.cta}</span>
-                {isRTL ? <ArrowLeft className="w-4 h-4 text-[#f46c38]" /> : <ArrowRight className="w-4 h-4 text-[#f46c38]" />}
+                {isRTL ? <ArrowLeft className="w-4 h-4 text-[#ccf52b]" /> : <ArrowRight className="w-4 h-4 text-[#ccf52b]" />}
               </a>
             </div>
 
             {/* 5. Desktop Information Cards (Mobile Order: 6) */}
             <div className="order-6 lg:order-5 grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
               {/* Card 1 */}
-              <div className="border-s-4 border-[#f46c38] ps-3.5 py-2.5 bg-white/[0.03] rounded-e-xl border-y border-e border-white/10 flex items-center gap-3 hover:border-[#f46c38]/50 transition-colors">
-                <Award className="w-4 h-4 text-[#f46c38] shrink-0" />
+              <div className="border-s-4 border-[#ccf52b] ps-3.5 py-2.5 bg-white/[0.03] rounded-e-xl border-y border-e border-white/10 flex items-center gap-3 hover:border-[#ccf52b]/50 transition-colors">
+                <Award className="w-4 h-4 text-[#ccf52b] shrink-0" />
                 <span className="text-xs sm:text-sm font-bold text-white">{t.years}</span>
               </div>
 
               {/* Card 2 */}
-              <div className="border-s-4 border-[#f46c38] ps-3.5 py-2.5 bg-white/[0.03] rounded-e-xl border-y border-e border-white/10 flex items-center gap-3 hover:border-[#f46c38]/50 transition-colors">
-                <Briefcase className="w-4 h-4 text-[#f46c38] shrink-0" />
+              <div className="border-s-4 border-[#ccf52b] ps-3.5 py-2.5 bg-white/[0.03] rounded-e-xl border-y border-e border-white/10 flex items-center gap-3 hover:border-[#ccf52b]/50 transition-colors">
+                <Briefcase className="w-4 h-4 text-[#ccf52b] shrink-0" />
                 <span className="text-xs sm:text-sm font-bold text-white">{t.roleCard || 'Multidisciplinary Creative Designer'}</span>
               </div>
 
               {/* Card 3 */}
-              <div className="border-s-4 border-[#f46c38] ps-3.5 py-2.5 bg-white/[0.03] rounded-e-xl border-y border-e border-white/10 flex items-center gap-3 hover:border-[#f46c38]/50 transition-colors">
-                <MapPin className="w-4 h-4 text-[#f46c38] shrink-0" />
+              <div className="border-s-4 border-[#ccf52b] ps-3.5 py-2.5 bg-white/[0.03] rounded-e-xl border-y border-e border-white/10 flex items-center gap-3 hover:border-[#ccf52b]/50 transition-colors">
+                <MapPin className="w-4 h-4 text-[#ccf52b] shrink-0" />
                 <span className="text-xs sm:text-sm font-bold text-white">{t.location}</span>
               </div>
             </div>
@@ -151,7 +151,7 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
                 onClick={() => handleCopy('mugahedalmaari@gmail.com', 'email')}
                 className="inline-flex items-center gap-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 hover:text-white transition-all cursor-pointer"
               >
-                <Mail className="w-3.5 h-3.5 text-[#f46c38]" />
+                <Mail className="w-3.5 h-3.5 text-[#ccf52b]" />
                 <span>mugahedalmaari@gmail.com</span>
                 {copiedItem === 'email' ? (
                   <span className="text-[#c5ff41] font-bold flex items-center gap-1 ms-1">
@@ -167,7 +167,7 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 hover:text-white transition-all cursor-pointer"
               >
-                <Linkedin className="w-3.5 h-3.5 text-[#f46c38]" />
+                <Linkedin className="w-3.5 h-3.5 text-[#ccf52b]" />
                 <span>linkedin.com/in/mugahedalmaari</span>
                 <ExternalLink className="w-3 h-3 text-gray-500" />
               </a>
