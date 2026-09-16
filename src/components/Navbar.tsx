@@ -61,8 +61,8 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
     <>
       <nav className="sticky top-0 z-50 bg-[#151312]/90 backdrop-blur-md border-b border-white/10 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
-        <a href="/" className="group min-w-0 font-bold text-base sm:text-2xl text-white tracking-tight hover:text-[#f46c38] transition-colors flex items-center gap-2 sm:gap-3">
-          <BrandIcon className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-full ring-2 ring-white/10 group-hover:ring-[#f46c38]/50 transition-all" />
+        <a href="/" className="group min-w-0 font-bold text-base sm:text-2xl text-white tracking-tight hover:text-[#ccf52b] transition-colors flex items-center gap-2 sm:gap-3">
+          <BrandIcon className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-full ring-2 ring-white/10 group-hover:ring-[#ccf52b]/50 transition-all" />
           <span className="truncate max-w-[150px] min-[390px]:max-w-[190px] sm:max-w-none">{t.name}</span>
         </a>
 
@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
               key={idx}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.target, item.route)}
-              className={`text-sm font-medium transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#f46c38] after:transition-all ${item.route && onServicesPage ? 'text-white after:w-full' : 'text-gray-300 hover:text-white after:w-0 hover:after:w-full'}`}
+              className={`text-sm font-medium transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-[#ccf52b] after:transition-all ${item.route && onServicesPage ? 'text-white after:w-full' : 'text-gray-300 hover:text-white after:w-0 hover:after:w-full'}`}
             >
               {item.label}
             </a>
@@ -80,10 +80,10 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
 
           <button
             onClick={onToggleLang}
-            className="text-xs font-bold text-white bg-[#f46c38]/15 hover:bg-[#f46c38] border border-[#f46c38]/40 hover:border-[#f46c38] rounded-full px-4 py-2 cursor-pointer transition-all duration-200 flex items-center gap-1.5 shadow-sm active:scale-95"
+            className="group text-xs font-bold text-white hover:text-[#151312] bg-[#ccf52b]/15 hover:bg-[#ccf52b] border border-[#ccf52b]/40 hover:border-[#ccf52b] rounded-full px-4 py-2 cursor-pointer transition-all duration-200 flex items-center gap-1.5 shadow-sm active:scale-95"
             aria-label="Toggle language"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#f46c38]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#ccf52b] group-hover:text-[#151312]" />
             <span>{t.toggleLabel}</span>
           </button>
         </div>
@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
         <div className="flex md:hidden items-center">
           <button
             onClick={onToggleLang}
-            className="min-h-11 text-xs font-bold text-white bg-[#f46c38]/20 border border-[#f46c38]/50 rounded-full px-4 py-2 cursor-pointer active:scale-95"
+            className="min-h-11 text-xs font-bold text-white bg-[#ccf52b]/20 border border-[#ccf52b]/50 rounded-full px-4 py-2 cursor-pointer active:scale-95"
             aria-label="Toggle language"
           >
             {t.toggleLabel}
@@ -118,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
                   handleNavClick(event, item.target, item.route);
                 }}
                 aria-current={active ? 'page' : undefined}
-                className={`relative flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 transition-all active:scale-95 ${active ? 'bg-[#f46c38] text-white shadow-lg shadow-[#f46c38]/20' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                className={`relative flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 transition-all active:scale-95 ${active ? 'bg-[#ccf52b] text-[#151312] shadow-lg shadow-[#ccf52b]/20' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
               >
                 <Icon className="h-5 w-5 shrink-0" strokeWidth={active ? 2.5 : 2} />
                 <span className="max-w-full truncate text-[10px] font-bold leading-none">{item.mobileLabel}</span>

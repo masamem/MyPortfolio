@@ -43,7 +43,7 @@ const ModelPreview: React.FC<{ item: PortfolioMedia; isRTL: boolean }> = ({ item
         style={{ width: '100%', height: '100%', display: 'block' }}
       >
         <div slot="progress-bar" className="absolute inset-x-8 top-1/2 h-1 overflow-hidden rounded-full bg-white/10">
-          <div className="h-full w-1/2 animate-pulse rounded-full bg-[#f46c38]" />
+          <div className="h-full w-1/2 animate-pulse rounded-full bg-[#ccf52b]" />
         </div>
         <a
           slot="poster"
@@ -52,7 +52,7 @@ const ModelPreview: React.FC<{ item: PortfolioMedia; isRTL: boolean }> = ({ item
           rel="noopener noreferrer"
           className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-gray-300"
         >
-          <Box className="w-12 h-12 text-[#f46c38]" />
+          <Box className="w-12 h-12 text-[#ccf52b]" />
           <span className="text-sm font-bold">{isRTL ? 'تحميل المجسم ثلاثي الأبعاد' : 'Load 3D model'}</span>
         </a>
       </model-viewer>
@@ -64,7 +64,7 @@ const ModelPreview: React.FC<{ item: PortfolioMedia; isRTL: boolean }> = ({ item
         <button
           type="button"
           onClick={resetView}
-          className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/65 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-[#f46c38]"
+          className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/65 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-[#ccf52b] hover:text-[#151312]"
           aria-label={isRTL ? 'إعادة ضبط زاوية العرض' : 'Reset model view'}
         >
           <RotateCcw className="h-3.5 w-3.5" />
@@ -103,7 +103,7 @@ const MediaPreview: React.FC<{ item: PortfolioMedia; title: string; isRTL: boole
       rel="noopener noreferrer"
       className="w-full h-full min-h-52 flex flex-col items-center justify-center gap-3 bg-white/[0.04] text-gray-300 hover:text-white transition-colors"
     >
-      {item.type === 'pdf' ? <FileText className="w-10 h-10 text-[#f46c38]" /> : <Box className="w-10 h-10 text-[#f46c38]" />}
+      {item.type === 'pdf' ? <FileText className="w-10 h-10 text-[#ccf52b]" /> : <Box className="w-10 h-10 text-[#ccf52b]" />}
       <span className="font-bold text-sm">{item.name}</span>
       <span className="text-xs text-gray-500">{item.size}</span>
       <ExternalLink className="w-4 h-4" />
@@ -129,7 +129,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
         className="relative w-full max-w-6xl mx-auto my-4 sm:my-8 bg-[#151312] border border-white/15 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="h-1.5 bg-[#f46c38]" />
+        <div className="h-1.5 bg-[#ccf52b]" />
         <button
           onClick={onClose}
           className="absolute top-5 end-5 z-20 p-2.5 rounded-full bg-black/60 border border-white/15 text-gray-300 hover:text-white hover:bg-black/80 transition-all"
@@ -140,7 +140,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
 
         <div className="p-5 sm:p-8 lg:p-10 border-b border-white/10">
           <div className="flex flex-wrap items-center gap-2.5 mb-4">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#f46c38]/15 border border-[#f46c38]/30 text-[#f46c38] px-3 py-1 text-xs font-bold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#ccf52b]/15 border border-[#ccf52b]/30 text-[#ccf52b] px-3 py-1 text-xs font-bold uppercase tracking-wider">
               <FolderOpen className="w-3.5 h-3.5" />
               {project.subcategory ? `${project.category} · ${project.subcategory}` : project.category}
             </span>
@@ -187,7 +187,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#f46c38] hover:text-white transition-colors"
+                      className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#ccf52b] hover:text-white transition-colors"
                     >
                       {item.type === 'video' && <Play className="w-3.5 h-3.5" />}
                       <span>{isRTL ? 'فتح' : 'Open'}</span>
