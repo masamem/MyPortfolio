@@ -13,7 +13,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
   const t = contentData[lang];
   const isRTL = lang === 'ar';
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
-  const [downloadingResume, setDownloadingResume] = useState(false);
 
   const handleCopy = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
@@ -27,31 +26,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  const handleDownloadResume = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setDownloadingResume(true);
-    
-    // Simulate/Trigger Resume Download or PDF View
-    const resumeText = `Mugahed Al-Maari - Multimedia Designer Resume
-Email: mugahedalmaari@gmail.com
-Location: Riyadh, Saudi Arabia
-LinkedIn: linkedin.com/in/mugahedalmaari
-Behance: behance.net/mugahedalmaari
-Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Production.`;
-
-    const blob = new Blob([resumeText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Mugahed_AlMaari_Resume.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    setTimeout(() => setDownloadingResume(false), 3000);
   };
 
   return (
@@ -103,12 +77,22 @@ Experience: 6+ Years in Multimedia Design, Motion Graphics, Branding & Video Pro
             <div className="order-4 flex flex-wrap items-center gap-4 mb-8">
               {/* Download Resume CTA */}
               <a
-                href="#"
-                onClick={handleDownloadResume}
+                href="/downloads/Mugahed_AlMaari_Resume.pdf"
+                download="Mugahed_AlMaari_Resume.pdf"
                 className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-[#151312] bg-[#ccf52b] hover:bg-[#b8df20] rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 shadow-lg shadow-[#ccf52b]/25 hover:shadow-[#ccf52b]/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
               >
-                <Download className="w-4 h-4 text-white" />
-                <span>{downloadingResume ? (isRTL ? 'جاري التحميل...' : 'Downloading...') : t.ctaResume}</span>
+                <Download className="w-4 h-4" aria-hidden="true" />
+                <span>{isRTL ? 'تحميل السيرة الذاتية' : 'Download Résumé'}<span className="block text-[10px] font-medium opacity-75">{isRTL ? 'PDF باللغة الإنجليزية' : 'English PDF'}</span></span>
+              </a>
+
+
+              <a
+                href="/downloads/Mugahed_AlMaari_Portfolio.pdf"
+                download="Mugahed_AlMaari_Portfolio.pdf"
+                className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-white bg-white/5 hover:bg-white/10 border border-[#ccf52b]/40 hover:border-[#ccf52b] rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 transition-all transform hover:-translate-y-0.5"
+              >
+                <Download className="w-4 h-4 text-[#ccf52b]" aria-hidden="true" />
+                <span>{isRTL ? 'تحميل ملف الأعمال' : 'Download Portfolio'}<span className="block text-[10px] font-medium text-gray-400">{isRTL ? 'PDF باللغة الإنجليزية' : 'English PDF'}</span></span>
               </a>
 
               <a
