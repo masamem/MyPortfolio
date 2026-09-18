@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from '../types';
 import { contentData } from '../data/portfolioData';
-import { ArrowRight, ArrowLeft, Mail, Check, Sparkles, MapPin, Briefcase, Award, Download, Linkedin, ExternalLink } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Mail, Check, Sparkles, MapPin, Briefcase, Award, Eye, Linkedin, ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
 import { HeroVisualShowcase } from './HeroVisualShowcase';
 
@@ -75,24 +75,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
             {/* 4. CTA Buttons (Mobile Order: 4) */}
             <div className="order-4 flex flex-wrap items-center gap-4 mb-8">
-              {/* Download Resume CTA */}
+              {/* View Resume CTA */}
               <a
                 href="/downloads/Mugahed_AlMaari_Resume.pdf"
-                download="Mugahed_AlMaari_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-[#151312] bg-[#ccf52b] hover:bg-[#b8df20] rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 shadow-lg shadow-[#ccf52b]/25 hover:shadow-[#ccf52b]/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
               >
-                <Download className="w-4 h-4" aria-hidden="true" />
-                <span>{isRTL ? 'تحميل السيرة الذاتية' : 'Download Résumé'}<span className="block text-[10px] font-medium opacity-75">{isRTL ? 'PDF باللغة الإنجليزية' : 'English PDF'}</span></span>
+                <Eye className="w-4 h-4" aria-hidden="true" />
+                <span>{isRTL ? 'عرض السيرة الذاتية' : 'View Résumé'}<span className="block text-[10px] font-medium opacity-75">{isRTL ? 'PDF باللغة الإنجليزية' : 'English PDF'}</span></span>
               </a>
 
 
               <a
                 href="/downloads/Mugahed_AlMaari_Portfolio.pdf"
-                download="Mugahed_AlMaari_Portfolio.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 font-bold text-sm sm:text-base text-white bg-white/5 hover:bg-white/10 border border-[#ccf52b]/40 hover:border-[#ccf52b] rounded-xl px-7 py-3.5 sm:px-8 sm:py-4 transition-all transform hover:-translate-y-0.5"
               >
-                <Download className="w-4 h-4 text-[#ccf52b]" aria-hidden="true" />
-                <span>{isRTL ? 'تحميل ملف الأعمال' : 'Download Portfolio'}<span className="block text-[10px] font-medium text-gray-400">{isRTL ? 'PDF باللغة الإنجليزية' : 'English PDF'}</span></span>
+                <Eye className="w-4 h-4 text-[#ccf52b]" aria-hidden="true" />
+                <span>{isRTL ? 'عرض ملف الأعمال' : 'View Portfolio'}<span className="block text-[10px] font-medium text-gray-400">{isRTL ? 'PDF باللغة الإنجليزية' : 'English PDF'}</span></span>
               </a>
 
               <a
