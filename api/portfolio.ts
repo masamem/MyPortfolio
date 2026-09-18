@@ -115,7 +115,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             size: formatSize(file.size),
             modifiedTime: file.modifiedTime || "",
             isCover: isCoverName(file.name!),
-            url: `/api/portfolio-file?id=${encodeURIComponent(file.id!)}&v=${version}`,
+            url: `/api/portfolio-file?id=${encodeURIComponent(file.id!)}&v=${version}${type === "video" ? "&stream=2" : ""}`,
             webViewLink: file.webViewLink || "",
           };
         })
