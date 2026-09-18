@@ -1,6 +1,14 @@
 import { google } from "googleapis";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
+// Support both Fetch Headers (Gaxios 7) and older Google client header objects.
+export function responseHeader(headers: unknown, name: string): string | undefined {
+  const value = headers as { get?: (key: string) => string | null } & Record<string, unknown>;
+  if (typeof value.get === "function") return value.get(name) || undefined;
+  const header = value[name];
+  return Array.isArray(header) ? header.join(", ") : typeof header === "string" ? header : undefined;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET" && req.method !== "HEAD") {
     res.setHeader("Allow", "GET, HEAD");
@@ -75,7 +83,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader("Content-Type", contentType);
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("Accept-Ranges", "bytes");
-    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    res.setHeader("Cache-Control", contentType.startsWith("video/")
+      ? "private, no-store"
+      : "public, max-age=31536000, immutable");
     res.setHeader("Content-Disposition", `inline; filename*=UTF-8''${encodeURIComponent(fileName)}`);
 
     if (meta.data.size) res.setHeader("Content-Length", meta.data.size);
@@ -87,20 +97,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       { responseType: "stream", headers: range ? { Range: range } : undefined }
     );
 
-    const headers = response.headers as Record<string, string | undefined>;
-    if (headers["content-range"]) {
-      res.statusCode = 206;
-      res.setHeader("Content-Range", headers["content-range"]);
+    // Gaxios 7 returns Fetch Headers, not a plain object. Safari needs the
+    // actual partial-response status and length for its initial bytes=0-1 probe.
+    const contentRange = responseHeader(response.headers, "content-range");
+    const contentLength = responseHeader(response.headers, "content-length");
+    res.statusCode = response.status;
+    if (contentRange) res.setHeader("Content-Range", contentRange);
+    if (contentLength) {
+      res.setHeader("Content-Length", contentLength);
+    } else {
+      res.removeHeader("Content-Length");
     }
-    if (headers["content-length"]) res.setHeader("Content-Length", headers["content-length"]);
 
     response.data.on("error", (error: Error) => {
       console.error("[/api/portfolio-file stream]", error);
-      if (!res.headersSent) res.status(500).end();
+      if (!res.headersSent) {
+        res.removeHeader("Content-Length");
+        res.removeHeader("Content-Range");
+        res.status(500).end();
+      } else {
+        res.destroy(error);
+      }
     });
+    res.on("close", () => response.data.destroy());
     response.data.pipe(res);
   } catch (error) {
     console.error("[/api/portfolio-file]", error);
-    if (!res.headersSent) return res.status(500).json({ error: "file_fetch_failed" });
+    if (!res.headersSent) {
+      res.removeHeader("Content-Length");
+      res.removeHeader("Content-Range");
+      res.setHeader("Cache-Control", "no-store");
+      const upstream = error as { response?: { status?: number; headers?: Headers } };
+      if (upstream.response?.status === 416) {
+        const range = upstream.response.headers?.get("content-range");
+        if (range) res.setHeader("Content-Range", range);
+        return res.status(416).end();
+      }
+      return res.status(500).json({ error: "file_fetch_failed" });
+    }
   }
 }
