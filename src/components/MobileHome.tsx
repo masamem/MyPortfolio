@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, BriefcaseBusiness, MapPin, Play, Sparkles, Zap } from 'lucide-react';
+import { ArrowUpRight, BriefcaseBusiness, Eye, FileText, MapPin, Play, Sparkles, Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Language } from '../types';
 import { contentData } from '../data/portfolioData';
@@ -70,6 +70,42 @@ export const MobileHome: React.FC<MobileHomeProps> = ({ lang }) => {
               </a>
             </div>
           </div>
+        </div>
+
+        <div className="mt-3 grid grid-cols-2 gap-2.5">
+          <a
+            href="/downloads/Mugahed_AlMaari_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-[66px] items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-3.5 py-3 text-white active:scale-[0.98]"
+          >
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#ccf52b]/12 text-[#ccf52b]">
+              <FileText className="h-4.5 w-4.5" />
+            </span>
+            <span className="min-w-0">
+              <strong className="block text-xs font-bold">{isRTL ? 'عرض السيرة الذاتية' : 'View Résumé'}</strong>
+              <span className="mt-0.5 flex items-center gap-1 text-[10px] text-white/40">
+                PDF <Eye className="h-3 w-3" />
+              </span>
+            </span>
+          </a>
+
+          <a
+            href="/downloads/Mugahed_AlMaari_Portfolio.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-[66px] items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-3.5 py-3 text-white active:scale-[0.98]"
+          >
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#ccf52b]/12 text-[#ccf52b]">
+              <Eye className="h-4.5 w-4.5" />
+            </span>
+            <span className="min-w-0">
+              <strong className="block text-xs font-bold">{isRTL ? 'عرض ملف الأعمال' : 'View Portfolio'}</strong>
+              <span className="mt-0.5 flex items-center gap-1 text-[10px] text-white/40">
+                PDF <ArrowUpRight className="h-3 w-3" />
+              </span>
+            </span>
+          </a>
         </div>
 
         <div className="mt-3 grid grid-cols-3 gap-2.5">
