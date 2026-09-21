@@ -59,7 +59,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-28 border-t border-white/10 relative">
+    <section id="contact" className="py-16 sm:py-28 border-t border-white/10 relative">
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -69,12 +69,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
       >
         
         {/* Section Heading */}
-        <div className="max-w-3xl mb-12">
+        <div className="max-w-3xl mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#ccf52b] mb-2">
             <span className="w-2 h-2 rounded-full bg-[#ccf52b]" />
             <span>{isRTL ? 'بدء التعاون' : 'GET IN TOUCH'}</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-none mb-6">
+          <h2 className="text-3xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-none mb-4 sm:mb-6">
             {t.sectionContact}
           </h2>
           <p className="text-lg sm:text-xl text-gray-300">
@@ -310,4 +310,3 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
     </section>
   );
 };
-
