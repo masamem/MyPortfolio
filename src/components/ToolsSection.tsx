@@ -66,7 +66,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({ lang }) => {
         </div>
 
         {/* Primary Area: Capabilities Responsive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-12 sm:mb-14">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-12 sm:mb-14">
           {capabilitiesData.map((item, index) => {
             const IconComponent = iconMap[item.iconName] || Sparkles;
 
@@ -77,7 +77,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({ lang }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.05, ease: 'easeOut' }}
                 viewport={{ once: true }}
-                className="group relative bg-[#141211] border border-white/10 hover:border-[#ccf52b]/50 rounded-xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between shadow-md"
+                className="group relative bg-[#141211] border border-white/10 hover:border-[#ccf52b]/50 rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between shadow-md"
               >
                 <div>
                   {/* Top Header: Icon & Subtle Corner Detail */}
