@@ -59,11 +59,12 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-[#151312]/90 backdrop-blur-md border-b border-white/10 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#151312]/90 backdrop-blur-xl transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-15 sm:h-18 flex items-center justify-between">
         <a href="/" className="group min-w-0 font-bold text-base sm:text-2xl text-white tracking-tight hover:text-[#ccf52b] transition-colors flex items-center gap-2 sm:gap-3">
           <BrandIcon className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 rounded-full ring-2 ring-white/10 group-hover:ring-[#ccf52b]/50 transition-all" />
-          <span className="truncate max-w-[150px] min-[390px]:max-w-[190px] sm:max-w-none">{t.name}</span>
+          <span className="text-lg tracking-[-0.03em] md:hidden">MUVFX</span>
+          <span className="hidden truncate sm:max-w-none md:inline">{t.name}</span>
         </a>
 
         <div className="hidden md:flex items-center gap-7">
@@ -91,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
         <div className="flex md:hidden items-center">
           <button
             onClick={onToggleLang}
-            className="min-h-11 text-xs font-bold text-white bg-[#ccf52b]/20 border border-[#ccf52b]/50 rounded-full px-4 py-2 cursor-pointer active:scale-95"
+            className="min-h-10 rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-2 text-[11px] font-bold text-white cursor-pointer active:scale-95"
             aria-label="Toggle language"
           >
             {t.toggleLabel}
@@ -101,7 +102,7 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
       </nav>
 
       <nav
-        className="fixed z-50 md:hidden left-3 right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] rounded-2xl border border-white/10 bg-[#1b1918]/95 px-1.5 py-1.5 shadow-2xl shadow-black/60 backdrop-blur-xl"
+        className="fixed z-50 md:hidden left-3 right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] rounded-[22px] border border-white/10 bg-[#1b1918]/92 px-1.5 py-1.5 shadow-2xl shadow-black/70 backdrop-blur-2xl"
         aria-label={lang === 'ar' ? 'التنقل الرئيسي' : 'Primary navigation'}
       >
         <div className="grid grid-cols-5 gap-1">
@@ -118,8 +119,9 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, onToggleLang }) => {
                   handleNavClick(event, item.target, item.route);
                 }}
                 aria-current={active ? 'page' : undefined}
-                className={`relative flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 transition-all active:scale-95 ${active ? 'bg-[#ccf52b] text-[#151312] shadow-lg shadow-[#ccf52b]/20' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                className={`relative flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-all active:scale-95 ${active ? 'bg-[#ccf52b]/12 text-[#ccf52b]' : 'text-gray-500 hover:bg-white/5 hover:text-white'}`}
               >
+                {active && <span className="absolute top-1 h-0.5 w-5 rounded-full bg-[#ccf52b]" />}
                 <Icon className="h-5 w-5 shrink-0" strokeWidth={active ? 2.5 : 2} />
                 <span className="max-w-full truncate text-[10px] font-bold leading-none">{item.mobileLabel}</span>
               </a>

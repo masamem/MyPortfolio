@@ -115,21 +115,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="work" className="py-24 sm:py-32 border-t border-white/10 relative bg-[#0d0c0b]">
+    <section id="work" className="py-16 sm:py-32 border-t border-white/10 relative bg-[#0d0c0b]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           viewport={{ once: true, margin: '-50px' }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-16"
         >
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#ccf52b] mb-3">
               <span className="w-2 h-2 rounded-full bg-[#ccf52b] animate-pulse" />
               <span>{t.sectionProjectsEyebrow}</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-none uppercase">
+            <h2 className="text-3xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-none uppercase">
               {t.sectionProjects}
             </h2>
           </div>
@@ -151,7 +151,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
           </div>
         </motion.div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 sm:mb-14 border-b border-white/10">
+        <div className="mobile-hide-scrollbar -mx-4 flex items-center gap-2 overflow-x-auto px-4 pb-4 mb-7 sm:mx-0 sm:px-0 sm:mb-14 border-b border-white/10">
           <button
             onClick={() => selectCategory('all')}
             className={`text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full transition-all whitespace-nowrap ${selectedCategory === 'all' ? 'bg-[#ccf52b] text-[#151312] border border-[#ccf52b]' : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'}`}
@@ -226,7 +226,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                     transition={{ duration: 0.35, ease: 'easeOut' }}
                     key={project.id}
                     onClick={() => setActiveProject(project)}
-                    className="group relative bg-[#141211] border border-white/10 hover:border-[#ccf52b]/60 rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer shadow-xl"
+                    className="group relative bg-[#141211] border border-white/10 hover:border-[#ccf52b]/60 rounded-[22px] overflow-hidden transition-all duration-500 cursor-pointer shadow-xl"
                   >
                     <div className="relative overflow-hidden bg-black/60 aspect-[4/3]">
                       {cover?.type === 'image' ? (

@@ -7,3 +7,26 @@ html {
 section[id] {
   scroll-margin-top: 5rem;
 }
+
+.mobile-hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.mobile-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-bottom: 6rem;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  section[id] {
+    scroll-margin-top: 4.25rem;
+  }
+}

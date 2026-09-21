@@ -4,6 +4,7 @@ import { contentData } from '../data/portfolioData';
 import { ArrowRight, ArrowLeft, Mail, Check, Sparkles, MapPin, Briefcase, Award, Eye, Linkedin, ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
 import { HeroVisualShowcase } from './HeroVisualShowcase';
+import { MobileHome } from './MobileHome';
 
 interface HeroSectionProps {
   lang: Language;
@@ -29,7 +30,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="hero" className="relative pt-8 sm:pt-16 pb-12 sm:pb-20 overflow-hidden min-h-[85vh] flex items-center">
+    <section id="hero" className="relative overflow-hidden">
+      <div className="md:hidden">
+        <MobileHome lang={lang} />
+      </div>
+
+      <div className="relative hidden min-h-[85vh] items-center pt-16 pb-20 md:flex">
       {/* Subtle Background Glows */}
       <div className="absolute top-1/3 left-1/4 -translate-x-1/2 w-[500px] h-[300px] bg-[#ccf52b]/10 blur-[140px] rounded-full pointer-events-none -z-10" />
       <div className="absolute top-10 right-10 w-[250px] h-[250px] bg-[#c5ff41]/5 blur-[100px] rounded-full pointer-events-none -z-10" />
@@ -168,6 +174,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang }) => {
 
         </div>
       </motion.div>
+      </div>
     </section>
   );
 };
