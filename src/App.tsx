@@ -9,6 +9,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ServicesPage } from './components/ServicesPage';
 import { ShowcaseSection } from './components/ShowcaseSection';
+import { ProcessRoadmap } from './components/ProcessRoadmap';
 
 export default function App() {
   const [lang, setLang] = useState<Language>(() => {
@@ -55,6 +56,7 @@ export default function App() {
         <main>
           <HeroSection lang={lang} />
           <ShowcaseSection lang={lang} />
+          <ProcessRoadmap lang={lang} />
           <ProjectsSection lang={lang} />
           <ToolsSection lang={lang} />
           <ContactSection lang={lang} />
