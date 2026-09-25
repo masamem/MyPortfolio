@@ -44,7 +44,7 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen overflow-x-hidden pb-24 md:pb-0 bg-[#151312] text-white selection:bg-[#ccf52b] selection:text-[#151312] ${
+      className={`min-h-screen overflow-x-clip pb-24 md:pb-0 bg-[#151312] text-white selection:bg-[#ccf52b] selection:text-[#151312] ${
         isRTL ? 'font-["Cairo",sans-serif]' : 'font-["Poppins",sans-serif]'
       }`}
       style={{ direction: currentContent.dir as 'ltr' | 'rtl' }}
