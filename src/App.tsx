@@ -8,6 +8,7 @@ import { ToolsSection } from './components/ToolsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ServicesPage } from './components/ServicesPage';
+import { ShowcaseSection } from './components/ShowcaseSection';
 
 export default function App() {
   const [lang, setLang] = useState<Language>(() => {
@@ -53,6 +54,7 @@ export default function App() {
       ) : (
         <main>
           <HeroSection lang={lang} />
+          <ShowcaseSection lang={lang} />
           <ProjectsSection lang={lang} />
           <ToolsSection lang={lang} />
           <ContactSection lang={lang} />
