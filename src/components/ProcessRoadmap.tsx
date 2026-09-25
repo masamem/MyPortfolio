@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { ArrowDown, CheckCircle2, Clapperboard, Compass, Lightbulb, PackageCheck, PenTool, Sparkles } from 'lucide-react';
 import { Language } from '../types';
+import { BrandIcon } from './BrandIcon';
 
 interface ProcessRoadmapProps {
   lang: Language;
@@ -137,7 +138,7 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
             <AnimatePresence mode="wait">
               <motion.div key={active.number} initial={{ opacity: 0, scale: 0.8, rotate: -8 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: 0.8, rotate: 8 }} transition={{ duration: 0.3 }} className="relative z-10 flex flex-col items-center text-center">
                 <ActiveIcon className="mb-3 h-9 w-9 text-[#ccf52b]" />
-                <span className="text-4xl font-black tracking-[-0.06em] text-white">M</span>
+                <BrandIcon className="h-14 w-14 rounded-full border border-[#ccf52b]/25 shadow-[0_0_30px_rgba(204,245,43,0.12)]" />
                 <span className="mt-1 font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-[#ccf52b]">MUVFX</span>
               </motion.div>
             </AnimatePresence>
