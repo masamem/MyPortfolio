@@ -8,6 +8,8 @@ import { ToolsSection } from './components/ToolsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ServicesPage } from './components/ServicesPage';
+import { ShowcaseSection } from './components/ShowcaseSection';
+import { ProcessRoadmap } from './components/ProcessRoadmap';
 
 export default function App() {
   const [lang, setLang] = useState<Language>(() => {
@@ -42,7 +44,7 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen overflow-x-hidden pb-24 md:pb-0 bg-[#151312] text-white selection:bg-[#ccf52b] selection:text-[#151312] ${
+      className={`min-h-screen overflow-x-clip pb-24 md:pb-0 bg-[#151312] text-white selection:bg-[#ccf52b] selection:text-[#151312] ${
         isRTL ? 'font-["Cairo",sans-serif]' : 'font-["Poppins",sans-serif]'
       }`}
       style={{ direction: currentContent.dir as 'ltr' | 'rtl' }}
@@ -53,6 +55,8 @@ export default function App() {
       ) : (
         <main>
           <HeroSection lang={lang} />
+          <ShowcaseSection lang={lang} />
+          <ProcessRoadmap lang={lang} />
           <ProjectsSection lang={lang} />
           <ToolsSection lang={lang} />
           <ContactSection lang={lang} />
