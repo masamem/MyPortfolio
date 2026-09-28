@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform } from 'motion/react';
-import { ArrowDown, Clapperboard, Compass, Lightbulb, PackageCheck, PenTool, Sparkles } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'motion/react';
+import { Clapperboard, Compass, Lightbulb, PackageCheck, PenTool, Sparkles } from 'lucide-react';
 import { Language } from '../types';
 import { BrandIcon } from './BrandIcon';
 
@@ -15,87 +15,99 @@ const steps = [
   { number: '06', title: { en: 'Deliver', ar: 'التسليم' }, description: { en: 'Exporting platform-ready assets, organized and ready to perform.', ar: 'تصدير ملفات جاهزة للمنصات، منظمة ومهيأة لتحقيق النتائج.' }, detail: { en: 'Export · Handoff · Impact', ar: 'تصدير · تسليم · تأثير' }, icon: PackageCheck },
 ];
 
+const Coin = ({ rotateY }: { rotateY: ReturnType<typeof useTransform<number, number>> }) => (
+  <div className="[perspective:800px]">
+    <motion.div className="relative h-[82px] w-[82px] [transform-style:preserve-3d] sm:h-[104px] sm:w-[104px]" style={{ rotateY, rotateX: 7 }}>
+      {Array.from({ length: 11 }).map((_, index) => (
+        <span key={index} className="absolute inset-0 rounded-full border border-[#8fae18]/70 bg-gradient-to-br from-[#e1ff58] via-[#769111] to-[#252d06]" style={{ transform: `translateZ(${index - 5}px)` }} />
+      ))}
+      {[
+        '[transform:translateZ(6px)]',
+        '[transform:rotateY(180deg)_translateZ(6px)]',
+      ].map((transformClass, index) => (
+        <div key={index} className={`absolute inset-0 overflow-hidden rounded-full border-2 border-[#e8ff81]/80 bg-[#090a07] p-[6px] shadow-[inset_0_0_18px_rgba(204,245,43,0.25),0_0_40px_rgba(204,245,43,0.24)] [backface-visibility:hidden] ${transformClass}`}>
+          <BrandIcon className="h-full w-full rounded-full" />
+          <span className="absolute inset-[6px] rounded-full bg-gradient-to-br from-white/22 via-transparent to-black/40" />
+          <span className="absolute inset-[3px] rounded-full border border-dashed border-[#ccf52b]/50" />
+        </div>
+      ))}
+    </motion.div>
+  </div>
+);
+
 export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
   const isRTL = lang === 'ar';
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start 70%', 'end 35%'] });
-  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
-  const coinRotateY = useTransform(progress, [0, 1], [0, 1440]);
-  const coinScale = useTransform(progress, [0, 0.16, 0.25, 1], [2.8, 1.15, 1, 1]);
-  const coinY = useTransform(progress, [0, 0.18, 1], ['34vh', '0vh', '0vh']);
-  const lineScale = useTransform(progress, [0.08, 0.94], [0, 1]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
+  const smooth = useSpring(scrollYProgress, { stiffness: 100, damping: 26, mass: 0.35 });
+
+  useMotionValueEvent(scrollYProgress, 'change', (value) => {
+    const stageProgress = Math.max(0, (value - 0.2) / 0.72);
+    setActiveIndex(Math.min(steps.length - 1, Math.floor(stageProgress * steps.length)));
+  });
+
+  const coinY = useTransform(smooth, [0, 0.18, 1], ['0vh', '-31vh', '-31vh']);
+  const coinScale = useTransform(smooth, [0, 0.18, 1], [1.55, 0.72, 0.72]);
+  const coinRotateY = useTransform(smooth, [0, 1], [0, 1800]);
+  const introOpacity = useTransform(smooth, [0, 0.11, 0.2], [1, 1, 0]);
+  const introY = useTransform(smooth, [0, 0.2], [0, -70]);
+  const roadmapOpacity = useTransform(smooth, [0.13, 0.22, 0.94, 1], [0, 1, 1, 0]);
+  const lineScale = useTransform(smooth, [0.18, 0.92], [0, 1]);
+  const active = steps[activeIndex];
+  const ActiveIcon = active.icon;
+  const showLeft = activeIndex % 2 === 0;
 
   return (
-    <section ref={sectionRef} className="relative overflow-x-clip border-t border-white/10 bg-[#080807] px-4 py-24 sm:px-6 lg:py-32">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ccf52b]/45 to-transparent" />
-      <div className="pointer-events-none absolute left-1/2 top-32 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#ccf52b]/[0.045] blur-[110px]" />
+    <section ref={sectionRef} className="relative h-[350vh] border-t border-white/10 bg-[#080807]">
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(204,245,43,0.055),transparent_36%)]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ccf52b]/45 to-transparent" />
 
-      <div className="pointer-events-none sticky top-[92px] z-30 h-0 lg:top-[110px]">
-        <motion.div className="absolute left-1/2 -translate-x-1/2 [perspective:700px]" style={{ y: coinY, scale: coinScale }}>
-          <motion.div className="relative h-[62px] w-[62px] [transform-style:preserve-3d] sm:h-[72px] sm:w-[72px]" style={{ rotateY: coinRotateY, rotateX: 8 }}>
-            {Array.from({ length: 9 }).map((_, index) => (
-              <span key={index} className="absolute inset-0 rounded-full border border-[#8fae18]/65 bg-gradient-to-br from-[#dfff50] via-[#789313] to-[#263006] shadow-[0_0_28px_rgba(204,245,43,0.18)]" style={{ transform: `translateZ(${index - 4}px)` }} />
-            ))}
-            <div className="absolute inset-0 overflow-hidden rounded-full border-2 border-[#e4ff74]/75 bg-[#090a07] p-[5px] shadow-[inset_0_0_15px_rgba(204,245,43,0.24),0_0_0_7px_rgba(8,8,7,0.94),0_0_38px_rgba(204,245,43,0.3)] [backface-visibility:hidden] [transform:translateZ(5px)]">
-              <BrandIcon className="h-full w-full rounded-full" />
-              <span className="absolute inset-[5px] rounded-full bg-gradient-to-br from-white/20 via-transparent to-black/35" />
-              <span className="absolute inset-[2px] rounded-full border border-dashed border-[#ccf52b]/45" />
-            </div>
-            <div className="absolute inset-0 overflow-hidden rounded-full border-2 border-[#e4ff74]/75 bg-[#090a07] p-[5px] shadow-[inset_0_0_15px_rgba(204,245,43,0.24)] [backface-visibility:hidden] [transform:rotateY(180deg)_translateZ(5px)]">
-              <BrandIcon className="h-full w-full rounded-full" />
-              <span className="absolute inset-[5px] rounded-full bg-gradient-to-br from-white/20 via-transparent to-black/35" />
-              <span className="absolute inset-[2px] rounded-full border border-dashed border-[#ccf52b]/45" />
-            </div>
-          </motion.div>
+        <motion.div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2" style={{ y: coinY, scale: coinScale }}>
+          <Coin rotateY={coinRotateY} />
         </motion.div>
-      </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[78vh] max-w-3xl flex-col justify-center pt-48 text-center sm:pt-56">
-        <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-[#ccf52b]/25 bg-[#ccf52b]/[0.07] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#ccf52b]">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ccf52b]" />
-          {isRTL ? 'العملية الإبداعية' : 'The creative process'}
-        </div>
-        <h2 className="text-5xl font-black leading-[0.94] tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl">{isRTL ? 'من الموجز إلى التأثير.' : 'From brief to impact.'}</h2>
-        <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-white/45 sm:text-base">{isRTL ? 'عملية إبداعية مركزة تحول الأفكار إلى تجارب بصرية واضحة ومؤثرة.' : 'A focused creative process that turns ideas into clear, memorable visual experiences.'}</p>
-        <div className="mt-8 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-white/25"><ArrowDown className="h-3.5 w-3.5 text-[#ccf52b]" />{isRTL ? 'مرر لتتبع الرحلة' : 'Scroll to follow the journey'}</div>
-      </div>
-
-      <div className="relative mx-auto mt-32 max-w-6xl pb-24 sm:mt-40 lg:mt-48">
-        <div className="absolute bottom-0 left-[27px] top-0 w-px bg-white/8 lg:left-1/2 lg:-translate-x-1/2" />
-        <motion.div className="absolute bottom-0 left-[27px] top-0 w-px origin-top bg-gradient-to-b from-[#ccf52b] via-[#ccf52b]/65 to-[#ccf52b]/10 shadow-[0_0_16px_rgba(204,245,43,0.35)] lg:left-1/2 lg:-translate-x-1/2" style={{ scaleY: lineScale }} />
-
-        <div className="space-y-24 sm:space-y-28 lg:space-y-36">
-          {steps.map((step, index) => {
-            const Icon = step.icon;
-            const leftSide = index % 2 === 0;
-            return (
-              <div key={step.number} className="relative grid min-h-[190px] grid-cols-[56px_1fr] items-center lg:grid-cols-2 lg:gap-28">
-                <motion.article
-                  initial={{ opacity: 0, x: leftSide ? -50 : 50, y: 20 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ amount: 0.55, once: false }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className={`col-start-2 rounded-[24px] border border-white/10 bg-[#12110f]/95 p-5 shadow-2xl shadow-black/35 backdrop-blur-xl sm:p-7 lg:col-start-auto lg:max-w-md ${leftSide ? 'lg:justify-self-end' : 'lg:col-start-2 lg:justify-self-start'}`}
-                >
-                  <div className="mb-6 flex items-center justify-between gap-5">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#ccf52b]/20 bg-[#ccf52b]/[0.08] text-[#ccf52b]"><Icon className="h-5 w-5" /></div>
-                    <span className="font-mono text-[10px] font-black tracking-[0.2em] text-[#ccf52b]">STEP {step.number}</span>
-                  </div>
-                  <h3 className="text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl">{step.title[lang]}</h3>
-                  <p className="mt-3 text-sm leading-6 text-white/45">{step.description[lang]}</p>
-                  <div className="mt-6 border-t border-white/8 pt-4 font-mono text-[9px] uppercase tracking-[0.17em] text-white/25">{step.detail[lang]}</div>
-                </motion.article>
-                <span className="absolute left-[27px] top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#080807] bg-[#ccf52b] shadow-[0_0_13px_rgba(204,245,43,0.65)] lg:left-1/2" />
-              </div>
-            );
-          })}
-        </div>
-
-        <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ amount: 0.8 }} className="relative z-10 mx-auto mt-28 max-w-md rounded-[28px] border border-[#ccf52b]/25 bg-[#ccf52b]/[0.065] px-6 py-8 text-center shadow-[0_0_70px_rgba(204,245,43,0.08)]">
-          <Sparkles className="mx-auto h-6 w-6 text-[#ccf52b]" />
-          <div className="mt-3 text-2xl font-black tracking-[-0.04em] text-white">{isRTL ? 'جاهز لصناعة التأثير.' : 'Ready to make an impact.'}</div>
-          <p className="mt-2 text-xs leading-5 text-white/40">{isRTL ? 'فكرة واضحة، تنفيذ دقيق، ونتيجة مصممة لتُذكر.' : 'Clear thinking, crafted execution, and a result designed to be remembered.'}</p>
+        <motion.div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-5 pt-52 text-center" style={{ opacity: introOpacity, y: introY }}>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#ccf52b]/25 bg-[#ccf52b]/[0.07] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#ccf52b]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ccf52b]" />
+            {isRTL ? 'العملية الإبداعية' : 'The creative process'}
+          </div>
+          <h2 className="text-4xl font-black leading-[0.96] tracking-[-0.055em] text-white sm:text-6xl lg:text-7xl">{isRTL ? 'من الموجز إلى التأثير.' : 'From brief to impact.'}</h2>
+          <p className="mt-5 max-w-xl text-sm leading-6 text-white/45 sm:text-base">{isRTL ? 'عملية إبداعية مركزة تحول الأفكار إلى تجارب بصرية واضحة ومؤثرة.' : 'A focused creative process that turns ideas into clear, memorable visual experiences.'}</p>
+          <span className="mt-7 font-mono text-[9px] uppercase tracking-[0.22em] text-white/25">{isRTL ? 'مرر للاستكشاف' : 'Scroll to explore'}</span>
         </motion.div>
+
+        <motion.div className="absolute inset-x-0 top-1/2 z-10 -translate-y-1/2 px-4 sm:px-8" style={{ opacity: roadmapOpacity }}>
+          <div className="relative mx-auto h-[390px] max-w-5xl">
+            <div className="absolute left-1/2 top-1/2 h-[280px] w-px -translate-x-1/2 -translate-y-1/2 bg-white/8" />
+            <motion.div className="absolute left-1/2 top-1/2 h-[280px] w-px origin-top -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-[#ccf52b] via-[#ccf52b]/70 to-[#ccf52b]/15 shadow-[0_0_15px_rgba(204,245,43,0.35)]" style={{ scaleY: lineScale }} />
+            <div className="absolute left-1/2 top-1/2 flex h-[280px] -translate-x-1/2 -translate-y-1/2 flex-col justify-between">
+              {steps.map((step, index) => <span key={step.number} className={`h-2.5 w-2.5 -translate-x-[4.5px] rounded-full border-2 border-[#080807] transition-all duration-300 ${index <= activeIndex ? 'bg-[#ccf52b] shadow-[0_0_12px_rgba(204,245,43,0.7)]' : 'bg-white/15'}`} />)}
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.article
+                key={active.number}
+                initial={{ opacity: 0, x: showLeft ? -45 : 45, y: 16 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, x: showLeft ? 30 : -30, y: -12 }}
+                transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                className={`absolute top-1/2 w-[min(78vw,360px)] -translate-y-1/2 rounded-[24px] border border-white/10 bg-[#12110f]/95 p-5 shadow-2xl shadow-black/45 backdrop-blur-xl sm:p-7 ${showLeft ? 'right-[54%] text-end' : 'left-[54%] text-start'}`}
+              >
+                <div className={`mb-5 flex items-center gap-4 ${showLeft ? 'flex-row-reverse' : ''}`}>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-[#ccf52b]/20 bg-[#ccf52b]/[0.08] text-[#ccf52b]"><ActiveIcon className="h-5 w-5" /></div>
+                  <span className="font-mono text-[10px] font-black tracking-[0.2em] text-[#ccf52b]">STEP {active.number}</span>
+                </div>
+                <h3 className="text-2xl font-black tracking-[-0.04em] text-white sm:text-4xl">{active.title[lang]}</h3>
+                <p className="mt-3 text-xs leading-5 text-white/45 sm:text-sm sm:leading-6">{active.description[lang]}</p>
+                <div className="mt-5 border-t border-white/8 pt-4 font-mono text-[8px] uppercase tracking-[0.16em] text-white/25 sm:text-[9px]">{active.detail[lang]}</div>
+              </motion.article>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+
+        <div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 font-mono text-[9px] tracking-[0.18em] text-white/18">{String(activeIndex + 1).padStart(2, '0')} / 06</div>
       </div>
     </section>
   );
