@@ -21,40 +21,20 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start 70%', 'end 35%'] });
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
   const coinRotateY = useTransform(progress, [0, 1], [0, 1440]);
-  const coinScale = useTransform(progress, [0, 0.12, 0.25, 1], [1.7, 1.12, 0.9, 0.9]);
+  const coinScale = useTransform(progress, [0, 0.16, 0.25, 1], [2.8, 1.15, 1, 1]);
+  const coinY = useTransform(progress, [0, 0.18, 1], ['34vh', '0vh', '0vh']);
   const lineScale = useTransform(progress, [0.08, 0.94], [0, 1]);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden border-t border-white/10 bg-[#080807] px-4 py-24 sm:px-6 lg:py-32">
+    <section ref={sectionRef} className="relative overflow-x-clip border-t border-white/10 bg-[#080807] px-4 py-24 sm:px-6 lg:py-32">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ccf52b]/45 to-transparent" />
       <div className="pointer-events-none absolute left-1/2 top-32 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#ccf52b]/[0.045] blur-[110px]" />
 
-      <div className="relative z-10 mx-auto max-w-3xl text-center">
-        <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-[#ccf52b]/25 bg-[#ccf52b]/[0.07] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#ccf52b]">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ccf52b]" />
-          {isRTL ? 'العملية الإبداعية' : 'The creative process'}
-        </div>
-        <h2 className="text-5xl font-black leading-[0.94] tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl">{isRTL ? 'من الموجز إلى التأثير.' : 'From brief to impact.'}</h2>
-        <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-white/45 sm:text-base">{isRTL ? 'عملية إبداعية مركزة تحول الأفكار إلى تجارب بصرية واضحة ومؤثرة.' : 'A focused creative process that turns ideas into clear, memorable visual experiences.'}</p>
-        <div className="mt-8 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-white/25"><ArrowDown className="h-3.5 w-3.5 text-[#ccf52b]" />{isRTL ? 'مرر لتتبع الرحلة' : 'Scroll to follow the journey'}</div>
-      </div>
-
-      <div className="relative mx-auto mt-32 max-w-6xl pb-24 sm:mt-40 lg:mt-48">
-        <div className="absolute bottom-0 left-[27px] top-0 w-px bg-white/8 lg:left-1/2 lg:-translate-x-1/2" />
-        <motion.div className="absolute bottom-0 left-[27px] top-0 w-px origin-top bg-gradient-to-b from-[#ccf52b] via-[#ccf52b]/65 to-[#ccf52b]/10 shadow-[0_0_16px_rgba(204,245,43,0.35)] lg:left-1/2 lg:-translate-x-1/2" style={{ scaleY: lineScale }} />
-
-        <div className="pointer-events-none sticky top-[92px] z-30 h-0 lg:top-[110px]">
-          <motion.div className="absolute left-[27px] -translate-x-1/2 [perspective:700px] lg:left-1/2" style={{ scale: coinScale }}>
-          <motion.div
-            className="relative h-[62px] w-[62px] [transform-style:preserve-3d] sm:h-[72px] sm:w-[72px]"
-            style={{ rotateY: coinRotateY, rotateX: 8 }}
-          >
+      <div className="pointer-events-none sticky top-[92px] z-30 h-0 lg:top-[110px]">
+        <motion.div className="absolute left-1/2 -translate-x-1/2 [perspective:700px]" style={{ y: coinY, scale: coinScale }}>
+          <motion.div className="relative h-[62px] w-[62px] [transform-style:preserve-3d] sm:h-[72px] sm:w-[72px]" style={{ rotateY: coinRotateY, rotateX: 8 }}>
             {Array.from({ length: 9 }).map((_, index) => (
-              <span
-                key={index}
-                className="absolute inset-0 rounded-full border border-[#8fae18]/65 bg-gradient-to-br from-[#dfff50] via-[#789313] to-[#263006] shadow-[0_0_28px_rgba(204,245,43,0.18)]"
-                style={{ transform: `translateZ(${index - 4}px)` }}
-              />
+              <span key={index} className="absolute inset-0 rounded-full border border-[#8fae18]/65 bg-gradient-to-br from-[#dfff50] via-[#789313] to-[#263006] shadow-[0_0_28px_rgba(204,245,43,0.18)]" style={{ transform: `translateZ(${index - 4}px)` }} />
             ))}
             <div className="absolute inset-0 overflow-hidden rounded-full border-2 border-[#e4ff74]/75 bg-[#090a07] p-[5px] shadow-[inset_0_0_15px_rgba(204,245,43,0.24),0_0_0_7px_rgba(8,8,7,0.94),0_0_38px_rgba(204,245,43,0.3)] [backface-visibility:hidden] [transform:translateZ(5px)]">
               <BrandIcon className="h-full w-full rounded-full" />
@@ -67,8 +47,22 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
               <span className="absolute inset-[2px] rounded-full border border-dashed border-[#ccf52b]/45" />
             </div>
           </motion.div>
-          </motion.div>
+        </motion.div>
+      </div>
+
+      <div className="relative z-10 mx-auto flex min-h-[78vh] max-w-3xl flex-col justify-center pt-48 text-center sm:pt-56">
+        <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-[#ccf52b]/25 bg-[#ccf52b]/[0.07] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#ccf52b]">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ccf52b]" />
+          {isRTL ? 'العملية الإبداعية' : 'The creative process'}
         </div>
+        <h2 className="text-5xl font-black leading-[0.94] tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl">{isRTL ? 'من الموجز إلى التأثير.' : 'From brief to impact.'}</h2>
+        <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-white/45 sm:text-base">{isRTL ? 'عملية إبداعية مركزة تحول الأفكار إلى تجارب بصرية واضحة ومؤثرة.' : 'A focused creative process that turns ideas into clear, memorable visual experiences.'}</p>
+        <div className="mt-8 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-white/25"><ArrowDown className="h-3.5 w-3.5 text-[#ccf52b]" />{isRTL ? 'مرر لتتبع الرحلة' : 'Scroll to follow the journey'}</div>
+      </div>
+
+      <div className="relative mx-auto mt-32 max-w-6xl pb-24 sm:mt-40 lg:mt-48">
+        <div className="absolute bottom-0 left-[27px] top-0 w-px bg-white/8 lg:left-1/2 lg:-translate-x-1/2" />
+        <motion.div className="absolute bottom-0 left-[27px] top-0 w-px origin-top bg-gradient-to-b from-[#ccf52b] via-[#ccf52b]/65 to-[#ccf52b]/10 shadow-[0_0_16px_rgba(204,245,43,0.35)] lg:left-1/2 lg:-translate-x-1/2" style={{ scaleY: lineScale }} />
 
         <div className="space-y-24 sm:space-y-28 lg:space-y-36">
           {steps.map((step, index) => {
