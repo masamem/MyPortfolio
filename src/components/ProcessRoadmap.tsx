@@ -47,7 +47,7 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
     setActiveIndex(Math.min(steps.length - 1, Math.floor(stageProgress * steps.length)));
   });
 
-  const coinY = useTransform(smooth, [0, 0.18, 1], ['0vh', '-31vh', '-31vh']);
+  const coinY = useTransform(smooth, [0, 0.18, 1], ['-9vh', '-31vh', '-31vh']);
   const coinScale = useTransform(smooth, [0, 0.18, 1], [1.55, 0.72, 0.72]);
   const coinRotateY = useTransform(smooth, [0, 1], [0, 1800]);
   const introOpacity = useTransform(smooth, [0, 0.11, 0.2], [1, 1, 0]);
@@ -93,14 +93,14 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
                 animate={{ opacity: 1, x: 0, y: 0 }}
                 exit={{ opacity: 0, x: showLeft ? 30 : -30, y: -12 }}
                 transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                className={`absolute top-1/2 w-[min(78vw,360px)] -translate-y-1/2 rounded-[24px] border border-white/10 bg-[#12110f]/95 p-5 shadow-2xl shadow-black/45 backdrop-blur-xl sm:p-7 ${showLeft ? 'right-[54%] text-end' : 'left-[54%] text-start'}`}
+                className={`absolute top-1/2 w-[42vw] max-w-[360px] -translate-y-1/2 rounded-[20px] border border-white/10 bg-[#12110f]/95 p-4 shadow-2xl shadow-black/45 backdrop-blur-xl sm:w-[360px] sm:rounded-[24px] sm:p-7 ${showLeft ? 'right-[54%] text-end' : 'left-[54%] text-start'}`}
               >
                 <div className={`mb-5 flex items-center gap-4 ${showLeft ? 'flex-row-reverse' : ''}`}>
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-[#ccf52b]/20 bg-[#ccf52b]/[0.08] text-[#ccf52b]"><ActiveIcon className="h-5 w-5" /></div>
                   <span className="font-mono text-[10px] font-black tracking-[0.2em] text-[#ccf52b]">STEP {active.number}</span>
                 </div>
-                <h3 className="text-2xl font-black tracking-[-0.04em] text-white sm:text-4xl">{active.title[lang]}</h3>
-                <p className="mt-3 text-xs leading-5 text-white/45 sm:text-sm sm:leading-6">{active.description[lang]}</p>
+                <h3 className="text-lg font-black tracking-[-0.04em] text-white sm:text-4xl">{active.title[lang]}</h3>
+                <p className="mt-3 text-[10px] leading-4 text-white/45 sm:text-sm sm:leading-6">{active.description[lang]}</p>
                 <div className="mt-5 border-t border-white/8 pt-4 font-mono text-[8px] uppercase tracking-[0.16em] text-white/25 sm:text-[9px]">{active.detail[lang]}</div>
               </motion.article>
             </AnimatePresence>
