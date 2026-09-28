@@ -20,7 +20,6 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start 70%', 'end 35%'] });
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
-  const coinTop = useTransform(progress, [0, 0.12, 0.88, 1], ['5%', '15%', '84%', '93%']);
   const coinRotateY = useTransform(progress, [0, 1], [0, 1440]);
   const coinScale = useTransform(progress, [0, 0.12, 0.25, 1], [1.7, 1.12, 0.9, 0.9]);
   const lineScale = useTransform(progress, [0.08, 0.94], [0, 1]);
@@ -44,7 +43,8 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
         <div className="absolute bottom-0 left-[27px] top-0 w-px bg-white/8 lg:left-1/2 lg:-translate-x-1/2" />
         <motion.div className="absolute bottom-0 left-[27px] top-0 w-px origin-top bg-gradient-to-b from-[#ccf52b] via-[#ccf52b]/65 to-[#ccf52b]/10 shadow-[0_0_16px_rgba(204,245,43,0.35)] lg:left-1/2 lg:-translate-x-1/2" style={{ scaleY: lineScale }} />
 
-        <motion.div className="pointer-events-none absolute left-[27px] z-30 -translate-x-1/2 [perspective:700px] lg:left-1/2" style={{ top: coinTop, scale: coinScale }}>
+        <div className="pointer-events-none sticky top-[92px] z-30 h-0 lg:top-[110px]">
+          <motion.div className="absolute left-[27px] -translate-x-1/2 [perspective:700px] lg:left-1/2" style={{ scale: coinScale }}>
           <motion.div
             className="relative h-[62px] w-[62px] [transform-style:preserve-3d] sm:h-[72px] sm:w-[72px]"
             style={{ rotateY: coinRotateY, rotateX: 8 }}
@@ -67,7 +67,8 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
               <span className="absolute inset-[2px] rounded-full border border-dashed border-[#ccf52b]/45" />
             </div>
           </motion.div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         <div className="space-y-24 sm:space-y-28 lg:space-y-36">
           {steps.map((step, index) => {
