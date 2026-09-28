@@ -78,7 +78,7 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
           <span className="mt-7 font-mono text-[9px] uppercase tracking-[0.22em] text-white/25">{isRTL ? 'مرر للاستكشاف' : 'Scroll to explore'}</span>
         </motion.div>
 
-        <motion.div className="absolute inset-x-0 top-1/2 z-10 -translate-y-1/2 px-4 sm:px-8" style={{ opacity: roadmapOpacity }}>
+        <motion.div className="absolute inset-x-0 top-[42%] z-10 -translate-y-1/2 px-4 sm:top-1/2 sm:px-8" style={{ opacity: roadmapOpacity }}>
           <div className="relative mx-auto h-[390px] max-w-5xl">
             <div className="absolute left-1/2 top-1/2 h-[280px] w-px -translate-x-1/2 -translate-y-1/2 bg-white/8" />
             <motion.div className="absolute left-1/2 top-1/2 h-[280px] w-px origin-top -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-[#ccf52b] via-[#ccf52b]/70 to-[#ccf52b]/15 shadow-[0_0_15px_rgba(204,245,43,0.35)]" style={{ scaleY: lineScale }} />
