@@ -21,7 +21,7 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start 70%', 'end 35%'] });
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
   const coinTop = useTransform(progress, [0, 0.12, 0.88, 1], ['5%', '15%', '84%', '93%']);
-  const coinRotate = useTransform(progress, [0, 1], [0, 1260]);
+  const coinRotateY = useTransform(progress, [0, 1], [0, 1440]);
   const coinScale = useTransform(progress, [0, 0.12, 0.25, 1], [1.7, 1.12, 0.9, 0.9]);
   const lineScale = useTransform(progress, [0.08, 0.94], [0, 1]);
 
@@ -44,11 +44,29 @@ export const ProcessRoadmap: React.FC<ProcessRoadmapProps> = ({ lang }) => {
         <div className="absolute bottom-0 left-[27px] top-0 w-px bg-white/8 lg:left-1/2 lg:-translate-x-1/2" />
         <motion.div className="absolute bottom-0 left-[27px] top-0 w-px origin-top bg-gradient-to-b from-[#ccf52b] via-[#ccf52b]/65 to-[#ccf52b]/10 shadow-[0_0_16px_rgba(204,245,43,0.35)] lg:left-1/2 lg:-translate-x-1/2" style={{ scaleY: lineScale }} />
 
-        <motion.div className="pointer-events-none absolute left-[27px] z-30 -translate-x-1/2 lg:left-1/2" style={{ top: coinTop, rotate: coinRotate, scale: coinScale }}>
-          <div className="relative flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#ccf52b]/55 bg-[#0a0a08] p-1.5 shadow-[0_0_0_7px_rgba(8,8,7,0.95),0_0_36px_rgba(204,245,43,0.28)] sm:h-[66px] sm:w-[66px]">
-            <BrandIcon className="h-full w-full rounded-full" />
-            <span className="absolute inset-[-5px] rounded-full border border-dashed border-[#ccf52b]/35" />
-          </div>
+        <motion.div className="pointer-events-none absolute left-[27px] z-30 -translate-x-1/2 [perspective:700px] lg:left-1/2" style={{ top: coinTop, scale: coinScale }}>
+          <motion.div
+            className="relative h-[62px] w-[62px] [transform-style:preserve-3d] sm:h-[72px] sm:w-[72px]"
+            style={{ rotateY: coinRotateY, rotateX: 8 }}
+          >
+            {Array.from({ length: 9 }).map((_, index) => (
+              <span
+                key={index}
+                className="absolute inset-0 rounded-full border border-[#8fae18]/65 bg-gradient-to-br from-[#dfff50] via-[#789313] to-[#263006] shadow-[0_0_28px_rgba(204,245,43,0.18)]"
+                style={{ transform: `translateZ(${index - 4}px)` }}
+              />
+            ))}
+            <div className="absolute inset-0 overflow-hidden rounded-full border-2 border-[#e4ff74]/75 bg-[#090a07] p-[5px] shadow-[inset_0_0_15px_rgba(204,245,43,0.24),0_0_0_7px_rgba(8,8,7,0.94),0_0_38px_rgba(204,245,43,0.3)] [backface-visibility:hidden] [transform:translateZ(5px)]">
+              <BrandIcon className="h-full w-full rounded-full" />
+              <span className="absolute inset-[5px] rounded-full bg-gradient-to-br from-white/20 via-transparent to-black/35" />
+              <span className="absolute inset-[2px] rounded-full border border-dashed border-[#ccf52b]/45" />
+            </div>
+            <div className="absolute inset-0 overflow-hidden rounded-full border-2 border-[#e4ff74]/75 bg-[#090a07] p-[5px] shadow-[inset_0_0_15px_rgba(204,245,43,0.24)] [backface-visibility:hidden] [transform:rotateY(180deg)_translateZ(5px)]">
+              <BrandIcon className="h-full w-full rounded-full" />
+              <span className="absolute inset-[5px] rounded-full bg-gradient-to-br from-white/20 via-transparent to-black/35" />
+              <span className="absolute inset-[2px] rounded-full border border-dashed border-[#ccf52b]/45" />
+            </div>
+          </motion.div>
         </motion.div>
 
         <div className="space-y-24 sm:space-y-28 lg:space-y-36">
