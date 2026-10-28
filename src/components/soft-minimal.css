@@ -149,7 +149,14 @@
 .soft-toolkit li.soft-tool-ai{background:#e5efcf;border-color:#657d2838;color:#3e5418}
 .soft-toolkit h3 svg{color:#587600}
 .ed-contact .ed-email{border-color:#70952a}
-.ed-contact .edsocials a:hover{color:#486000}
+.ed-contact .ed-socials a:hover{color:#486000}
 .ed-service-card .ed-number{background:#edf4dd;border-color:#657d2826;color:#526c13}
 .ed-about-signature{background:#e5efcf;color:#496600}
+.editorial{background:#f4f3ef!important;color:#171916}
+.editorial>main{background:#f8f8f5;border-color:#fff}
+.ed-nav,.ed-hero-copy{background:#f0f0eb}
+.ed-profile-mark{background:#e8e9e2;color:#171916}
+.ed-kicker{background:#fff;color:#63675c}
+.soft-cap-icon{background:#f4f4ef;border-color:#17191616;color:#526908}
+.ed-more{background:#fff;border-color:#17191630;color:#171916}
 
