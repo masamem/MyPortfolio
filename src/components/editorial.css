@@ -97,6 +97,8 @@
   .ed-socials a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
   .ed-email{min-height:44px;max-width:100%;font-size:clamp(13px,3.7vw,20px)}
   .ed-project-caption p{font-size:13px}
+  .editorial [role=dialog] button{min-width:44px;min-height:44px}
+  .editorial [role=dialog] a{min-height:44px}
   .ed-hero-top,.ed-eyebrow{font-size:10px}
   .ed-nav{padding-top:max(12px,env(safe-area-inset-top))}
   .ed-footer{padding-bottom:max(24px,env(safe-area-inset-bottom))}
