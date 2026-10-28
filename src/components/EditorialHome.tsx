@@ -23,7 +23,7 @@ function Cover({ media, name, featured = false }: { media: PortfolioMedia | null
     : <video src={media.url} muted playsInline preload="metadata" aria-label={name} onError={() => setFailed(true)} />;
 }
 
-export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggleLang: () => void }) {
+export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang: Language; onToggleLang: () => void; aboutPage?: boolean }) {
   const ar = lang === 'ar';
   const [projects, setProjects] = useState<DrivePortfolioProject[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +50,7 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
       if (!controller.signal.aborted) { setLoading(false); setRefreshing(false); }
     }
   };
-  useEffect(() => { load(); return () => request.current?.abort(); }, []);
+  useEffect(() => { if (!aboutPage) load(); return () => request.current?.abort(); }, [aboutPage]);
   useEffect(() => {
     if (!active) return;
     const previous = document.body.style.overflow;
@@ -80,22 +80,27 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
   const featureMedia = feature?.media.find(m => m.type === 'video') || feature?.cover || null;
   const categoryLabel = (name: string) => ar ? labels[name] || name : name;
 
-  return <div className="editorial" dir={ar ? 'rtl' : 'ltr'}>
-    <a className="ed-skip" href="#work">{ar ? 'انتقل إلى الأعمال' : 'Skip to work'}</a>
+  return <div className={`editorial${aboutPage ? ' ed-about-page' : ''}`} dir={ar ? 'rtl' : 'ltr'}>
+    <a className="ed-skip" href="#main-content">{ar ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
     <header className="ed-nav ed-shell">
-      <a href="#hero" className="ed-logo" aria-label="MUVFX home">MUVFX<span>↗</span></a>
+      <a href="/" className="ed-logo" aria-label="MUVFX home">MUVFX<span>↗</span></a>
       <nav aria-label={ar ? 'القائمة الرئيسية' : 'Main navigation'}>
-        <a href="#work">{ar ? 'الأعمال' : 'Work'}</a>
-        <a href="#about">{ar ? 'عني' : 'About'}</a>
+        <a href="/#work">{ar ? 'الأعمال' : 'Work'}</a>
+        <a href="/about" aria-current={aboutPage ? 'page' : undefined}>{ar ? 'عني' : 'About'}</a>
         <a href="#contact">{ar ? 'تواصل' : 'Contact'}</a>
         <button onClick={onToggleLang} lang={ar ? 'en' : 'ar'}>{ar ? 'EN' : 'عربي'}</button>
       </nav>
     </header>
-    <main>
+    <main id="main-content" tabIndex={-1}>
+      {aboutPage ? <section id="hero" className="ed-shell ed-about-hero">
+        <span className="ed-eyebrow">{ar ? 'مجاهد المعاري / عني' : 'MUGAHED AL-MAARI / ABOUT'}</span>
+        <h1>{ar ? 'مرحباً' : 'Hello'}<span className="ed-period">.</span></h1>
+        <div className="ed-about-intro"><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة في الرياض. أجمع الهوية البصرية والحركة والمحتوى لصناعة تجارب تعبر عن العلامات وتتواصل مع جمهورها.' : 'I’m Mugahed, a multimedia designer in Riyadh. I bring identity, motion, and content together to create visual experiences that connect brands with people.'}</p><span className="ed-about-signature" aria-hidden="true">M↗</span></div>
+      </section> : <>
       <section id="hero" className="ed-shell ed-hero">
         <div className="ed-hero-top"><span>{ar ? 'مصمم مستقل متعدد التخصصات' : 'INDEPENDENT MULTIMEDIA DESIGNER'}</span><span>{ar ? 'الرياض، السعودية' : 'RIYADH, SAUDI ARABIA'}</span></div>
         <div className="ed-intro">
-          <h1>{ar ? <>هوية بصرية.<br />حركة.<br /><em>قصص مرئية.</em></> : <>BRAND DESIGN.<br />MOTION.<br /><em>VISUAL STORIES.</em></>}</h1>
+          <h1>{ar ? <>أفكار<br /><em>تتحرك<span className="ed-period">.</span></em></> : <>Ideas in<br /><em>motion<span className="ed-period">.</span></em></>}</h1>
           <div className="ed-bio"><p className="ed-name">{ar ? 'مجاهد المعاري' : 'Mugahed Al-Maari'}</p><p>{ar ? 'أجمع التصميم والحركة لصناعة هويات وتجارب بصرية تترك أثراً.' : 'Bringing brands to life through identity, motion, and visual storytelling.'}</p><p className="ed-available"><span />{ar ? 'متاح لفرص إبداعية' : 'Open to creative opportunities'}</p></div>
         </div>
         <div className="ed-actions"><a className="ed-primary" href="#work">{ar ? 'اكتشف أعمالي' : 'Explore work'} <ArrowDown size={18} /></a><a className="ed-text-link" href="#contact">{ar ? 'لنتحدث' : 'Let’s talk'} <ArrowUpRight size={18} /></a></div>
@@ -121,6 +126,7 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
         </div>
         {filtered.length > visible && <button className="ed-more" onClick={() => setVisible(n => n + 6)}>{ar ? 'عرض المزيد' : 'More work'} <ArrowDown size={17} /></button>}
       </section>
+      </>}
       <section id="about" className="ed-shell ed-about">
         <div><span className="ed-eyebrow">{ar ? 'عن المصمم' : 'A LITTLE ABOUT ME'}</span><h2>{ar ? <>فكر مستقل.<br />إبداع متعدد التخصصات.</> : <>Independent mind.<br />Multidisciplinary craft.</>}</h2></div>
         <div><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة مقيم في الرياض بخبرة تتجاوز ٦ سنوات في الهوية البصرية والموشن جرافيك ومحتوى الحملات.' : 'I’m Mugahed, a multimedia designer based in Riyadh with 6+ years of experience across brand identity, motion graphics, and campaign content.'}</p><a className="ed-text-link" href="/downloads/Mugahed_AlMaari_Resume.pdf" target="_blank" rel="noopener noreferrer">{ar ? 'السيرة الذاتية (PDF بالإنجليزية)' : 'View résumé (PDF)'} <ArrowUpRight size={18} /></a></div>
