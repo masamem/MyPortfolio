@@ -112,3 +112,83 @@
   .ed-primary{gap:16px}
 }
 
+/* Light editorial direction. Media and the project viewer retain their own contrast. */
+.editorial{
+  --ink:#f4f3ef;--paper:#171916;--lime:#c8fa22;
+  background-color:var(--ink);
+  background-image:repeating-linear-gradient(90deg,transparent 0,transparent calc(8.33333% - 1px),#17191608 calc(8.33333% - 1px),#17191608 8.33333%);
+  color:var(--paper);
+}
+.editorial a:focus-visible,.editorial button:focus-visible{outline-color:#486000}
+.ed-nav{border-bottom-color:#17191618}
+.ed-nav nav a[aria-current=page]{font-weight:700;text-decoration:underline;text-underline-offset:6px}
+.ed-logo{color:#171916}
+.ed-logo span{color:#576d07}
+.ed-nav button{color:#171916;border-color:#17191630}
+.ed-nav nav a:hover,.ed-text-link:hover,.ed-socials a:hover{color:#526908}
+.ed-hero{padding-top:40px}
+.ed-hero-top,.ed-eyebrow,.ed-number{color:#63675c}
+.ed-intro{grid-template-columns:minmax(0,1fr) 270px;align-items:center;margin-top:50px}
+.ed-intro h1{font-size:clamp(80px,12vw,176px);font-weight:400;line-height:.9;letter-spacing:-.085em}
+.ed-intro h1 em{color:#171916;font-style:normal}
+.ed-period{color:#617d00;letter-spacing:-.04em}
+.ed-bio,.ed-about p,.ed-services p,.ed-socials{color:#53594e}
+.ed-bio{font-size:17px;line-height:1.5}
+.ed-bio .ed-name{color:#171916}
+.ed-available{font-size:12px}
+.ed-available span{background:#637e00}
+.ed-actions{margin-block:38px 60px}
+.ed-primary{color:#171916}
+.ed-text-link,.ed-email{border-bottom-color:#17191670}
+.ed-email{color:#171916}
+.ed-section-heading h2{font-weight:400;font-size:clamp(36px,5vw,68px)}
+.ed-refresh{color:#53594e}
+.ed-filters{border-bottom-color:#17191625}
+.ed-filters button{color:#53594e;border-color:#17191625;background:#f4f3ef}
+.ed-filters button[aria-pressed=true]{color:#171916}
+.ed-filters button:hover{border-color:#617d00}
+.ed-project-caption h3{font-size:23px;font-weight:500}
+.ed-project-caption p{color:#63675c}
+.ed-project-caption>svg{color:#171916}
+.ed-project-arrow{color:#171916}
+.ed-more{color:#171916;border-color:#17191650}
+.ed-status{color:#53594e}
+.ed-status button{color:#486000}
+.ed-about{border-color:#17191625;padding-block:72px}
+.ed-about h2{font-weight:400;font-size:clamp(30px,3.7vw,52px);letter-spacing:-.05em}
+.ed-services>div+div{border-color:#17191625}
+.ed-services h3{font-weight:500}
+.ed-contact{border-color:#17191625;padding-block:76px}
+.ed-contact h2{font-weight:400;text-transform:none;font-size:clamp(44px,7vw,100px)}
+.ed-footer{border-color:#17191625;color:#63675c}
+.ed-about-hero{padding-top:70px;padding-bottom:76px}
+.ed-about-hero h1{font-weight:400;font-size:clamp(110px,20vw,280px);letter-spacing:-.085em;line-height:1;margin:32px 0 60px}
+.ed-about-intro{display:grid;grid-template-columns:2fr 1fr;align-items:end;gap:80px}
+.ed-about-intro p{font-size:clamp(23px,3vw,40px);font-weight:400;line-height:1.22;letter-spacing:-.035em;max-width:820px;margin:0}
+.ed-about-signature{display:grid;place-items:center;aspect-ratio:1;background:#c8fa22;color:#171916;font-size:clamp(80px,12vw,160px);font-weight:700;letter-spacing:-.12em}
+.editorial[dir=rtl] .ed-intro h1{font-size:clamp(70px,10vw,140px);font-weight:400;line-height:1.1}
+.editorial[dir=rtl] .ed-about-hero h1{letter-spacing:-.03em}
+@media(max-width:900px){
+  .ed-intro{grid-template-columns:1fr;gap:36px}
+  .ed-intro h1{font-size:clamp(80px,17vw,145px)}
+  .ed-bio{max-width:450px}
+  .ed-about-intro{gap:32px}
+}
+@media(max-width:600px){
+  .editorial{background-size:200% 100%}
+  .ed-hero{padding-top:30px}
+  .ed-intro{margin-top:42px;gap:30px}
+  .ed-intro h1{font-size:clamp(78px,22vw,125px)}
+  .ed-bio{font-size:16px;line-height:1.55}
+  .ed-actions{margin-block:28px 38px}
+  .ed-about{padding-block:44px}
+  .ed-services>div+div,.ed-contact{border-color:#17191625}
+  .ed-contact{padding-block:44px}
+  .ed-about-hero{padding-top:42px;padding-bottom:44px}
+  .ed-about-hero h1{font-size:clamp(100px,30vw,165px);margin:28px 0 40px}
+  .ed-about-intro{grid-template-columns:1fr;gap:30px}
+  .ed-about-intro p{font-size:25px}
+  .ed-about-signature{width:140px;justify-self:end;font-size:80px}
+  .editorial[dir=rtl] .ed-intro h1{font-size:clamp(65px,19vw,105px)}
+}
+
