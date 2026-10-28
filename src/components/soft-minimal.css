@@ -132,14 +132,14 @@
 @media(max-width:540px){.soft-cap-grid{grid-template-columns:1fr}}
 
 /* MUVFX green accents within the soft neutral layout. */
-.ed-hero-copy .ed-primary{background:#c8fa22;color:#202719}
+.ed-hero-copy .ed-primary{background:#aaff2e;color:#202719}
 .ed-hero-copy .ed-primary:hover{background:#b9e821}
-.ed-nav nav a[href="#contact"]{background:#c8fa22;color:#202719}
+.ed-nav nav a[href="#contact"]{background:#aaff2e;color:#202719}
 .ed-profile-mark{background:#e5efcf;border-color:#fff;color:#496600}
 .ed-nav .ed-logo span,.ed-period{color:#587600}
 .ed-kicker{background:#edf4dd;color:#3e5418}
-.ed-filters button[aria-pressed=true]{background:#c8fa22;border-color:#c8fa22;color:#202719}
-.ed-project-arrow{background:#c8fa22;color:#202719}
+.ed-filters button[aria-pressed=true]{background:#aaff2e;border-color:#aaff2e;color:#202719}
+.ed-project-arrow{background:#aaff2e;color:#202719}
 .ed-more{background:#edf4dd;border-color:#677f2838;color:#3e5418}
 .ed-more:hover{background:#e3efc8}
 .soft-cap-icon{background:#edf4dd;border-color:#657d2826;color:#526c13}
@@ -159,4 +159,20 @@
 .ed-kicker{background:#fff;color:#63675c}
 .soft-cap-icon{background:#f4f4ef;border-color:#17191616;color:#526908}
 .ed-more{background:#fff;border-color:#17191630;color:#171916}
+.ed-nav{position:sticky;top:12px;z-index:60;transition:background-color .2s,box-shadow .2s,border-radius .2s}
+.ed-nav.is-scrolled{background:rgba(244,243,239,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid #ffffffaa;border-radius:18px;box-shadow:0 6px 24px #17191610}
+.ed-nav .ed-logo{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;letter-spacing:-1px}
+.ed-official-mark{display:block;width:36px;height:36px;object-fit:contain;background:#000;border-radius:9px;flex-shrink:0}
+.ed-profile-mark{width:96px;height:96px;padding:7px;background:#000;border-radius:24px;border:0;margin-bottom:16px}
+.ed-profile-mark img,.ed-about-signature img{display:block;width:100%;height:100%;object-fit:contain}
+.ed-about-signature{background:#000;padding:20px}
+.ed-footer-logo{display:block;width:72px;height:72px;object-fit:contain;background:#000;border-radius:16px;padding:5px}
+@media(max-width:600px){
+  .ed-nav{top:8px}
+  .ed-nav .ed-logo{gap:5px;font-size:16px}
+  .ed-official-mark{width:27px;height:27px;border-radius:7px}
+  .ed-profile-mark{width:84px;height:84px}
+  .ed-footer-logo{width:60px;height:60px}
+}
+
 
