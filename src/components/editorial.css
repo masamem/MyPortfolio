@@ -80,9 +80,32 @@
 .ed-socials a{color:inherit;text-decoration:none}
 .ed-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;border-top:1px solid #ffffff16;padding-block:28px;font-size:10px;color:#a4a79a}
 .ed-spin{animation:ed-spin 1s linear infinite}
+.ed-email{direction:ltr}
 @keyframes ed-spin{to{transform:rotate(360deg)}}
 .editorial[dir=rtl] .ed-intro h1{letter-spacing:-.03em;line-height:1.25;font-size:clamp(44px,6vw,85px)}
 @media(max-width:900px){.ed-intro{grid-template-columns:1fr}.ed-bio{max-width:440px}.ed-bio p{margin-block:8px}.ed-bio .ed-available{margin-top:16px}.ed-intro h1{font-size:clamp(46px,9.4vw,82px)}.ed-services{gap:20px}.ed-services>div+div{padding-inline-start:20px}}
 @media(max-width:600px){.ed-nav{padding-block:21px}.ed-nav nav{gap:15px;font-size:12px}.ed-logo{font-size:22px}.ed-hero{padding-top:26px}.ed-hero-top{font-size:8px;letter-spacing:1px}.ed-hero-top span:last-child{display:none}.ed-intro{margin-top:32px;gap:24px}.ed-intro h1{font-size:clamp(36px,9.5vw,57px)}.ed-bio{font-size:14px;max-width:320px}.ed-actions{margin:24px 0 30px;gap:24px}.ed-primary{padding:14px 18px;gap:25px}.ed-feature{aspect-ratio:1.35}.ed-feature-top{inset-block-start:16px;inset-inline-start:16px;font-size:8px}.ed-feature-bottom{inset-inline:16px;bottom:18px;font-size:16px}.ed-play{width:38px;height:38px}.ed-work{padding-top:55px;padding-bottom:50px}.ed-projects{grid-template-columns:1fr;gap:30px}.ed-project-caption h3{font-size:21px}.ed-filters{gap:7px}.ed-filters button{padding:9px 12px;font-size:11px}.ed-about{grid-template-columns:1fr;gap:24px;padding-block:40px}.ed-services{grid-template-columns:1fr;gap:26px;padding-block:36px}.ed-services>div+div{border-inline-start:0;border-top:1px solid #ffffff22;padding-inline-start:0;padding-top:25px}.ed-services p{max-width:100%;margin-bottom:0}.ed-contact{padding-block:40px}.ed-contact h2{font-size:clamp(40px,11vw,66px)}.ed-footer .ed-logo{width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.editorial *{animation:none!important;transition:none!important}}
+@media(max-width:600px){
+  .ed-nav{padding-block:12px;gap:12px}
+  .ed-nav nav{gap:4px}
+  .ed-nav nav a,.ed-nav nav button{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px}
+  .ed-nav .ed-logo{min-height:44px;display:inline-flex;align-items:center}
+  .ed-text-link,.ed-refresh,.ed-filters button,.ed-more,.ed-status button{min-height:44px}
+  .ed-filters button{min-width:44px;font-size:12px}
+  .ed-socials{gap:8px 16px}
+  .ed-socials a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
+  .ed-email{min-height:44px;max-width:100%;font-size:clamp(13px,3.7vw,20px)}
+  .ed-project-caption p{font-size:13px}
+  .ed-hero-top,.ed-eyebrow{font-size:10px}
+  .ed-nav{padding-top:max(12px,env(safe-area-inset-top))}
+  .ed-footer{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+}
+@media(max-width:359px){
+  .ed-nav{flex-wrap:wrap}
+  .ed-nav nav{width:100%;justify-content:space-between}
+  .ed-intro h1{font-size:9.5vw}
+  .ed-actions{gap:16px}
+  .ed-primary{gap:16px}
+}
 
