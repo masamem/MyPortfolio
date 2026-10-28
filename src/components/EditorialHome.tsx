@@ -98,17 +98,23 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
         <div className="ed-about-intro"><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة في الرياض. أجمع الهوية البصرية والحركة والمحتوى لصناعة تجارب تعبر عن العلامات وتتواصل مع جمهورها.' : 'I’m Mugahed, a multimedia designer in Riyadh. I bring identity, motion, and content together to create visual experiences that connect brands with people.'}</p><span className="ed-about-signature" aria-hidden="true">M↗</span></div>
       </section> : <>
       <section id="hero" className="ed-shell ed-hero">
-        <div className="ed-hero-top"><span>{ar ? 'مصمم مستقل متعدد التخصصات' : 'INDEPENDENT MULTIMEDIA DESIGNER'}</span><span>{ar ? 'الرياض، السعودية' : 'RIYADH, SAUDI ARABIA'}</span></div>
-        <div className="ed-intro">
-          <h1>{ar ? <>أفكار<br /><em>تتحرك<span className="ed-period">.</span></em></> : <>Ideas in<br /><em>motion<span className="ed-period">.</span></em></>}</h1>
-          <div className="ed-bio"><p className="ed-name">{ar ? 'مجاهد المعاري' : 'Mugahed Al-Maari'}</p><p>{ar ? 'أجمع التصميم والحركة لصناعة هويات وتجارب بصرية تترك أثراً.' : 'Bringing brands to life through identity, motion, and visual storytelling.'}</p><p className="ed-available"><span />{ar ? 'متاح لفرص إبداعية' : 'Open to creative opportunities'}</p></div>
-        </div>
-        <div className="ed-actions"><a className="ed-primary" href="#work">{ar ? 'اكتشف أعمالي' : 'Explore work'} <ArrowDown size={18} /></a><a className="ed-text-link" href="#contact">{ar ? 'لنتحدث' : 'Let’s talk'} <ArrowUpRight size={18} /></a></div>
+        <div className="ed-hero-layout">
+          <div className="ed-hero-copy">
+            <p className="ed-available"><span />{ar ? 'متاح لفرص إبداعية' : 'Open to creative opportunities'}</p>
+            <p className="ed-kicker">{ar ? 'مجاهد المعاري / مصمم وسائط متعددة' : 'Mugahed Al-Maari / Multimedia Designer'}</p>
+            <div className="ed-intro"><h1>{ar ? <>تصميم وحركة<br /><em>تمنح علامتك الحياة<span className="ed-period">.</span></em></> : <>Design & motion.<br /><em>Bring your brand to life<span className="ed-period">.</span></em></>}</h1></div>
+            <div className="ed-bio"><p>{ar ? 'أصمم هويات بصرية وموشن جرافيك ومحتوى حملات يساعد علامتك على الظهور والتواصل مع جمهورها.' : 'I create brand identities, motion graphics, and campaign content that help your brand stand out and connect.'}</p></div>
+            <div className="ed-actions"><a className="ed-primary" href="#work">{ar ? 'اكتشف أعمالي' : 'Explore my work'} <ArrowDown size={18} /></a><a className="ed-text-link" href="#contact">{ar ? 'ناقش مشروعك' : 'Let’s talk'} <ArrowUpRight size={18} /></a></div>
+            <p className="ed-hero-note">{ar ? 'الرياض، السعودية · خبرة أكثر من ٦ سنوات' : 'Riyadh, Saudi Arabia · 6+ years of creative experience'}</p>
+          </div>
+          <div className="ed-hero-media">
         {feature ? <button className="ed-feature" onClick={e => open(feature, e.currentTarget)} aria-label={ar ? 'افتح العمل المميز' : 'Open featured work'}>
           <Cover media={featureMedia} name={title(feature, ar)} featured />
           <span className="ed-feature-top">MUVFX / {ar ? 'عمل مميز' : 'FEATURED WORK'}</span>
           <span className="ed-feature-bottom"><span className="ed-play"><Play size={18} /></span><span>{title(feature, ar)}<small>{ar ? 'اكتشف المشروع' : 'Explore the project'}</small></span><ArrowUpRight size={30} /></span>
         </button> : <div className="ed-feature ed-feature-empty" aria-busy={loading}><span className="ed-monogram">M↗</span><span>{loading ? (ar ? 'جاري تحميل الأعمال…' : 'Loading selected work…') : (ar ? 'التصميم يلتقي بالحركة.' : 'Where design meets motion.')}</span></div>}
+          </div>
+        </div>
       </section>
       <section id="work" className="ed-shell ed-work">
         <div className="ed-section-heading"><div><span className="ed-eyebrow">{ar ? 'الفكرة. الحرفة. الأثر.' : 'IDEA. CRAFT. IMPACT.'}</span><h2>{ar ? 'أعمالي' : 'Selected work'}</h2></div><button className="ed-refresh" onClick={() => load(true)} disabled={refreshing || loading} aria-label={ar ? 'تحديث الأعمال' : 'Refresh work'}><RefreshCw size={15} className={refreshing ? 'ed-spin' : ''} />{ar ? 'تحديث' : 'Refresh'}</button></div>
@@ -127,16 +133,17 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
         {filtered.length > visible && <button className="ed-more" onClick={() => setVisible(n => n + 6)}>{ar ? 'عرض المزيد' : 'More work'} <ArrowDown size={17} /></button>}
       </section>
       </>}
-      <section id="about" className="ed-shell ed-about">
-        <div><span className="ed-eyebrow">{ar ? 'عن المصمم' : 'A LITTLE ABOUT ME'}</span><h2>{ar ? <>فكر مستقل.<br />إبداع متعدد التخصصات.</> : <>Independent mind.<br />Multidisciplinary craft.</>}</h2></div>
-        <div><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة مقيم في الرياض بخبرة تتجاوز ٦ سنوات في الهوية البصرية والموشن جرافيك ومحتوى الحملات.' : 'I’m Mugahed, a multimedia designer based in Riyadh with 6+ years of experience across brand identity, motion graphics, and campaign content.'}</p><a className="ed-text-link" href="/downloads/Mugahed_AlMaari_Resume.pdf" target="_blank" rel="noopener noreferrer">{ar ? 'السيرة الذاتية (PDF بالإنجليزية)' : 'View résumé (PDF)'} <ArrowUpRight size={18} /></a></div>
-      </section>
       <section id="capabilities" className="ed-shell ed-services" aria-label={ar ? 'الخدمات' : 'Services'}>
+        <div className="ed-service-heading"><span className="ed-eyebrow">{ar ? 'كيف أساعدك' : 'HOW I CAN HELP'}</span><h2>{ar ? 'من الفكرة إلى الأثر.' : 'From idea to impact.'}</h2><p>{ar ? 'ثلاث طرق لصناعة حضور بصري أقوى لعلامتك.' : 'Three ways to build a stronger visual presence for your brand.'}</p></div>
         {[
           [ar ? 'الهوية البصرية' : 'Brand Identity', ar ? 'أنظمة بصرية تمنح العلامات شخصية واضحة وحضوراً مميزاً.' : 'Distinctive visual systems that give brands a clear and lasting presence.'],
           [ar ? 'الحركة والفيديو' : 'Motion & Video', ar ? 'أنيميشن وموشن جرافيك وفيديو يحول الأفكار إلى قصص.' : 'Animation, motion graphics, and film that turn ideas into stories.'],
           [ar ? 'محتوى الحملات' : 'Campaign Content', ar ? 'محتوى بصري مصمم للتواصل عبر المنصات.' : 'Thoughtful campaign visuals and social content, made for every platform.']
-        ].map(([name, description], i) => <div key={name}><span className="ed-number">0{i + 1}</span><h3>{name}</h3><p>{description}</p></div>)}
+        ].map(([name, description], i) => <div className="ed-service-card" key={name}><span className="ed-number">0{i + 1}</span><h3>{name}</h3><p>{description}</p><a className="ed-text-link" href="#contact">{ar ? 'ناقش مشروعك' : 'Discuss your project'} <ArrowUpRight size={17} /></a></div>)}
+      </section>
+      <section id="about" className="ed-shell ed-about">
+        <div><span className="ed-eyebrow">{ar ? 'عن المصمم' : 'A LITTLE ABOUT ME'}</span><h2>{ar ? <>فكر مستقل.<br />إبداع متعدد التخصصات.</> : <>Independent mind.<br />Multidisciplinary craft.</>}</h2></div>
+        <div><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة مقيم في الرياض بخبرة تتجاوز ٦ سنوات في الهوية البصرية والموشن جرافيك ومحتوى الحملات.' : 'I’m Mugahed, a multimedia designer based in Riyadh with 6+ years of experience across brand identity, motion graphics, and campaign content.'}</p><a className="ed-text-link" href="/downloads/Mugahed_AlMaari_Resume.pdf" target="_blank" rel="noopener noreferrer">{ar ? 'السيرة الذاتية (PDF بالإنجليزية)' : 'View résumé (PDF)'} <ArrowUpRight size={18} /></a></div>
       </section>
       <section id="contact" className="ed-shell ed-contact"><span className="ed-eyebrow">{ar ? 'هل لديك فكرة؟' : 'HAVE SOMETHING IN MIND?'}</span><h2>{ar ? 'لنصنع الأثر معاً.' : 'LET’S MAKE IT MOVE.'}</h2><a className="ed-email" href="mailto:mugahedalmaari@gmail.com">mugahedalmaari@gmail.com <ArrowUpRight /></a><div className="ed-socials"><a href="https://wa.me/966500582126" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a href="https://www.linkedin.com/in/mugahedalmaari" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.behance.net/mugahedalmaari" target="_blank" rel="noopener noreferrer">Behance ↗</a><a href="/downloads/Mugahed_AlMaari_Portfolio.pdf" target="_blank" rel="noopener noreferrer">{ar ? 'ملف الأعمال PDF' : 'Portfolio PDF'} ↗</a></div></section>
     </main>
