@@ -1,68 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Language } from './types';
-import { contentData } from './data/portfolioData';
 import { Navbar } from './components/Navbar';
-import { HeroSection } from './components/HeroSection';
-import { ProjectsSection } from './components/ProjectsSection';
-import { ToolsSection } from './components/ToolsSection';
-import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ServicesPage } from './components/ServicesPage';
-import { ShowcaseSection } from './components/ShowcaseSection';
-import { ProcessRoadmap } from './components/ProcessRoadmap';
+import { EditorialHome } from './components/EditorialHome';
 
 export default function App() {
   const [lang, setLang] = useState<Language>(() => {
-    const saved = localStorage.getItem('portfolio-lang');
-    return saved === 'ar' ? 'ar' : 'en';
+    try { return localStorage.getItem('portfolio-lang') === 'ar' ? 'ar' : 'en'; }
+    catch { return 'en'; }
   });
-
-  const toggleLanguage = () => {
-    setLang((prev) => (prev === 'en' ? 'ar' : 'en'));
-  };
-
-  const currentContent = contentData[lang];
-  const isRTL = lang === 'ar';
+  const toggleLanguage = () => setLang(previous => previous === 'en' ? 'ar' : 'en');
   const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.documentElement.dir = currentContent.dir;
-    localStorage.setItem('portfolio-lang', lang);
-  }, [lang, currentContent.dir]);
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    try { localStorage.setItem('portfolio-lang', lang); } catch { /* Language still works without storage. */ }
+  }, [lang]);
 
   useEffect(() => {
     if (isServicesPage || !window.location.hash) return;
-
-    const sectionId = decodeURIComponent(window.location.hash.slice(1));
-    const frame = window.requestAnimationFrame(() => {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const frame = requestAnimationFrame(() => {
+      try { document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView(); }
+      catch { /* Ignore malformed external fragment links. */ }
     });
-
-    return () => window.cancelAnimationFrame(frame);
+    return () => cancelAnimationFrame(frame);
   }, [isServicesPage]);
 
-  return (
-    <div
-      className={`min-h-screen overflow-x-clip pb-24 md:pb-0 bg-[#151312] text-white selection:bg-[#ccf52b] selection:text-[#151312] ${
-        isRTL ? 'font-["Cairo",sans-serif]' : 'font-["Poppins",sans-serif]'
-      }`}
-      style={{ direction: currentContent.dir as 'ltr' | 'rtl' }}
-    >
-      <Navbar lang={lang} onToggleLang={toggleLanguage} />
-      {isServicesPage ? (
-        <ServicesPage lang={lang} />
-      ) : (
-        <main>
-          <HeroSection lang={lang} />
-          <ShowcaseSection lang={lang} />
-          <ProcessRoadmap lang={lang} />
-          <ProjectsSection lang={lang} />
-          <ToolsSection lang={lang} />
-          <ContactSection lang={lang} />
-        </main>
-      )}
-      <Footer lang={lang} />
-    </div>
-  );
+  if (!isServicesPage) return <EditorialHome lang={lang} onToggleLang={toggleLanguage} />;
+  return <div className="min-h-screen bg-[#151312] text-white" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+    <Navbar lang={lang} onToggleLang={toggleLanguage} />
+    <ServicesPage lang={lang} />
+    <Footer lang={lang} />
+  </div>;
 }
