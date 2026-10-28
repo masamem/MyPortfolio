@@ -77,7 +77,7 @@ const ModelPreview: React.FC<{ item: PortfolioMedia; isRTL: boolean }> = ({ item
 
 const MediaPreview: React.FC<{ item: PortfolioMedia; title: string; isRTL: boolean }> = ({ item, title, isRTL }) => {
   if (item.type === 'image') {
-    return <img src={item.url} alt={`${title} - ${item.name}`} className="w-full h-full object-cover" loading="lazy" />;
+    return <img src={item.url} alt={`${title} - ${item.name}`} className="w-full h-full object-contain" loading="lazy" />;
   }
 
   if (item.type === 'video') {
@@ -203,3 +203,5 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
     </div>
   );
 };
+
+
