@@ -1,0 +1,101 @@
+.editorial{background:#deddd9!important;background-image:none!important;padding:38px 24px 24px;color:#1c1d1a}
+.ed-nav{position:relative;inset:auto;transform:none;width:min(1120px,100%);max-width:1120px;margin:auto;padding:25px 42px;background:#efefec;border:1px solid #fff;border-bottom:0;border-radius:44px 44px 0 0;box-shadow:none;mix-blend-mode:normal}
+.ed-nav .ed-logo{font-size:20px}
+.ed-nav nav a[href="#contact"]{background:#fff;border-radius:30px}
+.ed-nav nav button{background:#fff;border:0;border-radius:30px}
+.editorial>main{padding-top:0;width:min(1120px,100%);margin:auto;background:#f8f8f6;border:1px solid #fff;border-top:0;border-radius:0 0 44px 44px;overflow:hidden}
+.ed-shell{padding-inline:clamp(24px,5vw,70px)}
+.ed-hero{padding-inline:0;padding-top:0}
+.ed-hero-layout{display:block}
+.ed-hero-copy{background:#efefec;text-align:center;padding:55px 24px 64px;border-radius:0 0 70px 70px}
+.ed-hero-copy>.ed-available{display:none}
+.ed-profile-mark{display:grid;place-items:center;width:76px;height:76px;border:2px solid #fff;background:#e1e2dc;border-radius:50%;font-size:29px;font-weight:700;letter-spacing:-3px;margin:0 auto 12px;color:#30332b}
+.ed-kicker{display:inline-block;border-radius:24px;background:#fff;padding:7px 15px;font-size:11px;margin:0 0 25px;transform:rotate(-4deg)}
+.ed-hero-copy .ed-intro h1{font-size:clamp(34px,4.1vw,53px);font-weight:500;letter-spacing:-.055em;line-height:1.08}
+.ed-hero-copy .ed-intro h1 em{font-weight:500}
+.ed-period{color:#1c1d1a}
+.ed-hero-copy .ed-bio{font-size:14px;line-height:1.6;max-width:440px;margin:22px auto 0}
+.ed-hero-copy .ed-actions{justify-content:center;gap:20px;margin:25px 0 0}
+.ed-hero-copy .ed-primary{background:#22231f;color:white;border-radius:30px;font-size:12px;padding:13px 23px;gap:20px;min-height:46px}
+.ed-primary:hover{background:#414538}
+.ed-hero-copy .ed-text-link{font-size:12px;min-height:44px}
+.ed-hero-note{margin-top:20px;font-size:10px}
+.ed-skill-band{display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:24px;padding:45px 35px 50px;border-radius:0 0 54px 54px;background:#fff;font-size:15px;letter-spacing:-.4px;font-weight:600}
+.ed-work{padding-top:65px;padding-bottom:45px}
+.ed-section-heading h2{font-size:36px}
+.ed-eyebrow{font-size:9px;letter-spacing:1.2px}
+.ed-filters{gap:8px}
+.ed-filters button{border-radius:25px;background:#fff;font-size:11px;padding:10px 15px;min-height:44px}
+.ed-filters button[aria-pressed=true]{background:#22231f;border-color:#22231f;color:#fff}
+.ed-projects{gap:28px 24px}
+.ed-project-image{border-radius:24px}
+.ed-project-arrow{background:#fff;color:#22231f;width:38px;height:38px}
+.ed-project-caption h3{font-size:20px}
+.ed-project-caption p{font-size:12px}
+.ed-more{border-radius:30px;font-size:12px}
+.ed-services{gap:28px;padding-block:55px}
+.ed-service-heading{text-align:center;padding-bottom:35px}
+.ed-service-heading h2{font-size:clamp(29px,3vw,38px);max-width:590px;margin:auto}
+.ed-service-heading p{margin:16px auto 0;max-width:470px;font-size:14px}
+.ed-services>.ed-service-card,.ed-services>.ed-service-card+div{background:transparent;border:0;border-radius:0;padding:0;min-height:240px}
+.ed-service-card .ed-number{display:grid;place-items:center;background:#fff;border:1px solid #ddd;border-radius:12px;width:38px;height:38px;padding:0}
+.ed-service-card h3{font-size:19px;margin:22px 0 12px}
+.ed-service-card p{font-size:13px;line-height:1.6}
+.ed-service-card .ed-text-link{font-size:12px}
+.ed-about{padding-block:45px;margin-bottom:45px;border-color:#1c1d1a12}
+.ed-about h2{font-size:32px}
+.ed-about p{font-size:14px}
+.ed-contact{min-height:0;display:flex;align-items:center;justify-content:center;padding:65px 24px!important;background:#fff;color:#22231f;background-image:none;border-radius:70px 70px 0 0;text-align:center}
+.ed-contact>*{animation:none!important;opacity:1!important;transform:none!important}
+.ed-contact .ed-eyebrow{color:#707467}
+.ed-contact h2{font-size:clamp(32px,4vw,48px);max-width:520px;letter-spacing:-.05em;line-height:1.1;margin:15px 0 32px}
+.ed-contact .ed-email{font-size:clamp(14px,2vw,19px);color:#22231f;border-color:#22231f}
+.ed-contact .ed-socials{justify-content:center;color:#53594e}
+.ed-contact .ed-socials a{min-height:44px;display:inline-flex;align-items:center}
+.ed-contact .ed-socials a:hover{color:#22231f;text-decoration:underline}
+.ed-contact a:focus-visible{outline-color:#486000}
+.ed-footer{max-width:1120px;width:100%;background:transparent;color:#53594e;border:0;margin:0 auto;padding:24px 15px}
+.ed-footer .ed-logo{color:#22231f;font-size:18px}
+.ed-about-hero{padding-top:45px}
+.ed-about-hero h1{font-size:clamp(90px,14vw,170px)}
+.ed-about-signature{border-radius:35px;background:#e4e8dc}
+.editorial[dir=rtl] .ed-hero-copy .ed-intro h1{font-size:clamp(35px,4vw,51px);line-height:1.35}
+@media(max-width:700px){
+  .ed-nav{padding:18px 24px}
+  .ed-services{grid-template-columns:1fr}
+  .ed-services>.ed-service-card,.ed-services>.ed-service-card+div{min-height:0;padding-bottom:26px}
+  .ed-service-card p{margin-bottom:8px}
+}
+@media(max-width:600px){
+  .editorial{padding:14px 10px 10px}
+  .ed-nav{padding:12px 13px;border-radius:30px 30px 0 0;gap:8px}
+  .ed-nav .ed-logo{font-size:18px}
+  .ed-nav nav{gap:0;font-size:11px}
+  .ed-nav nav a,.ed-nav nav button{padding-inline:7px}
+  .editorial>main{padding-top:0;border-radius:0 0 30px 30px}
+  .ed-hero-copy{padding:36px 22px 42px;border-radius:0 0 45px 45px}
+  .ed-hero-copy .ed-intro h1{font-size:34px}
+  .ed-profile-mark{width:64px;height:64px;font-size:26px}
+  .ed-kicker{font-size:10px;padding:7px 10px}
+  .ed-hero-copy .ed-bio{font-size:13px}
+  .ed-hero-copy .ed-actions{gap:18px}
+  .ed-skill-band{font-size:12px;gap:23px 14px;padding:30px 20px;border-radius:0 0 36px 36px}
+  .ed-skill-band>span{width:calc(50% - 8px);text-align:center}
+  .ed-work{padding-top:44px;padding-bottom:25px}
+  .ed-section-heading h2{font-size:30px}
+  .ed-projects{gap:28px}
+  .ed-services{padding-block:35px;gap:24px}
+  .ed-service-heading{padding-bottom:15px}
+  .ed-about{padding-block:32px;margin-bottom:30px}
+  .ed-contact{border-radius:45px 45px 0 0;padding-block:48px!important}
+  .ed-contact h2{font-size:34px}
+  .ed-footer .ed-logo{width:auto}
+  .ed-footer{font-size:9px;gap:12px}
+  .editorial[dir=rtl] .ed-hero-copy .ed-intro h1{font-size:33px}
+}
+@media(max-width:359px){
+  .ed-nav{flex-wrap:wrap;justify-content:center}
+  .ed-nav nav{width:100%;justify-content:space-between}
+  .ed-hero-copy .ed-intro h1{font-size:30px}
+}
+
