@@ -5,6 +5,7 @@ import { DrivePortfolioProject, PortfolioMedia, fetchPortfolioFromDrive } from '
 import { ProjectDetailModal } from './ProjectDetailModal';
 import './editorial.css';
 import './soft-minimal.css';
+import { SoftCapabilities } from './SoftCapabilities';
 
 const labels: Record<string, string> = { Branding: 'الهوية البصرية', Videos: 'الفيديو', 'Motion Graphics': 'موشن جرافيك', 'AI Videos': 'فيديو بالذكاء الاصطناعي', 'Other Videos': 'فيديوهات أخرى', 'Social Media': 'محتوى التواصل', '3D': 'ثلاثي الأبعاد', 'Other Work': 'أعمال أخرى' };
 const title = (project: DrivePortfolioProject, ar: boolean) => {
@@ -131,7 +132,7 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
         {filtered.length > visible && <button className="ed-more" onClick={() => setVisible(n => n + 6)}>{ar ? 'عرض المزيد' : 'More work'} <ArrowDown size={17} /></button>}
       </section>
       </>}
-      <section id="capabilities" className="ed-shell ed-services" aria-label={ar ? 'الخدمات' : 'Services'}>
+      <section id="services" className="ed-shell ed-services" aria-label={ar ? 'الخدمات' : 'Services'}>
         <div className="ed-service-heading"><span className="ed-eyebrow">{ar ? 'كيف أساعدك' : 'HOW I CAN HELP'}</span><h2>{ar ? 'من الفكرة إلى الأثر.' : 'From idea to impact.'}</h2><p>{ar ? 'ثلاث طرق لصناعة حضور بصري أقوى لعلامتك.' : 'Three ways to build a stronger visual presence for your brand.'}</p></div>
         {[
           [ar ? 'الهوية البصرية' : 'Brand Identity', ar ? 'أنظمة بصرية تمنح العلامات شخصية واضحة وحضوراً مميزاً.' : 'Distinctive visual systems that give brands a clear and lasting presence.'],
@@ -139,6 +140,7 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
           [ar ? 'محتوى الحملات' : 'Campaign Content', ar ? 'محتوى بصري مصمم للتواصل عبر المنصات.' : 'Thoughtful campaign visuals and social content, made for every platform.']
         ].map(([name, description], i) => <div className="ed-service-card" key={name}><span className="ed-number">0{i + 1}</span><h3>{name}</h3><p>{description}</p><a className="ed-text-link" href="#contact">{ar ? 'ناقش مشروعك' : 'Discuss your project'} <ArrowUpRight size={17} /></a></div>)}
       </section>
+      <SoftCapabilities lang={lang} />
       <section id="about" className="ed-shell ed-about">
         <div><span className="ed-eyebrow">{ar ? 'عن المصمم' : 'A LITTLE ABOUT ME'}</span><h2>{ar ? <>فكر مستقل.<br />إبداع متعدد التخصصات.</> : <>Independent mind.<br />Multidisciplinary craft.</>}</h2></div>
         <div><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة مقيم في الرياض بخبرة تتجاوز ٦ سنوات في الهوية البصرية والموشن جرافيك ومحتوى الحملات.' : 'I’m Mugahed, a multimedia designer based in Riyadh with 6+ years of experience across brand identity, motion graphics, and campaign content.'}</p><a className="ed-text-link" href="/downloads/Mugahed_AlMaari_Resume.pdf" target="_blank" rel="noopener noreferrer">{ar ? 'السيرة الذاتية (PDF بالإنجليزية)' : 'View résumé (PDF)'} <ArrowUpRight size={18} /></a></div>
