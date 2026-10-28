@@ -27,6 +27,13 @@ function Cover({ media, name, featured = false }: { media: PortfolioMedia | null
 
 export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang: Language; onToggleLang: () => void; aboutPage?: boolean }) {
   const ar = lang === 'ar';
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 32);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
   const [projects, setProjects] = useState<DrivePortfolioProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -84,8 +91,8 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
 
   return <div className={`editorial${aboutPage ? ' ed-about-page' : ''}`} dir={ar ? 'rtl' : 'ltr'}>
     <a className="ed-skip" href="#main-content">{ar ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
-    <header className="ed-nav ed-shell">
-      <a href="/" className="ed-logo" aria-label="MUVFX home">MUVFX<span>↗</span></a>
+    <header className={`ed-nav ed-shell${scrolled ? ' is-scrolled' : ''}`}>
+      <a href="/" className="ed-logo" aria-label="MUVFX home"><img className="ed-official-mark" src="/brand/muvfx-mark.svg" alt="" />MUVFX</a>
       <nav aria-label={ar ? 'القائمة الرئيسية' : 'Main navigation'}>
         <a href="/#work">{ar ? 'الأعمال' : 'Work'}</a>
         <a href="/about" aria-current={aboutPage ? 'page' : undefined}>{ar ? 'عني' : 'About'}</a>
@@ -97,13 +104,13 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
       {aboutPage ? <section id="hero" className="ed-shell ed-about-hero">
         <span className="ed-eyebrow">{ar ? 'مجاهد المعاري / عني' : 'MUGAHED AL-MAARI / ABOUT'}</span>
         <h1>{ar ? 'مرحباً' : 'Hello'}<span className="ed-period">.</span></h1>
-        <div className="ed-about-intro"><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة في الرياض. أجمع الهوية البصرية والحركة والمحتوى لصناعة تجارب تعبر عن العلامات وتتواصل مع جمهورها.' : 'I’m Mugahed, a multimedia designer in Riyadh. I bring identity, motion, and content together to create visual experiences that connect brands with people.'}</p><span className="ed-about-signature" aria-hidden="true">M↗</span></div>
+        <div className="ed-about-intro"><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة في الرياض. أجمع الهوية البصرية والحركة والمحتوى لصناعة تجارب تعبر عن العلامات وتتواصل مع جمهورها.' : 'I’m Mugahed, a multimedia designer in Riyadh. I bring identity, motion, and content together to create visual experiences that connect brands with people.'}</p><span className="ed-about-signature"><img src="/brand/muvfx-logo.svg" alt="MUVFX" /></span></div>
       </section> : <>
       <section id="hero" className="ed-shell ed-hero">
         <div className="ed-hero-layout">
           <div className="ed-hero-copy">
             <p className="ed-available"><span />{ar ? 'متاح لفرص إبداعية' : 'Open to creative opportunities'}</p>
-            <div className="ed-profile-mark" aria-hidden="true">M↗</div>
+            <div className="ed-profile-mark"><img src="/brand/muvfx-logo.svg" alt="MUVFX" /></div>
             <p className="ed-kicker">{ar ? 'مجاهد المعاري / مصمم وسائط متعددة' : 'Mugahed Al-Maari / Multimedia Designer'}</p>
             <div className="ed-intro"><h1>{ar ? <>أصنع هويات،<br /><em>وحركة، وتجارب<br />بصرية<span className="ed-period">.</span></em></> : <>Building brands,<br /><em>motion, and visual<br />experiences<span className="ed-period">.</span></em></>}</h1></div>
             <div className="ed-bio"><p>{ar ? 'أصمم هويات بصرية وموشن جرافيك ومحتوى حملات يساعد علامتك على الظهور والتواصل مع جمهورها.' : 'I create brand identities, motion graphics, and campaign content that help your brand stand out and connect.'}</p></div>
@@ -147,7 +154,7 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
       </section>
       <section id="contact" className="ed-shell ed-contact"><span className="ed-eyebrow">{ar ? 'هل لديك فكرة؟' : 'HAVE SOMETHING IN MIND?'}</span><h2>{ar ? 'لنصنع الأثر معاً.' : 'Tell me about your next project.'}</h2><a className="ed-email" href="mailto:mugahedalmaari@gmail.com">mugahedalmaari@gmail.com <ArrowUpRight /></a><div className="ed-socials"><a href="https://wa.me/966500582126" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a href="https://www.linkedin.com/in/mugahedalmaari" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.behance.net/mugahedalmaari" target="_blank" rel="noopener noreferrer">Behance ↗</a><a href="/downloads/Mugahed_AlMaari_Portfolio.pdf" target="_blank" rel="noopener noreferrer">{ar ? 'ملف الأعمال PDF' : 'Portfolio PDF'} ↗</a></div></section>
     </main>
-    <footer className="ed-shell ed-footer"><a href="#hero" className="ed-logo">MUVFX</a><span>© {new Date().getFullYear()} {ar ? 'مجاهد المعاري' : 'Mugahed Al-Maari'}</span><span>{ar ? 'الرياض، السعودية' : 'Riyadh, Saudi Arabia'}</span></footer>
+    <footer className="ed-shell ed-footer"><a href="#hero" className="ed-logo" aria-label="MUVFX — back to top"><img className="ed-footer-logo" src="/brand/muvfx-logo.svg" alt="MUVFX" /></a><span>© {new Date().getFullYear()} {ar ? 'مجاهد المعاري' : 'Mugahed Al-Maari'}</span><span>{ar ? 'الرياض، السعودية' : 'Riyadh, Saudi Arabia'}</span></footer>
     <div ref={modal}><ProjectDetailModal project={active ? { ...active, name: title(active, ar) } : null} lang={lang} onClose={() => setActive(null)} /></div>
   </div>;
 }
