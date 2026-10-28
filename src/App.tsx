@@ -28,10 +28,12 @@ export default function App() {
     return () => cancelAnimationFrame(frame);
   }, [isServicesPage]);
 
-  if (!isServicesPage) return <EditorialHome lang={lang} onToggleLang={toggleLanguage} />;
+  if (!isServicesPage) return <EditorialHome lang={lang} onToggleLang={toggleLanguage} aboutPage={window.location.pathname.replace(/\/+$/, '') === '/about'} />;
   return <div className="min-h-screen bg-[#151312] text-white" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
     <Navbar lang={lang} onToggleLang={toggleLanguage} />
     <ServicesPage lang={lang} />
     <Footer lang={lang} />
   </div>;
 }
+
+
