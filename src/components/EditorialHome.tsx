@@ -20,7 +20,7 @@ function Cover({ media, name, featured = false }: { media: PortfolioMedia | null
   }
   return media.type === 'image'
     ? <img src={media.url} alt={name} loading={featured ? 'eager' : 'lazy'} onError={() => setFailed(true)} />
-    : <video src={media.url} muted playsInline preload={featured ? 'metadata' : 'none'} aria-label={name} onError={() => setFailed(true)} />;
+    : <video src={media.url} muted playsInline preload="metadata" aria-label={name} onError={() => setFailed(true)} />;
 }
 
 export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggleLang: () => void }) {
@@ -135,7 +135,7 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
       <section id="contact" className="ed-shell ed-contact"><span className="ed-eyebrow">{ar ? 'هل لديك فكرة؟' : 'HAVE SOMETHING IN MIND?'}</span><h2>{ar ? 'لنصنع الأثر معاً.' : 'LET’S MAKE IT MOVE.'}</h2><a className="ed-email" href="mailto:mugahedalmaari@gmail.com">mugahedalmaari@gmail.com <ArrowUpRight /></a><div className="ed-socials"><a href="https://wa.me/966500582126" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a href="https://www.linkedin.com/in/mugahedalmaari" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.behance.net/mugahedalmaari" target="_blank" rel="noopener noreferrer">Behance ↗</a><a href="/downloads/Mugahed_AlMaari_Portfolio.pdf" target="_blank" rel="noopener noreferrer">{ar ? 'ملف الأعمال PDF' : 'Portfolio PDF'} ↗</a></div></section>
     </main>
     <footer className="ed-shell ed-footer"><a href="#hero" className="ed-logo">MUVFX</a><span>© {new Date().getFullYear()} {ar ? 'مجاهد المعاري' : 'Mugahed Al-Maari'}</span><span>{ar ? 'الرياض، السعودية' : 'Riyadh, Saudi Arabia'}</span></footer>
-    <div ref={modal}><ProjectDetailModal project={active} lang={lang} onClose={() => setActive(null)} /></div>
+    <div ref={modal}><ProjectDetailModal project={active ? { ...active, name: title(active, ar) } : null} lang={lang} onClose={() => setActive(null)} /></div>
   </div>;
 }
 
