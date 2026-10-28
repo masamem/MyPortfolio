@@ -98,6 +98,7 @@
   .ed-email{min-height:44px;max-width:100%;font-size:clamp(13px,3.7vw,20px)}
   .ed-project-caption p{font-size:13px}
   .editorial [role=dialog] button{min-width:44px;min-height:44px}
+  .editorial [role=dialog]>div>button{position:fixed;top:max(18px,env(safe-area-inset-top));inset-inline-end:25px;z-index:80}
   .editorial [role=dialog] a{min-height:44px}
   .ed-hero-top,.ed-eyebrow{font-size:10px}
   .ed-nav{padding-top:max(12px,env(safe-area-inset-top))}
