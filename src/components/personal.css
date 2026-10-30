@@ -70,4 +70,8 @@
   .personal .ed-filters button{width:100%;min-width:0;padding:10px 5px;min-height:44px;font-size:11px;white-space:normal;line-height:1.4}
 }
 @media(max-width:359px){.personal .ed-shell{padding-inline:16px}.personal .ed-filters button{font-size:10px}.personal .ed-section-heading h2{font-size:26px}}
+/* Navigation highlight reflects the current page or section. */
+.personal .ed-nav nav a,.personal .ed-nav nav a[href="#contact"]{background:transparent;color:var(--text);text-decoration:none}
+.personal .ed-nav nav a[aria-current],.personal .ed-nav nav a[href="#contact"][aria-current]{background:#aaff2e;color:#161714;font-weight:600;text-decoration:none}
+@media(hover:hover){.personal .ed-nav nav a:not([aria-current]):hover{background:var(--line);color:var(--text)}}
 
