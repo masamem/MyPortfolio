@@ -74,4 +74,22 @@
 .personal .ed-nav nav a,.personal .ed-nav nav a[href="#contact"]{background:transparent;color:var(--text);text-decoration:none}
 .personal .ed-nav nav a[aria-current],.personal .ed-nav nav a[href="#contact"][aria-current]{background:#aaff2e;color:#161714;font-weight:600;text-decoration:none}
 @media(hover:hover){.personal .ed-nav nav a:not([aria-current]):hover{background:var(--line);color:var(--text)}}
+/* Tactile CTA and restrained foil sticker experiment. */
+.personal .ed-hero-copy .ed-primary{position:relative;box-shadow:0 5px 0 #161714!important;transform:translateY(-2px);transition:transform 130ms ease,box-shadow 130ms ease,background-color 130ms ease;isolation:isolate}
+@media(hover:hover){.personal .ed-hero-copy .ed-primary:hover{transform:translateY(-4px);box-shadow:0 7px 0 #161714!important;background:#baff55!important}}
+.personal .ed-hero-copy .ed-primary:active{transform:translateY(3px);box-shadow:0 0 0 #161714!important;transition-duration:60ms}
+.personal .portrait-sticker{isolation:isolate;overflow:hidden;background-color:#aaff2e;background-image:linear-gradient(115deg,#aaff2e 10%,#c9ff72 38%,#aaff2e 65%);--shine-x:50%;--shine-y:50%}
+.personal .portrait-sticker:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(115deg,transparent 12%,#eaffbb66 27%,#b8fff380 39%,#eddbff66 49%,#fffbbd88 58%,transparent 72%);background-size:220% 220%;background-position:var(--shine-x) var(--shine-y);opacity:.45;transition:opacity 200ms ease}
+.personal .portrait-sticker:after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at var(--shine-x) var(--shine-y),#ffffffb3,transparent 65%);opacity:.25}
+@media(hover:hover){.personal .portrait-sticker:hover:before{opacity:.85}.personal .portrait-sticker:hover:after{opacity:.65}}
+@media(prefers-reduced-motion:reduce){.personal .ed-hero-copy .ed-primary{transform:none;transition:none}.personal .portrait-sticker:before,.personal .portrait-sticker:after{display:none}}
+/* Tactile navigation: active section keeps its green fill. */
+.personal .ed-nav nav a{position:relative;border:1px solid transparent;transition:transform 130ms ease,box-shadow 130ms ease,background-color 130ms ease}
+.personal .ed-nav nav a[aria-current]{border-color:#161714;box-shadow:0 3px 0 #161714;transform:translateY(-1px)}
+@media(hover:hover){
+  .personal .ed-nav nav a:not([aria-current]):hover{transform:translateY(-2px);border-color:var(--line);box-shadow:0 3px 0 var(--line);background:var(--surface)}
+  .personal .ed-nav nav a[aria-current]:hover{transform:translateY(-2px);box-shadow:0 4px 0 #161714}
+}
+.personal .ed-nav nav a:active,.personal .ed-nav nav a[aria-current]:active{transform:translateY(2px);box-shadow:none;transition-duration:60ms}
+@media(prefers-reduced-motion:reduce){.personal .ed-nav nav a,.personal .ed-nav nav a[aria-current]{transform:none!important;transition:none}}
 

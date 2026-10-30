@@ -139,7 +139,12 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
             <div className="ed-actions"><a className="ed-primary" href="#work">{ar ? 'اكتشف أعمالي' : 'Explore my work'} <ArrowDown size={18} /></a><a className="ed-text-link" href="#contact">{ar ? 'ناقش مشروعك' : 'Let’s talk'} <ArrowUpRight size={18} /></a></div>
             <p className="ed-hero-note">{ar ? 'الرياض، السعودية · خبرة أكثر من ٦ سنوات' : 'Riyadh, Saudi Arabia · 6+ years of creative experience'}</p>
           </div>
-          <figure className="personal-portrait"><StretchPortrait ar={ar} /><figcaption><span>01 / MUVFX</span><span>{ar ? 'مصمم، وصانع أفكار.' : 'DESIGNER. VISUAL THINKER.'}</span></figcaption><a href="#contact" className="portrait-sticker">{ar ? 'لنعمل معاً' : 'Let’s make it move'} <ArrowUpRight size={22}/></a></figure>
+          <figure className="personal-portrait"><StretchPortrait ar={ar} /><figcaption><span>01 / MUVFX</span><span>{ar ? 'مصمم، وصانع أفكار.' : 'DESIGNER. VISUAL THINKER.'}</span></figcaption><a href="#contact" className="portrait-sticker" onPointerMove={event => {
+            if (event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const rect = event.currentTarget.getBoundingClientRect();
+            event.currentTarget.style.setProperty('--shine-x', ((event.clientX - rect.left) / rect.width * 100) + '%');
+            event.currentTarget.style.setProperty('--shine-y', ((event.clientY - rect.top) / rect.height * 100) + '%');
+          }} onPointerLeave={event => {event.currentTarget.style.removeProperty('--shine-x');event.currentTarget.style.removeProperty('--shine-y');}}>{ar ? 'لنعمل معاً' : 'Let’s make it move'} <ArrowUpRight size={22}/></a></figure>
           <div className="ed-skill-band" aria-label={ar ? 'التخصصات الإبداعية' : 'Creative disciplines'}>
             <span>{ar ? 'الهوية البصرية' : 'Brand identity'}</span><span>{ar ? 'موشن جرافيك' : 'Motion graphics'}</span><span>{ar ? 'محتوى الحملات' : 'Campaign content'}</span><span>{ar ? 'التصميم ثلاثي الأبعاد' : '3D & visual stories'}</span>
           </div>
