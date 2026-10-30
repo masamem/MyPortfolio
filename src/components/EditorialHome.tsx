@@ -29,6 +29,26 @@ function Cover({ media, name, featured = false }: { media: PortfolioMedia | null
 
 export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang: Language; onToggleLang: () => void; aboutPage?: boolean }) {
   const ar = lang === 'ar';
+  const [activeNav, setActiveNav] = useState(aboutPage ? 'about' : window.location.hash.slice(1));
+  useEffect(() => {
+    let pending = 0;
+    const update = () => {
+      const nav = document.querySelector('.ed-nav');
+      const boundary = (nav?.getBoundingClientRect().bottom || 100) + 100;
+      let current = aboutPage ? 'about' : '';
+      for (const id of ['work', 'about', 'contact']) {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= boundary) current = id;
+      }
+      const contact = document.getElementById('contact');
+      if (contact && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8) current = 'contact';
+      setActiveNav(current);
+    };
+    const schedule = () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(update); };
+    const hash = () => { const id = window.location.hash.slice(1); if (['work','about','contact'].includes(id)) setActiveNav(id); };
+    update(); window.addEventListener('scroll', schedule, {passive:true}); window.addEventListener('resize', schedule); window.addEventListener('hashchange',hash);
+    return () => { cancelAnimationFrame(pending); window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); window.removeEventListener('hashchange',hash); };
+  }, [aboutPage]);
   const [dark, setDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -97,9 +117,9 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
     <header className={`ed-nav ed-shell${scrolled ? ' is-scrolled' : ''}`}>
       <a href="/" className="ed-logo" aria-label="MUVFX home"><img className="personal-brand-logo" src="/brand/muvfx-transparent-v2.svg" alt="MUVFX" /></a>
       <nav aria-label={ar ? 'القائمة الرئيسية' : 'Main navigation'}>
-        <a href="/#work">{ar ? 'الأعمال' : 'Work'}</a>
-        <a href="/about" aria-current={aboutPage ? 'page' : undefined}>{ar ? 'عني' : 'About'}</a>
-        <a href="#contact">{ar ? 'تواصل' : 'Contact'}</a>
+        <a href="/#work" aria-current={activeNav === 'work' ? 'location' : undefined} onClick={() => setActiveNav('work')}>{ar ? 'الأعمال' : 'Work'}</a>
+        <a href="/about" aria-current={activeNav === 'about' ? (aboutPage ? 'page' : 'location') : undefined}>{ar ? 'عني' : 'About'}</a>
+        <a href="#contact" aria-current={activeNav === 'contact' ? 'location' : undefined} onClick={() => setActiveNav('contact')}>{ar ? 'تواصل' : 'Contact'}</a>
         <button className="finish-toggle" onClick={() => setDark(v => !v)} aria-label={ar ? "تغيير المظهر" : "Toggle dark theme"} aria-pressed={dark}><span /></button><button onClick={onToggleLang} lang={ar ? 'en' : 'ar'}>{ar ? 'EN' : 'عربي'}</button>
       </nav>
     </header>
