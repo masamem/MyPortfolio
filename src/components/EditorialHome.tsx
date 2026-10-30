@@ -117,8 +117,8 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
     <header className={`ed-nav ed-shell${scrolled ? ' is-scrolled' : ''}`}>
       <a href="/" className="ed-logo" aria-label="MUVFX home"><img className="personal-brand-logo" src="/brand/muvfx-transparent-v2.svg" alt="MUVFX" /></a>
       <nav aria-label={ar ? 'القائمة الرئيسية' : 'Main navigation'}>
-        <a href="/#work" aria-current={activeNav === 'work' ? 'location' : undefined} onClick={() => setActiveNav('work')}>{ar ? 'الأعمال' : 'Work'}</a>
         <a href="/about" aria-current={activeNav === 'about' ? (aboutPage ? 'page' : 'location') : undefined}>{ar ? 'عني' : 'About'}</a>
+        <a href="/#work" aria-current={activeNav === 'work' ? 'location' : undefined} onClick={() => setActiveNav('work')}>{ar ? 'الأعمال' : 'Work'}</a>
         <a href="#contact" aria-current={activeNav === 'contact' ? 'location' : undefined} onClick={() => setActiveNav('contact')}>{ar ? 'تواصل' : 'Contact'}</a>
         <button className="finish-toggle" onClick={() => setDark(v => !v)} aria-label={ar ? "تغيير المظهر" : "Toggle dark theme"} aria-pressed={dark}><span /></button><button onClick={onToggleLang} lang={ar ? 'en' : 'ar'}>{ar ? 'EN' : 'عربي'}</button>
       </nav>
