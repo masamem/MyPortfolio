@@ -49,4 +49,25 @@
 .portrait-stretch canvas.is-ready{opacity:1}
 .portrait-stretch canvas.is-grabbed{cursor:grabbing;touch-action:none}
 @media(pointer:fine){.portrait-stretch canvas{touch-action:none}}
+/* Phone layout: compact portrait, balanced disciplines and predictable filters. */
+@media(max-width:650px){
+  .personal .ed-shell{padding-inline:20px}
+  .personal .personal-portrait{width:82%;max-width:270px;margin:12px auto 20px}
+  .personal .portrait-frame{aspect-ratio:1/1.13;box-shadow:5px 5px 0 #161714;border-width:4px}
+  .personal .portrait-sticker{font-size:11px;padding:10px 12px;gap:8px;right:-4px;box-shadow:3px 3px 0 #161714}
+  .personal .portrait-sticker svg{width:17px;height:17px}
+  .personal .personal-portrait figcaption{font-size:8px;letter-spacing:.4px;gap:8px;padding-top:16px}
+  .personal .ed-skill-band{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;padding:12px 0;margin-top:0}
+  .personal .ed-skill-band>span{width:auto;min-width:0;text-align:start;padding:12px 8px;font-size:11px;line-height:1.5}
+  .personal .ed-skill-band>span:nth-child(even){border-inline-start:1px solid var(--line);padding-inline-start:18px}
+  .personal .ed-skill-band>span:nth-child(n+3){border-top:1px solid var(--line)}
+  .personal .ed-work{padding-top:30px}
+  .personal .ed-section-heading{align-items:center;gap:10px;margin-bottom:20px}
+  .personal .ed-section-heading h2{font-size:29px;line-height:1.2}
+  .personal .ed-eyebrow{font-size:9px;letter-spacing:1px;margin-bottom:12px}
+  .personal .ed-refresh{font-size:11px!important;gap:5px;padding:4px;min-height:44px}
+  .personal .ed-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding-bottom:20px;margin-bottom:24px}
+  .personal .ed-filters button{width:100%;min-width:0;padding:10px 5px;min-height:44px;font-size:11px;white-space:normal;line-height:1.4}
+}
+@media(max-width:359px){.personal .ed-shell{padding-inline:16px}.personal .ed-filters button{font-size:10px}.personal .ed-section-heading h2{font-size:26px}}
 
