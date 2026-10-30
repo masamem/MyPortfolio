@@ -27,16 +27,16 @@ function Cover({ media, name, featured = false }: { media: PortfolioMedia | null
     : <video src={media.url} muted playsInline preload="metadata" aria-label={name} onError={() => setFailed(true)} />;
 }
 
-export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang: Language; onToggleLang: () => void; aboutPage?: boolean }) {
+export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggleLang: () => void; aboutPage?: boolean }) {
   const ar = lang === 'ar';
-  const [activeNav, setActiveNav] = useState(aboutPage ? 'about' : window.location.hash.slice(1));
+  const [activeNav, setActiveNav] = useState(['work','contact'].includes(window.location.hash.slice(1)) ? window.location.hash.slice(1) : 'about');
   useEffect(() => {
     let pending = 0;
     const update = () => {
       const nav = document.querySelector('.ed-nav');
       const boundary = (nav?.getBoundingClientRect().bottom || 100) + 100;
-      let current = aboutPage ? 'about' : '';
-      for (const id of ['work', 'about', 'contact']) {
+      let current = 'about';
+      for (const id of ['work', 'contact']) {
         const section = document.getElementById(id);
         if (section && section.getBoundingClientRect().top <= boundary) current = id;
       }
@@ -45,10 +45,10 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
       setActiveNav(current);
     };
     const schedule = () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(update); };
-    const hash = () => { const id = window.location.hash.slice(1); if (['work','about','contact'].includes(id)) setActiveNav(id); };
+    const hash = () => { const id = window.location.hash.slice(1); if (['work','contact'].includes(id)) setActiveNav(id); else if (id === 'hero') setActiveNav('about'); };
     update(); window.addEventListener('scroll', schedule, {passive:true}); window.addEventListener('resize', schedule); window.addEventListener('hashchange',hash);
     return () => { cancelAnimationFrame(pending); window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); window.removeEventListener('hashchange',hash); };
-  }, [aboutPage]);
+  }, []);
   const [dark, setDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -82,7 +82,7 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
       if (!controller.signal.aborted) { setLoading(false); setRefreshing(false); }
     }
   };
-  useEffect(() => { if (!aboutPage) load(); return () => request.current?.abort(); }, [aboutPage]);
+  useEffect(() => { load(); return () => request.current?.abort(); }, []);
   useEffect(() => {
     if (!active) return;
     const previous = document.body.style.overflow;
@@ -112,23 +112,18 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
   const featureMedia = feature?.media.find(m => m.type === 'video') || feature?.cover || null;
   const categoryLabel = (name: string) => ar ? labels[name] || name : name;
 
-  return <div className={`editorial personal${dark ? ' personal-dark' : ''}${aboutPage ? ' ed-about-page' : ''}`} dir={ar ? 'rtl' : 'ltr'}>
+  return <div className={`editorial personal${dark ? ' personal-dark' : ''}`} dir={ar ? 'rtl' : 'ltr'}>
     <a className="ed-skip" href="#main-content">{ar ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
     <header className={`ed-nav ed-shell${scrolled ? ' is-scrolled' : ''}`}>
       <a href="/" className="ed-logo" aria-label="MUVFX home"><img className="personal-brand-logo" src="/brand/muvfx-transparent-v2.svg" alt="MUVFX" /></a>
       <nav aria-label={ar ? 'القائمة الرئيسية' : 'Main navigation'}>
-        <a href="/about" aria-current={activeNav === 'about' ? (aboutPage ? 'page' : 'location') : undefined}>{ar ? 'عني' : 'About'}</a>
+        <a href="/#hero" aria-current={activeNav === 'about' ? 'location' : undefined} onClick={() => setActiveNav('about')}>{ar ? 'عني' : 'About'}</a>
         <a href="/#work" aria-current={activeNav === 'work' ? 'location' : undefined} onClick={() => setActiveNav('work')}>{ar ? 'الأعمال' : 'Work'}</a>
         <a href="#contact" aria-current={activeNav === 'contact' ? 'location' : undefined} onClick={() => setActiveNav('contact')}>{ar ? 'تواصل' : 'Contact'}</a>
         <button className="finish-toggle" onClick={() => setDark(v => !v)} aria-label={ar ? "تغيير المظهر" : "Toggle dark theme"} aria-pressed={dark}><span /></button><button onClick={onToggleLang} lang={ar ? 'en' : 'ar'}>{ar ? 'EN' : 'عربي'}</button>
       </nav>
     </header>
     <main id="main-content" tabIndex={-1}>
-      {aboutPage ? <section id="hero" className="ed-shell ed-about-hero">
-        <span className="ed-eyebrow">{ar ? 'مجاهد المعاري / عني' : 'MUGAHED AL-MAARI / ABOUT'}</span>
-        <h1>{ar ? 'مرحباً' : 'Hello'}<span className="ed-period">.</span></h1>
-        <div className="ed-about-intro"><p>{ar ? 'أنا مجاهد، مصمم وسائط متعددة في الرياض. أجمع الهوية البصرية والحركة والمحتوى لصناعة تجارب تعبر عن العلامات وتتواصل مع جمهورها.' : 'I’m Mugahed, a multimedia designer in Riyadh. I bring identity, motion, and content together to create visual experiences that connect brands with people.'}</p><span className="ed-about-signature"><img src="/brand/muvfx-transparent-v2.svg" alt="MUVFX" /></span></div>
-      </section> : <>
       <section id="hero" className="ed-shell ed-hero">
         <div className="ed-hero-layout">
           <div className="ed-hero-copy">
@@ -166,7 +161,6 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
         </div>
         {filtered.length > visible && <button className="ed-more" onClick={() => setVisible(n => n + 6)}>{ar ? 'عرض المزيد' : 'More work'} <ArrowDown size={17} /></button>}
       </section>
-      </>}
       <section id="services" className="ed-shell ed-services" aria-label={ar ? 'الخدمات' : 'Services'}>
         <div className="ed-service-heading"><span className="ed-eyebrow">{ar ? 'كيف أساعدك' : '02 / HOW I CAN HELP'}</span><h2>{ar ? 'من الفكرة إلى الأثر.' : 'From idea to impact.'}</h2><p>{ar ? 'ثلاث طرق لصناعة حضور بصري أقوى لعلامتك.' : 'Three ways to build a stronger visual presence for your brand.'}</p></div>
         {[
@@ -186,5 +180,6 @@ export function EditorialHome({ lang, onToggleLang, aboutPage = false }: { lang:
     <div ref={modal}><ProjectDetailModal project={active ? { ...active, name: title(active, ar) } : null} lang={lang} onClose={() => setActive(null)} /></div>
   </div>;
 }
+
 
 
