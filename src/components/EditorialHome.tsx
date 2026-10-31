@@ -6,6 +6,7 @@ import { ProjectDetailModal } from './ProjectDetailModal';
 import './editorial.css';
 import './soft-minimal.css';
 import './personal.css';
+import './cinematic.css';
 import { StretchPortrait } from './StretchPortrait';
 import { SoftCapabilities } from './SoftCapabilities';
 
@@ -112,6 +113,25 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
   const featureMedia = feature?.media.find(m => m.type === 'video') || feature?.cover || null;
   const categoryLabel = (name: string) => ar ? labels[name] || name : name;
 
+  useEffect(() => {
+    let frame=0;
+    const update=()=>{
+      frame=0;
+      const cards=Array.from(document.querySelectorAll<HTMLElement>('.mv-stack-card'));
+      const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      cards.forEach((card,index)=>{
+        const next=cards[index+1];
+        const top=parseFloat(getComputedStyle(card).top)||100;
+        const progress=next?Math.max(0,Math.min(1,(window.innerHeight-next.getBoundingClientRect().top)/(window.innerHeight-top))):0;
+        card.style.setProperty('--stack-scale',String(reduce?1:1-progress*.055));
+        card.style.setProperty('--stack-dim',String(reduce?0:progress*.35));
+      });
+    };
+    const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
+    update();window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);
+    return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);};
+  },[category,visible,projects.length]);
+
   return <div className={`editorial personal${dark ? ' personal-dark' : ''}`} dir={ar ? 'rtl' : 'ltr'}>
     <a className="ed-skip" href="#main-content">{ar ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
     <header className={`ed-nav ed-shell${scrolled ? ' is-scrolled' : ''}`}>
@@ -145,6 +165,7 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
           </div>
         </div>
       </section>
+      
       <section id="work" className="ed-shell ed-work">
         <div className="ed-section-heading"><div><span className="ed-eyebrow">{ar ? 'الفكرة. الحرفة. الأثر.' : '01 / SELECTED PROJECTS'}</span><h2>{ar ? 'أعمالي' : 'Selected work'}</h2></div><button className="ed-refresh" onClick={() => load(true)} disabled={refreshing || loading} aria-label={ar ? 'تحديث الأعمال' : 'Refresh work'}><RefreshCw size={15} className={refreshing ? 'ed-spin' : ''} />{ar ? 'تحديث' : 'Refresh'}</button></div>
         <div className="ed-filters" aria-label={ar ? 'تصفية الأعمال' : 'Filter work'}>
@@ -152,7 +173,7 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
         </div>
         <div role="status" aria-live="polite">{loading && <p className="ed-status">{ar ? 'جاري تحميل الأعمال…' : 'Loading work…'}</p>}{error && <p className="ed-status">{ar ? 'تعذر تحميل الأعمال. حاول التحديث.' : 'Work could not be loaded. Please try refreshing.'} <button onClick={() => load(true)}>{ar ? 'حاول مجدداً' : 'Try again'}</button></p>}{!loading && !error && !filtered.length && <p className="ed-status">{ar ? 'لا توجد أعمال في هذا القسم حتى الآن.' : 'No work in this collection yet.'}</p>}</div>
         <div className="ed-projects">
-          {filtered.slice(0, visible).map((project, index) => <article key={project.id}>
+          {filtered.slice(0, visible).map((project, index) => <article key={project.id} className="mv-stack-card" style={{'--card-index':index} as React.CSSProperties}>
             <button className="ed-project" onClick={e => open(project, e.currentTarget)}>
               <div className="ed-project-image"><Cover media={project.cover} name={title(project, ar)} /><span className="ed-project-arrow"><ArrowUpRight size={23} /></span>{project.cover?.type === 'video' && <span className="ed-video-label"><Play size={13} />{ar ? 'فيديو' : 'Video'}</span>}</div>
               <div className="ed-project-caption"><span className="ed-number">{String(index + 1).padStart(2, '0')}</span><div><h3>{title(project, ar)}</h3><p>{categoryLabel(project.subcategory || project.category)}</p></div><ArrowUpRight size={20} /></div>
