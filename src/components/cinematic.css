@@ -107,4 +107,8 @@
 .personal .ed-more{margin-top:18px}
 .personal .ed-contact{padding-top:50px;padding-bottom:50px}
 }
+/* Keep category filters available throughout the project stack. */
+.personal .ed-filters{position:sticky;top:90px;z-index:35;background:#0c0c0cf2;backdrop-filter:blur(16px);padding:14px 0;margin-bottom:28px;border-bottom:1px solid #d7e2ea26}
+.personal .mv-stack-card{top:calc(175px + var(--card-index)*10px)}
+@media(max-width:700px){.personal .ed-filters{top:76px;padding:10px 0;gap:6px}.personal .mv-stack-card{top:calc(196px + var(--card-index)*6px)}}
 
