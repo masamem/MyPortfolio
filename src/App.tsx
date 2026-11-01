@@ -3,7 +3,7 @@ import { Language } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ServicesPage } from './components/ServicesPage';
-import { EditorialHome } from './components/EditorialHome';
+import { PortfiHome } from './components/PortfiHome';
 
 export default function App() {
   const [lang, setLang] = useState<Language>(() => {
@@ -28,7 +28,7 @@ export default function App() {
     return () => cancelAnimationFrame(frame);
   }, [isServicesPage]);
 
-  if (!isServicesPage) return <EditorialHome lang={lang} onToggleLang={toggleLanguage} aboutPage={window.location.pathname.replace(/\/+$/, '') === '/about'} />;
+  if (!isServicesPage) return <PortfiHome lang={lang} onToggleLang={toggleLanguage} />;
   return <div className="min-h-screen bg-[#151312] text-white" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
     <Navbar lang={lang} onToggleLang={toggleLanguage} />
     <ServicesPage lang={lang} />
