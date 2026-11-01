@@ -7,6 +7,7 @@ import './editorial.css';
 import './soft-minimal.css';
 import './personal.css';
 import './cinematic.css';
+import './portfi-preview.css';
 import { StretchPortrait } from './StretchPortrait';
 import { SoftCapabilities } from './SoftCapabilities';
 
@@ -132,7 +133,7 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
     return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);};
   },[category,visible,projects.length]);
 
-  return <div className={`editorial personal${dark ? ' personal-dark' : ''}`} dir={ar ? 'rtl' : 'ltr'}>
+  return <div className={`editorial personal portfi-preview${dark ? ' personal-dark' : ''}`} dir={ar ? 'rtl' : 'ltr'}>
     <a className="ed-skip" href="#main-content">{ar ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
     <header className={`ed-nav ed-shell${scrolled ? ' is-scrolled' : ''}`}>
       <a href="/" className="ed-logo" aria-label="MUVFX home"><img className="personal-brand-logo" src="/brand/muvfx-transparent-v2.svg" alt="MUVFX" /></a>
@@ -149,7 +150,7 @@ export function EditorialHome({ lang, onToggleLang }: { lang: Language; onToggle
           <div className="ed-hero-copy">
             <p className="ed-available"><span />{ar ? 'متاح لفرص إبداعية' : 'Open to creative opportunities'}</p>
             <p className="ed-kicker">{ar ? 'مصمم وسائط متعددة · الرياض' : 'MULTIMEDIA DESIGNER · RIYADH'}</p>
-            <div className="ed-intro"><h1>{ar ? <>أهلاً! أنا<br /><mark>مجاهد</mark></> : <>Hi! My name<br />is <mark>Mugahed</mark></>}</h1></div>
+            <div className="ed-intro"><h1>{ar ? <>مجاهد<br /><mark>المعاري.</mark></> : <>Mugahed<br /><mark>Almaari.</mark></>}</h1></div>
             <div className="ed-bio"><p className="personal-lead">{ar ? 'أحب تحويل الأفكار إلى شيء يستحق المشاهدة.' : 'I love bringing ideas to life.'}</p><p>{ar ? 'أنا مجاهد المعاري. أصمم هويات بصرية، وأحرك القصص، وأصنع محتوى يربط العلامات بجمهورها.' : 'I’m Mugahed Al-Maari. I build visual identities, put stories in motion, and create content that connects brands with people.'}</p><p>{ar ? 'من الهوية البصرية إلى الحركة والحملات، أجمع أكثر من ٦ سنوات من الخبرة في التصميم لصناعة تجارب تترك أثراً.' : 'From brand identity to motion and campaigns, I bring 6+ years of design experience to visual work made to leave an impression.'}</p></div>
             <div className="ed-actions"><a className="ed-primary" href="#work">{ar ? 'اكتشف أعمالي' : 'Explore my work'} <ArrowDown size={18} /></a><a className="ed-text-link" href="#contact">{ar ? 'ناقش مشروعك' : 'Let’s talk'} <ArrowUpRight size={18} /></a></div>
             <p className="ed-hero-note">{ar ? 'الرياض، السعودية · خبرة أكثر من ٦ سنوات' : 'Riyadh, Saudi Arabia · 6+ years of creative experience'}</p>
