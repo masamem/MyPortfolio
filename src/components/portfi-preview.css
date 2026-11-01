@@ -1,0 +1,104 @@
+.portfi-preview{
+  --surface:#0b0b0a;
+  --text:#f5f5ef;
+  --line:#ffffff1c;
+  --lime:#ccf52b;
+  background:#080808!important;
+  color:var(--text);
+  padding:0;
+}
+.portfi-preview.personal-dark{--surface:#0b0b0a;--text:#f5f5ef;--line:#ffffff1c;background:#080808!important}
+.portfi-preview .ed-nav{
+  position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(900px,calc(100% - 32px));
+  margin:0;padding:9px 14px;border:1px solid #ffffff20;border-radius:999px;background:#0b0b0ae8;
+  color:#f5f5ef;backdrop-filter:blur(20px);box-shadow:0 12px 45px #0008;
+}
+.portfi-preview .ed-nav.is-scrolled{background:#0b0b0af5}
+.portfi-preview .ed-nav .ed-logo{width:64px;height:44px;min-height:44px;background:transparent}
+.portfi-preview .ed-nav .personal-brand-logo{width:64px;height:44px;filter:none;transform:scale(1.55)}
+.portfi-preview .ed-nav nav a,.portfi-preview .ed-nav nav button{color:#f5f5ef}
+.portfi-preview .ed-nav nav a{padding:10px 16px;border-radius:999px}
+.portfi-preview .ed-nav nav a[aria-current],.portfi-preview .ed-nav nav a[href="#contact"][aria-current]{background:#ccf52b;color:#0b0b0a;border-color:#ccf52b;box-shadow:none;transform:none}
+.portfi-preview .ed-nav nav a:not([aria-current]):hover{background:#ffffff10;color:#fff;transform:none;box-shadow:none}
+.portfi-preview .finish-toggle{background:#272725!important;border:1px solid #ffffff20!important}
+.portfi-preview .finish-toggle span{background:#ccf52b}
+.portfi-preview>main{max-width:none;width:100%;border:0;border-radius:0;background:#0b0b0a;color:#f5f5ef;padding-top:0}
+.portfi-preview .ed-shell{width:min(1440px,100%);padding-inline:clamp(24px,5vw,78px)}
+.portfi-preview .ed-hero{min-height:100svh;padding:150px clamp(24px,5vw,78px) 60px;display:flex;align-items:center}
+.portfi-preview .ed-hero-layout{grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(36px,6vw,100px)}
+.portfi-preview .ed-hero-copy>.ed-available{color:#ccf52b;border-color:#ccf52b55;background:#ccf52b0d;border-radius:999px}
+.portfi-preview .ed-kicker{color:#92928b;letter-spacing:.18em}
+.portfi-preview .ed-hero-copy .ed-intro h1{font-size:clamp(68px,9.5vw,148px);font-weight:500;line-height:.83;letter-spacing:-.085em;color:#f5f5ef;text-transform:none}
+.portfi-preview .ed-intro mark,.portfi-preview.personal-dark .ed-intro mark{display:inline-block;background:none;color:#ccf52b;padding:0}
+.portfi-preview .ed-hero-copy .ed-bio{max-width:600px;color:#aaa9a2;font-size:16px;line-height:1.7}
+.portfi-preview .ed-bio p{color:#aaa9a2}
+.portfi-preview .ed-bio .personal-lead{color:#f5f5ef;font-size:22px}
+.portfi-preview .ed-primary{background:#ccf52b!important;color:#0b0b0a!important;border-color:#ccf52b!important;border-radius:999px!important;box-shadow:none!important;transform:none!important;padding:15px 22px}
+.portfi-preview .ed-primary:hover{background:#ddff68!important;transform:none!important;box-shadow:none!important}
+.portfi-preview .ed-text-link{color:#f5f5ef;border-color:#ffffff35}
+.portfi-preview .ed-hero-note{color:#777770}
+.portfi-preview .personal-portrait{width:100%;max-width:470px}
+.portfi-preview .portrait-frame{border:1px solid #ffffff24;border-radius:50% 50% 8px 8px;box-shadow:0 35px 80px #0008;background:#171715}
+.portfi-preview .portrait-sticker{background:#ccf52b;background-image:none;border:0;border-radius:999px;box-shadow:0 12px 30px #0006;color:#0b0b0a}
+.portfi-preview .personal-portrait figcaption{color:#888881}
+.portfi-preview .ed-skill-band{border-color:#ffffff1c;color:#d1d1ca}
+.portfi-preview .ed-work{padding-top:100px;padding-bottom:110px}
+.portfi-preview .ed-section-heading h2,.portfi-preview .ed-service-heading h2,.portfi-preview .ed-about h2{color:#f5f5ef;font-weight:500}
+.portfi-preview .ed-section-heading h2{font-size:clamp(48px,7vw,100px);letter-spacing:-.07em}
+.portfi-preview .ed-eyebrow,.portfi-preview .ed-number,.portfi-preview .ed-refresh{color:#8d8d86}
+.portfi-preview .ed-filters{position:sticky;top:92px;background:#0b0b0aed;border-color:#ffffff1c;backdrop-filter:blur(18px)}
+.portfi-preview .ed-filters button{background:transparent;color:#a8a8a1;border-color:#ffffff25;border-radius:999px}
+.portfi-preview .ed-filters button[aria-pressed=true]{background:#ccf52b;color:#0b0b0a;border-color:#ccf52b}
+.portfi-preview .ed-projects{grid-template-columns:repeat(2,minmax(0,1fr));gap:54px 22px;padding-bottom:0}
+.portfi-preview .mv-stack-card{position:relative!important;top:auto!important;transform:none!important}
+.portfi-preview .mv-stack-card:after{display:none!important}
+.portfi-preview .ed-project-image{aspect-ratio:1.35;border:0;border-radius:18px;background:#171715}
+.portfi-preview .ed-project-caption{padding:18px 4px 0;color:#f5f5ef}
+.portfi-preview .ed-project-caption h3{color:#f5f5ef;font-size:24px;font-weight:500}
+.portfi-preview .ed-project-caption p{color:#85857e}
+.portfi-preview .ed-project-arrow{background:#ccf52b;color:#0b0b0a}
+.portfi-preview .ed-more{background:#ccf52b;color:#0b0b0a;border-color:#ccf52b;border-radius:999px}
+.portfi-preview .ed-services{display:block;border-top:1px solid #ffffff20;padding-block:100px}
+.portfi-preview .ed-service-heading{padding-bottom:48px;border-bottom:1px solid #ffffff20;text-align:start}
+.portfi-preview .ed-service-heading h2{font-size:clamp(44px,6vw,88px);letter-spacing:-.06em;margin-inline:0}
+.portfi-preview .ed-service-heading p{color:#8f8f88;margin-inline:0}
+.portfi-preview .ed-service-card{display:grid;grid-template-columns:70px minmax(190px,.7fr) 1fr auto;align-items:center;gap:24px;border:0!important;border-bottom:1px solid #ffffff20!important;padding:30px 0!important}
+.portfi-preview .ed-service-card .ed-number{background:transparent;color:#ccf52b;padding:0}
+.portfi-preview .ed-service-card h3{font-size:clamp(24px,3vw,40px);font-weight:500;color:#f5f5ef;margin:0}
+.portfi-preview .ed-service-card p{color:#8f8f88;max-width:500px;margin:0}
+.portfi-preview .ed-service-card .ed-text-link{white-space:nowrap}
+.portfi-preview .soft-capabilities{background:#11110f;color:#f5f5ef;border-color:#ffffff20}
+.portfi-preview .soft-cap-heading h2,.portfi-preview .soft-cap-heading p,.portfi-preview .soft-cap-card h3,.portfi-preview .soft-cap-card p,.portfi-preview .soft-cap-caption,.portfi-preview .soft-toolkit-heading h3,.portfi-preview .soft-toolkit-heading p{color:#f5f5ef}
+.portfi-preview .soft-cap-card,.portfi-preview .soft-toolkit{background:#171715;border-color:#ffffff20;color:#f5f5ef}
+.portfi-preview .ed-about{border-color:#ffffff20;padding-block:100px}
+.portfi-preview .ed-about p{color:#aaa9a2}
+.portfi-preview .ed-contact{background:#ccf52b;color:#0b0b0a;padding-block:100px}
+.portfi-preview .ed-contact .ed-eyebrow,.portfi-preview .ed-contact h2,.portfi-preview .ed-contact .ed-email,.portfi-preview .ed-contact .ed-socials{color:#0b0b0a}
+.portfi-preview .ed-contact h2{font-size:clamp(58px,10vw,150px);font-weight:500;letter-spacing:-.08em}
+.portfi-preview .ed-contact .ed-email{border-color:#0b0b0a}
+.portfi-preview .ed-footer{max-width:none;background:#0b0b0a;color:#8f8f88;border-color:#ffffff20;padding-inline:clamp(24px,5vw,78px)}
+@media(max-width:700px){
+  .portfi-preview .ed-nav{top:8px;width:calc(100% - 16px);border-radius:16px;padding:7px 9px}
+  .portfi-preview .ed-nav nav a{padding:8px 9px;font-size:10px}
+  .portfi-preview .ed-nav .ed-logo{width:52px;height:40px;min-height:40px}
+  .portfi-preview .ed-nav .personal-brand-logo{width:52px;height:40px}
+  .portfi-preview .ed-hero{padding:110px 20px 48px;min-height:auto}
+  .portfi-preview .ed-hero-layout{grid-template-columns:1fr;gap:28px}
+  .portfi-preview .ed-hero-copy .ed-intro h1{font-size:clamp(58px,18vw,94px);line-height:.88}
+  .portfi-preview .personal-portrait{width:82%;max-width:330px}
+  .portfi-preview .ed-skill-band{margin-top:18px}
+  .portfi-preview .ed-work{padding-top:64px;padding-bottom:70px}
+  .portfi-preview .ed-section-heading h2{font-size:48px}
+  .portfi-preview .ed-filters{top:70px;display:flex;overflow-x:auto;flex-wrap:nowrap;padding:10px 0}
+  .portfi-preview .ed-filters button{width:auto;min-width:max-content;padding:10px 14px}
+  .portfi-preview .ed-projects{grid-template-columns:1fr;gap:38px}
+  .portfi-preview .ed-services{padding-block:65px}
+  .portfi-preview .ed-service-card{grid-template-columns:42px 1fr auto;gap:12px;padding:24px 0!important}
+  .portfi-preview .ed-service-card p{display:none}
+  .portfi-preview .ed-service-card h3{font-size:25px}
+  .portfi-preview .ed-service-card .ed-text-link{font-size:0;border:0;padding:8px}
+  .portfi-preview .ed-service-card .ed-text-link svg{width:20px;height:20px}
+  .portfi-preview .ed-about{padding-block:64px}
+  .portfi-preview .ed-contact{padding-block:72px}
+  .portfi-preview .ed-contact h2{font-size:clamp(52px,16vw,84px)}
+}
