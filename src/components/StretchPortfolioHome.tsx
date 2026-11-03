@@ -8,7 +8,7 @@ import {faces} from '../stretchFace/content';
 import {useFitHeadline, useTheme} from '../stretchFace/hooks';
 import './stretch-portfolio.css';
 
-const DISC = '#6d5dfc';
+const DISC = '#1f8a5b';
 const arCategories: Record<string,string> = {Branding:'الهوية البصرية',Videos:'الفيديو','Social Media':'التواصل الاجتماعي','3D':'ثلاثي الأبعاد','Other Work':'أعمال أخرى'};
 
 function ProjectCover({project}:{project:DrivePortfolioProject}) {
