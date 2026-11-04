@@ -80,6 +80,9 @@ html[data-theme='dark'] .sp{--page:#12141b;--ink:#f0f2f7;--muted:#a4a9b5;--line:
   .sp-quick-contact>div{grid-template-columns:1fr}.sp-quick-contact button{width:100%}
 }
 
+.sp .rebune-live-link{color:#11130f;border:2px solid #c9ff38;box-shadow:0 8px 28px #c9ff382b;text-decoration:none}
+.sp .rebune-live-link:hover{color:#11130f;background:#dcff75;box-shadow:0 12px 34px #c9ff3840}
+
 /* Phone-first polish: compact controls, clear reading order and thumb-sized actions. */
 @media(max-width:767px){
   .sp{overflow:clip}
