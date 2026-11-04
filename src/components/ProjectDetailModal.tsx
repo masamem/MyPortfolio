@@ -169,7 +169,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#c9ff38] px-6 py-3 text-sm font-black uppercase tracking-wide text-[#151312] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c9ff38]"
+              className="rebune-live-link mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#c9ff38] px-6 py-3 text-sm font-black uppercase tracking-wide transition-all hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c9ff38]"
             >
               {isRTL ? 'زيارة الموقع' : 'Visit live website'}
               <ExternalLink className="h-4 w-4" />
