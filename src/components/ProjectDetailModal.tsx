@@ -116,6 +116,9 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
   const isRTL = lang === 'ar';
   const visibleMedia = [...project.media].sort((a, b) => Number(b.isCover) - Number(a.isCover));
   const modifiedYear = project.modifiedTime ? new Date(project.modifiedTime).getFullYear() : '';
+  const liveUrl = project.name.trim().toLowerCase() === 'rebune media library'
+    ? 'https://library.rebune.com/'
+    : null;
 
   return (
     <div
@@ -161,6 +164,17 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
               ? 'هذا المشروع يتم تحميله مباشرة من مجلد Google Drive الخاص بك. أي تحديث للملفات سيظهر تلقائيًا في البورتفوليو.'
               : 'This project is loaded directly from your Google Drive folder. Updates to the folder appear automatically in the portfolio.'}
           </p>
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#c9ff38] px-6 py-3 text-sm font-black uppercase tracking-wide text-[#151312] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c9ff38]"
+            >
+              {isRTL ? 'زيارة الموقع' : 'Visit live website'}
+              <ExternalLink className="h-4 w-4" />
+            </a>
+          )}
         </div>
 
         <div className="p-5 sm:p-8 lg:p-10">
