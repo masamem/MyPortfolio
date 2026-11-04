@@ -1,0 +1,10 @@
+const menu=document.querySelector('.menu-toggle');
+const nav=document.querySelector('#nav-links');
+menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');nav.classList.toggle('open',open);});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open navigation');nav.classList.remove('open');}));
+const dialog=document.querySelector('#image-dialog');
+let previousFocus;
+document.querySelectorAll('[data-image]').forEach(button=>button.addEventListener('click',()=>{previousFocus=button;const img=document.querySelector('#dialog-image');img.src=button.dataset.image;img.alt=button.querySelector('img').alt;document.querySelector('#image-caption').textContent=button.dataset.caption;dialog.showModal();document.body.classList.add('dialog-open');}));
+dialog.querySelector('.dialog-close').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
+dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');previousFocus?.focus();});

@@ -80,6 +80,8 @@ html[data-theme='dark'] .sp{--page:#12141b;--ink:#f0f2f7;--muted:#a4a9b5;--line:
   .sp-quick-contact>div{grid-template-columns:1fr}.sp-quick-contact button{width:100%}
 }
 
+.sp-project-rebune{display:block;text-decoration:none}
+
 /* Phone-first polish: compact controls, clear reading order and thumb-sized actions. */
 @media(max-width:767px){
   .sp{overflow:clip}
