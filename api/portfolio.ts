@@ -29,6 +29,22 @@ function formatSize(bytes?: string | null): string {
   return `${(value / 1024 ** 3).toFixed(2)} GB`;
 }
 
+/** Map with at most `limit` calls in flight, preserving input order. Keeps Drive bursts under its rate limit. */
+async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const results = new Array<R>(items.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) {
+      const index = next++;
+      results[index] = await fn(items[index]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return results;
+}
+
+const DRIVE_CONCURRENCY = 8;
+
 function isCoverName(name: string): boolean {
   const base = name.replace(/\.[^.]+$/, "").trim().toLowerCase();
   return ["cover", "thumbnail", "thumb", "poster", "غلاف"].includes(base);
@@ -38,6 +54,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return res.status(405).json({ error: "method_not_allowed" });
+  }
+
+  // The CDN caches per full URL, so any query string (e.g. ?refresh=123) would skip the
+  // cache and force a full Drive crawl. Send those to the one cached URL instead.
+  if (Object.keys(req.query || {}).length > 0) {
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    return res.redirect(308, "/api/portfolio");
   }
 
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
@@ -89,7 +112,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // 1) My Portfolio / Category / Project / files
     // 2) My Portfolio / Videos / Subcategory / Project / files
     const categoryFolders = await listChildren(rootId, true);
-    const projects: any[] = [];
     const subcategories: any[] = [];
 
     const buildProject = async (
@@ -97,7 +119,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       categoryFolder: any,
       subcategoryFolder?: any,
     ) => {
-      if (!projectFolder?.id || !projectFolder?.name) return;
+      if (!projectFolder?.id || !projectFolder?.name) return null;
       const rawFiles = await listChildren(projectFolder.id, false);
 
       const media = rawFiles
@@ -135,7 +157,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .sort()
         .at(-1) || projectFolder.modifiedTime || "";
 
-      projects.push({
+      return {
         id: projectFolder.id,
         name: projectFolder.name,
         category: categoryFolder.name,
@@ -145,34 +167,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         modifiedTime: latestModified,
         cover,
         media,
-      });
+      };
     };
 
-    for (const categoryFolder of categoryFolders) {
-      if (!categoryFolder.id || !categoryFolder.name) continue;
-      const firstLevelFolders = await listChildren(categoryFolder.id, true);
+    // Phase 1: collect every project folder (folder listings run in parallel per level).
+    type ProjectRef = { projectFolder: any; categoryFolder: any; subcategoryFolder?: any };
+    const validCategories = categoryFolders.filter((folder) => folder.id && folder.name);
+    const refsPerCategory = await mapLimit(validCategories, DRIVE_CONCURRENCY, async (categoryFolder): Promise<ProjectRef[]> => {
+      const firstLevelFolders = (await listChildren(categoryFolder.id, true)).filter((f) => f.id && f.name);
 
       // Videos uses one extra level: Videos / Motion Graphics|AI Videos|Other Videos / Project / files
       if (categoryFolder.name.trim().toLowerCase() === "videos") {
-        for (const subcategoryFolder of firstLevelFolders) {
-          if (!subcategoryFolder.id || !subcategoryFolder.name) continue;
+        const perSub = await mapLimit(firstLevelFolders, DRIVE_CONCURRENCY, async (subcategoryFolder) => {
           subcategories.push({ id: subcategoryFolder.id, name: subcategoryFolder.name, category: categoryFolder.name, categoryId: categoryFolder.id });
           const projectFolders = await listChildren(subcategoryFolder.id, true);
-          for (const projectFolder of projectFolders) {
-            await buildProject(projectFolder, categoryFolder, subcategoryFolder);
-          }
-        }
-        continue;
+          return projectFolders.map((projectFolder) => ({ projectFolder, categoryFolder, subcategoryFolder }));
+        });
+        return perSub.flat();
       }
 
-      for (const projectFolder of firstLevelFolders) {
-        await buildProject(projectFolder, categoryFolder);
-      }
-    }
+      return firstLevelFolders.map((projectFolder) => ({ projectFolder, categoryFolder }));
+    });
+
+    // Phase 2: list every project's files in parallel.
+    const built = await mapLimit(refsPerCategory.flat(), DRIVE_CONCURRENCY, (ref) =>
+      buildProject(ref.projectFolder, ref.categoryFolder, ref.subcategoryFolder),
+    );
+    const projects = built.filter((project): project is NonNullable<typeof project> => project !== null);
+    subcategories.sort((a, b) => `${a.category}/${a.name}`.localeCompare(`${b.category}/${b.name}`));
 
     projects.sort((a, b) => (b.modifiedTime || "").localeCompare(a.modifiedTime || ""));
 
-    res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=120");
+    // Serve from Vercel's CDN for 5 minutes, then keep serving the last copy for up to a
+    // day while one background request rebuilds it, so visitors never wait on the Drive crawl.
+    res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=86400");
     return res.status(200).json({
       source: "google-drive",
       updatedAt: new Date().toISOString(),

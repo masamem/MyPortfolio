@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {ArrowDown, ArrowUpRight, RefreshCw} from 'lucide-react';
+import {ArrowDown, ArrowUpRight} from 'lucide-react';
 import {Language} from '../types';
 import {DrivePortfolioProject, fetchPortfolioFromDrive} from '../lib/portfolioDrive';
 import {ProjectDetailModal} from './ProjectDetailModal';
@@ -28,17 +28,18 @@ export function StretchPortfolioHome({lang,onToggleLang}:{lang:Language;onToggle
   const [mood,setMood] = useState<Mood>({face:'base',patience:100,pulls:0});
   const [projects,setProjects] = useState<DrivePortfolioProject[]>([]);
   const [loading,setLoading] = useState(true);
-  const [refreshing,setRefreshing] = useState(false);
   const [active,setActive] = useState<DrivePortfolioProject|null>(null);
   const onMood = useCallback((next:Mood)=>setMood(next),[]);
 
-  const load = async(force=false) => {
-    force ? setRefreshing(true) : setLoading(true);
-    try { const data = await fetchPortfolioFromDrive(force); setProjects(data.projects); }
-    catch { setProjects([]); }
-    finally { setLoading(false); setRefreshing(false); }
-  };
-  useEffect(()=>{load();},[]);
+  useEffect(()=>{
+    const controller = new AbortController();
+    fetchPortfolioFromDrive(false, controller.signal)
+      // Only replace projects on success; a failed request never wipes work already on screen.
+      .then(data => setProjects(data.projects))
+      .catch(() => { /* keep whatever is already shown; the empty state covers a first-load failure */ })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    return () => controller.abort();
+  },[]);
   useEffect(()=>{document.body.style.overflow=active?'hidden':'';return()=>{document.body.style.overflow='';};},[active]);
   const featured = useMemo(()=>projects.slice(0,8),[projects]);
   const moodName = ar ? ({base:'هادئ',l_left:'يراقبك',l_right:'يراقبك',x_cross:'مرتاب',x_tongue:'مرح',x_shock:'مندهش',x_laugh:'يضحك',x_skeptic:'غير مقتنع',x_whistle:'بريء',x_smug:'واثق',x_dizzy:'يرى النجوم',g_grimace:'مضغوط',g_ouch:'آخ!',g_squish:'مقرص'} as Record<string,string>)[mood.face] : faces[mood.face].mood;
@@ -58,7 +59,7 @@ export function StretchPortfolioHome({lang,onToggleLang}:{lang:Language;onToggle
 
     <section id="about" className="sp-section sp-about"><p className="sp-kicker">01 · {ar?'عني':'About'}</p><div><h2><span>{ar?'تصميم':'Design that'}</span><em>{ar?'يحرّك الناس.':'moves people.'}</em></h2><article><p>{ar?'أنا مجاهد المعاري، مصمم وسائط متعددة ومحترف إبداعي مقيم في الرياض. أجمع بين الهوية البصرية والموشن جرافيك والمونتاج وثلاثي الأبعاد وأدوات الذكاء الاصطناعي لصناعة قصص بصرية واضحة ومؤثرة.':'I’m Mugahed Al-Maari, a multimedia designer and creative professional based in Riyadh. I combine visual identity, motion graphics, video editing, 3D and emerging AI tools to turn ideas into clear, memorable visual stories.'}</p><p>{ar?'خبرتي تشمل العمل الحر وإدارة الإعلام ومحتوى الحملات والإنتاج متعدد الوسائط، وحاصل على بكالوريوس بمرتبة الشرف في تقنية الوسائط المتعددة.':'My experience spans freelance creative work, media management, campaign content and multimedia production. I hold a BSc (Hons) in Multimedia Technology.'}</p><div className="sp-about-links"><a href="/downloads/Mugahed_AlMaari_Resume.pdf" target="_blank" rel="noreferrer">{ar?'عرض السيرة الذاتية':'View résumé'} <ArrowUpRight/></a><a className="sp-linkedin" href="https://www.linkedin.com/in/mugahedalmaari" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight/></a></div></article></div></section>
 
-    <section id="work" className="sp-section sp-work"><div className="sp-work-heading"><p className="sp-kicker">02 · {ar?'أعمال مختارة':'Selected work'}</p><h2>{ar?'أفكار أصبحت مرئية.':'Ideas, made visible.'}</h2><button onClick={()=>load(true)} disabled={refreshing}><RefreshCw className={refreshing?'sp-spin':''}/>{ar?'تحديث':'Refresh'}</button></div>{loading?<div className="sp-status">{ar?'جاري تحميل المشاريع من Google Drive…':'Loading projects from Google Drive…'}</div>:featured.length?<ApertureWork projects={featured} lang={lang} onOpen={setActive}/>:<div className="sp-status">{ar?'تعذر تحميل المشاريع حالياً.':'Projects are temporarily unavailable.'}</div>}</section>
+    <section id="work" className="sp-section sp-work"><div className="sp-work-heading"><p className="sp-kicker">02 · {ar?'أعمال مختارة':'Selected work'}</p><h2>{ar?'أفكار أصبحت مرئية.':'Ideas, made visible.'}</h2></div>{loading?<div className="sp-status">{ar?'جاري تحميل المشاريع من Google Drive…':'Loading projects from Google Drive…'}</div>:featured.length?<ApertureWork projects={featured} lang={lang} onOpen={setActive}/>:<div className="sp-status">{ar?'تعذر تحميل المشاريع حالياً.':'Projects are temporarily unavailable.'}</div>}</section>
 
     <LogoBlurBrands lang={lang}/>
 

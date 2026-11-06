@@ -33,9 +33,10 @@ export interface DrivePortfolioResponse {
   projects: DrivePortfolioProject[];
 }
 
-export async function fetchPortfolioFromDrive(forceRefresh = false, signal?: AbortSignal) {
-  const suffix = forceRefresh ? `?refresh=${Date.now()}` : '';
-  const response = await fetch(`/api/portfolio${suffix}`, {
+// Always the same URL so Vercel's CDN can serve it. Drive changes show up within ~5 minutes.
+// `_forceRefresh` is ignored; it's kept only so older, unused components still type-check.
+export async function fetchPortfolioFromDrive(_forceRefresh?: boolean, signal?: AbortSignal) {
+  const response = await fetch('/api/portfolio', {
     signal,
     headers: { Accept: 'application/json' },
   });
