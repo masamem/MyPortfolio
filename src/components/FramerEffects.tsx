@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ArrowUpRight} from 'lucide-react';
 import {Language} from '../types';
 import {DrivePortfolioProject} from '../lib/portfolioDrive';
@@ -19,7 +19,16 @@ export function ApertureWork({projects,lang,onOpen}:{projects:DrivePortfolioProj
   return <div className="fx-aperture">{shown.map((project,index)=><article key={project.id} className={`fx-aperture-panel${active===index?' is-open':''}`} style={{'--tone':(['#c9ff38','#8370ff','#ff6946','#62b796','#e7b5cc','#82bedf'] as string[])[index%6]} as React.CSSProperties} onMouseEnter={()=>setActive(index)}><button className="fx-aperture-trigger" onClick={()=>setActive(index)} aria-expanded={active===index}><span>{String(index+1).padStart(2,'0')}</span><h3>{project.name}</h3><i>{active===index?'×':'+'}</i></button><div className="fx-aperture-body"><div className="fx-aperture-media"><ProjectMedia project={project}/></div><div className="fx-aperture-copy"><span>{ar?(arCategories[project.category]||project.category):project.category}</span><p>{ar?'مشروع مختار من أرشيف أعمالي المتصل مباشرةً بـ Google Drive.':'Selected work loaded directly from my connected Google Drive portfolio.'}</p><button onClick={()=>onOpen(project)}>{ar?'عرض المشروع':'Explore project'} <ArrowUpRight/></button></div></div></article>)}</div>
 }
 
-const brandPool=['REBUNE','COPONYA','STUFFYDNEED','FARO HOME','TILA','SAHM','MUVFX'];
-export function LogoBlurBrands({lang}:{lang:Language}){const count=5;const [offset,setOffset]=useState(0);const paused=useRef(false);useEffect(()=>{const id=window.setInterval(()=>{if(!paused.current)setOffset(v=>(v+count)%brandPool.length)},3300);return()=>clearInterval(id)},[]);const items=useMemo(()=>Array.from({length:count},(_,i)=>brandPool[(offset+i)%brandPool.length]),[offset]);return <section className="fx-brand-flow"><div><span>{lang==='ar'?'علامات ومشاريع':'Brands & projects'}</span><p>{lang==='ar'?'هويات ومنتجات ساهمت في تشكيلها.':'Selected identities and products I’ve helped shape.'}</p></div><div className="fx-logo-blur" onMouseEnter={()=>paused.current=true} onMouseLeave={()=>paused.current=false}>{items.map((name,i)=><b key={`${name}-${offset}-${i}`} style={{animationDelay:`${i*130}ms`}}>{name}</b>)}</div></section>}
+// All brands visible at once (the old 5-at-a-time blur carousel read as placeholder text).
+// When real logo files exist, add `logo: '/brand/<file>.svg'` and it renders instead of the wordmark.
+const brands:{name:string;href?:string;logo?:string}[]=[
+  {name:'Rebune',href:'https://library.rebune.com/'},
+  {name:'Coponya',href:'https://coponya.com'},
+  {name:'Stuffydneed'},
+  {name:'Faro Home'},
+  {name:'Tila'},
+  {name:'Sahm'},
+];
+export function LogoBlurBrands({lang}:{lang:Language}){return <section className="fx-brand-flow"><div><span>{lang==='ar'?'علامات ومشاريع':'Brands & projects'}</span><p>{lang==='ar'?'هويات ومنتجات ساهمت في تشكيلها.':'Selected identities and products I’ve helped shape.'}</p></div><ul className="fx-brand-list">{brands.map(({name,href,logo})=>{const mark=logo?<img src={logo} alt={name}/>:<b>{name}</b>;return <li key={name}>{href?<a href={href} target="_blank" rel="noopener noreferrer">{mark}<ArrowUpRight aria-hidden/></a>:mark}</li>})}</ul></section>}
 
 export function BreathingFooter({lang}:{lang:Language}){const ar=lang==='ar';return <footer className="fx-breathing-footer"><i className="fx-glow a"/><i className="fx-glow b"/><div className="fx-footer-top"><div className="fx-footer-intro"><a href="#home"><b>✦</b><span>MUVFX</span></a><p>{ar?'تصميم وسائط متعددة، موشن وتجارب رقمية — صُنعت في الرياض لتصنع أثراً.':'Multimedia design, motion and digital experiences—crafted in Riyadh, built to move.'}</p><a className="fx-footer-cta" href="mailto:mugahedalmaari@gmail.com">{ar?'لنتحدث':'Let’s talk'} ↗</a></div><div className="fx-footer-links"><div><h3>{ar?'استكشف':'Explore'}</h3><a href="#work">{ar?'الأعمال':'Work'}</a><a href="#about">{ar?'عني':'About'}</a><a href="#contact">{ar?'تواصل':'Contact'}</a></div><div><h3>{ar?'مشاريع':'Projects'}</h3><a href="https://library.rebune.com/">Rebune</a><a href="https://coponya.com">Coponya</a><a href="#work">Stuffydneed</a></div><div><h3>{ar?'روابط':'Connect'}</h3><a href="https://behance.net/mugahedalmaari">Behance</a><a href="https://linkedin.com/in/mugahedalmaari">LinkedIn</a><a href="mailto:mugahedalmaari@gmail.com">Email</a></div></div></div><div className="fx-footer-bottom"><span>© 2026 MUGAHED AL‑MAARI</span><span><b>✦</b> RIYADH, SAUDI ARABIA</span></div></footer>}

@@ -21,7 +21,11 @@ export function useFitHeadline<T extends HTMLElement>() {
         el.style.fontSize = `${PROBE}px`;
         const styles = getComputedStyle(parent);
         const available = parent.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight);
+        // Measure the text's own width. The headline is display:block in the CSS, so a plain
+        // offsetWidth returns the container width and the text overflowed (the "D" was clipped).
+        el.style.width = 'max-content';
         const natural = el.offsetWidth;
+        el.style.width = '';
         if (natural > 0) el.style.fontSize = `${(PROBE * available) / natural}px`;
       } else {
         el.style.fontSize = '';

@@ -124,3 +124,12 @@ html[data-theme='dark'] .sp{--page:#12141b;--ink:#f0f2f7;--muted:#a4a9b5;--line:
   .sp-quick-contact>div{grid-template-columns:1fr}.sp-quick-contact button{width:100%}
   .sp-about h2{font-size:19vw}.sp-work h2,.sp-contact h2{font-size:17vw}
 }
+
+
+/* Accent text: lime on dark, Ocean blue on light (lime on the light page is ~1.1:1 and disappears). */
+.sp{--accent-ink:#1e45fc}
+html[data-theme='dark'] .sp{--accent-ink:var(--accent)}
+.sp-about h2 em{color:var(--accent-ink)}
+
+/* clip instead of hidden: a hidden box can still be scrolled sideways by anchor jumps (#work), which shifted the whole page. */
+.sp{overflow:clip}
