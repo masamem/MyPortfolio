@@ -24,3 +24,15 @@
 .fx-aperture-copy p{max-width:52ch}
 .fx-aperture-copy button{justify-self:start;margin-top:4px}
 }
+
+/* Desktop work accordion: all projects fit (collapsed cards narrow on smaller laptops) and the
+   card height follows the screen, so one card plus the nav fits on a 768px-tall laptop. */
+@media(min-width:768px){
+.fx-aperture{--fx-col:104px;height:clamp(460px,calc(100svh - 180px),640px)}
+.fx-aperture-panel{flex-basis:var(--fx-col)}
+.fx-aperture-panel.is-open{flex-basis:max(var(--fx-open-min,442px),calc(100% - (var(--fx-col) + 8px) * (var(--fx-count,6) - 1)))}
+.fx-aperture-trigger{width:var(--fx-col)}
+.fx-aperture-body{left:var(--fx-col)}
+}
+@media(min-width:768px) and (max-width:1439px){.fx-aperture{--fx-col:84px}.fx-aperture-trigger h3{font-size:26px}}
+@media(min-width:768px) and (max-width:1099px){.fx-aperture{--fx-col:68px;--fx-open-min:340px}.fx-aperture-trigger{padding-inline:8px}.fx-aperture-trigger h3{font-size:22px}}
