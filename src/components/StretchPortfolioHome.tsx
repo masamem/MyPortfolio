@@ -9,6 +9,7 @@ import {useFitHeadline, useTheme} from '../stretchFace/hooks';
 import './stretch-portfolio.css';
 import './framer-effects.css';
 import {ApertureWork, BreathingFooter, LiquidGlassNav, LogoBlurBrands} from './FramerEffects';
+import {ExperienceSection} from './ExperienceSection';
 
 const DISC = '#c9ff38';
 const arCategories: Record<string,string> = {Branding:'الهوية البصرية',Videos:'الفيديو','Social Media':'التواصل الاجتماعي','3D':'ثلاثي الأبعاد','Other Work':'أعمال أخرى'};
@@ -48,6 +49,7 @@ export function StretchPortfolioHome({lang,onToggleLang}:{lang:Language;onToggle
     <LiquidGlassNav lang={lang} onToggleLang={onToggleLang} dark={dark} onToggleDark={toggleDark}/>
 
     <main id="home" className="sp-hero">
+      <p className="sp-role"><span className="sp-role-dot" aria-hidden/>{ar?'متاح للعمل الحر':'Available for freelance'}<b aria-hidden>·</b>{ar?'مصمم وسائط متعددة':'Multimedia designer'}<span className="sp-role-skills">{ar?' — هوية بصرية · موشن · فيديو · سوشيال · UI/UX':' — Brand identity · Motion · Video · Social · UI/UX'}</span></p>
       <h1 ref={title} className="sp-headline"><span>{ar?'مرحباً، أنا':'Hey, I’m'}</span> <em>{ar?'مجاهد':'Mugahed'}</em></h1>
       <div className="sp-hero-grid">
         <div className="sp-intro"><strong>{ar?'أحوّل الأفكار إلى حركة.':'I make ideas move.'}</strong><p>{ar?'أنا مجاهد المعاري، مصمم وسائط متعددة في الرياض بخبرة تتجاوز ٦ سنوات في الجرافيك والموشن والفيديو والمحتوى الاجتماعي والتجارب التفاعلية.':'I’m Mugahed Al-Maari, a Riyadh-based multimedia designer with 6+ years across branding, motion graphics, video, social content and interactive experiences.'}</p><p>{ar?'متاح لمشاريع العمل الحر والتعاون الإبداعي وفرص الوسائط المتعددة.':'Available for freelance projects, creative collaborations and multimedia opportunities.'}</p></div>
@@ -61,9 +63,11 @@ export function StretchPortfolioHome({lang,onToggleLang}:{lang:Language;onToggle
 
     <section id="work" className="sp-section sp-work"><div className="sp-work-heading"><p className="sp-kicker">02 · {ar?'أعمال مختارة':'Selected work'}</p><h2>{ar?'أفكار أصبحت مرئية.':'Ideas, made visible.'}</h2></div>{loading?<div className="sp-status">{ar?'جاري تحميل المشاريع من Google Drive…':'Loading projects from Google Drive…'}</div>:featured.length?<ApertureWork projects={featured} lang={lang} onOpen={setActive}/>:<div className="sp-status">{ar?'تعذر تحميل المشاريع حالياً.':'Projects are temporarily unavailable.'}</div>}</section>
 
+    <ExperienceSection lang={lang}/>
+
     <LogoBlurBrands lang={lang}/>
 
-    <section id="contact" className="sp-section sp-contact"><p className="sp-kicker">03 · {ar?'تواصل':'Contact'}</p><h2>{ar?'لنصنع شيئاً يستحق المشاهدة.':'Let’s make something worth watching.'}</h2><a className="sp-email" href="mailto:mugahedalmaari@gmail.com">mugahedalmaari@gmail.com <ArrowUpRight/></a><div className="sp-contact-row"><span>{ar?'الرياض، المملكة العربية السعودية':'Riyadh, Saudi Arabia'}</span><a href="https://www.behance.net/mugahedalmaari" target="_blank" rel="noreferrer">Behance</a><a href="https://www.linkedin.com/in/mugahedalmaari" target="_blank" rel="noreferrer">LinkedIn</a></div><div className="sp-specialties"><span>{ar?'متخصص في':'Specialized in'}</span><em>Brand Identity</em><b>Motion</b><strong>video editing</strong><em>Creative Direction</em><b>3D / AI</b><em>Social Content</em></div></section>
+    <section id="contact" className="sp-section sp-contact"><p className="sp-kicker">04 · {ar?'تواصل':'Contact'}</p><h2>{ar?'لنصنع شيئاً يستحق المشاهدة.':'Let’s make something worth watching.'}</h2><a className="sp-email" href="mailto:mugahedalmaari@gmail.com">mugahedalmaari@gmail.com <ArrowUpRight/></a><div className="sp-contact-row"><span>{ar?'الرياض، المملكة العربية السعودية':'Riyadh, Saudi Arabia'}</span><a href="https://www.behance.net/mugahedalmaari" target="_blank" rel="noreferrer">Behance</a><a href="https://www.linkedin.com/in/mugahedalmaari" target="_blank" rel="noreferrer">LinkedIn</a></div><div className="sp-specialties"><span>{ar?'متخصص في':'Specialized in'}</span><em>Brand Identity</em><b>Motion</b><strong>video editing</strong><em>Creative Direction</em><b>3D / AI</b><em>Social Content</em></div></section>
     <BreathingFooter lang={lang}/>
     <ProjectDetailModal project={active} lang={lang} onClose={()=>setActive(null)}/>
   </div>;
