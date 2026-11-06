@@ -20,8 +20,7 @@
 
 /* Card copy: category on its own line, description gets the full width (it was squeezed to one word per line). */
 @media(min-width:768px){
-.fx-aperture-copy{grid-template-columns:1fr auto;row-gap:10px}
-.fx-aperture-copy span{grid-column:1/-1}
-.fx-aperture-copy p{grid-column:1;max-width:46ch}
-.fx-aperture-copy button{grid-column:2;align-self:end}
+.fx-aperture-copy{grid-template-columns:1fr;row-gap:10px}
+.fx-aperture-copy p{max-width:52ch}
+.fx-aperture-copy button{justify-self:start;margin-top:4px}
 }
