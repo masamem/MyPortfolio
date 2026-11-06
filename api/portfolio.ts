@@ -2,7 +2,16 @@ import { google } from "googleapis";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 const FOLDER_MIME = "application/vnd.google-apps.folder";
-const FIELDS = "nextPageToken, files(id,name,mimeType,size,modifiedTime,parents,thumbnailLink,webViewLink)";
+const FIELDS = "nextPageToken, files(id,name,description,mimeType,size,modifiedTime,parents,thumbnailLink,webViewLink)";
+
+/**
+ * A project's card text comes from its Drive folder's Description (Drive → folder → Details).
+ * English first; optionally a line of three or more dashes, then the Arabic text.
+ */
+function splitDescription(raw?: string | null): { en: string; ar: string } {
+  const [en = "", ar = ""] = (raw || "").split(/\r?\n\s*-{3,}\s*\r?\n/);
+  return { en: en.trim(), ar: ar.trim() };
+}
 
 function esc(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
@@ -160,6 +169,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return {
         id: projectFolder.id,
         name: projectFolder.name,
+        description: splitDescription(projectFolder.description),
         category: categoryFolder.name,
         categoryId: categoryFolder.id,
         subcategory: subcategoryFolder?.name || "",

@@ -17,3 +17,11 @@
 .fx-brand-list a:hover img{filter:none;opacity:1}
 @media(min-width:1100px){.fx-brand-list{grid-template-columns:repeat(6,1fr)}}
 @media(max-width:767px){.fx-brand-list{grid-template-columns:repeat(2,1fr)}.fx-brand-list a,.fx-brand-list li>b{min-height:64px}}
+
+/* Card copy: category on its own line, description gets the full width (it was squeezed to one word per line). */
+@media(min-width:768px){
+.fx-aperture-copy{grid-template-columns:1fr auto;row-gap:10px}
+.fx-aperture-copy span{grid-column:1/-1}
+.fx-aperture-copy p{grid-column:1;max-width:46ch}
+.fx-aperture-copy button{grid-column:2;align-self:end}
+}

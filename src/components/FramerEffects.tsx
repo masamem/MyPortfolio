@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ArrowUpRight} from 'lucide-react';
 import {Language} from '../types';
-import {DrivePortfolioProject} from '../lib/portfolioDrive';
+import {DrivePortfolioProject, projectBlurb} from '../lib/portfolioDrive';
 
 const arCategories:Record<string,string>={Branding:'الهوية البصرية',Videos:'الفيديو','Social Media':'التواصل الاجتماعي','3D':'ثلاثي الأبعاد','Other Work':'أعمال أخرى'};
 
@@ -16,7 +16,7 @@ export function ApertureWork({projects,lang,onOpen}:{projects:DrivePortfolioProj
   const shown=projects.slice(0,6);const [active,setActive]=useState(0);const ar=lang==='ar';
   useEffect(()=>{if(active>shown.length-1)setActive(0)},[shown.length,active]);
   if(!shown.length)return null;
-  return <div className="fx-aperture">{shown.map((project,index)=><article key={project.id} className={`fx-aperture-panel${active===index?' is-open':''}`} style={{'--tone':(['#c9ff38','#8370ff','#ff6946','#62b796','#e7b5cc','#82bedf'] as string[])[index%6]} as React.CSSProperties} onMouseEnter={()=>setActive(index)}><button className="fx-aperture-trigger" onClick={()=>setActive(index)} aria-expanded={active===index}><span>{String(index+1).padStart(2,'0')}</span><h3>{project.name}</h3><i>{active===index?'×':'+'}</i></button><div className="fx-aperture-body"><div className="fx-aperture-media"><ProjectMedia project={project}/></div><div className="fx-aperture-copy"><span>{ar?(arCategories[project.category]||project.category):project.category}</span><p>{ar?'مشروع مختار من أرشيف أعمالي المتصل مباشرةً بـ Google Drive.':'Selected work loaded directly from my connected Google Drive portfolio.'}</p><button onClick={()=>onOpen(project)}>{ar?'عرض المشروع':'Explore project'} <ArrowUpRight/></button></div></div></article>)}</div>
+  return <div className="fx-aperture">{shown.map((project,index)=><article key={project.id} className={`fx-aperture-panel${active===index?' is-open':''}`} style={{'--tone':(['#c9ff38','#8370ff','#ff6946','#62b796','#e7b5cc','#82bedf'] as string[])[index%6]} as React.CSSProperties} onMouseEnter={()=>setActive(index)}><button className="fx-aperture-trigger" onClick={()=>setActive(index)} aria-expanded={active===index}><span>{String(index+1).padStart(2,'0')}</span><h3>{project.name}</h3><i>{active===index?'×':'+'}</i></button><div className="fx-aperture-body"><div className="fx-aperture-media"><ProjectMedia project={project}/></div><div className="fx-aperture-copy"><span>{ar?(arCategories[project.category]||project.category):project.category}</span><p>{projectBlurb(project,lang)}</p><button onClick={()=>onOpen(project)}>{ar?'عرض المشروع':'Explore project'} <ArrowUpRight/></button></div></div></article>)}</div>
 }
 
 // All brands visible at once (the old 5-at-a-time blur carousel read as placeholder text).

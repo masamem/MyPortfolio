@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import '@google/model-viewer';
 import { Language } from '../types';
-import { DrivePortfolioProject, PortfolioMedia } from '../lib/portfolioDrive';
+import { DrivePortfolioProject, PortfolioMedia, projectBlurb } from '../lib/portfolioDrive';
 import { X, Calendar, FolderOpen, ExternalLink, FileText, Box, Play, RotateCcw } from 'lucide-react';
 
 interface ProjectDetailModalProps {
@@ -160,9 +160,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight pe-12">{project.name}</h2>
           <p className="mt-3 text-sm sm:text-base text-gray-400 max-w-2xl">
-            {isRTL
-              ? 'هذا المشروع يتم تحميله مباشرة من مجلد Google Drive الخاص بك. أي تحديث للملفات سيظهر تلقائيًا في البورتفوليو.'
-              : 'This project is loaded directly from your Google Drive folder. Updates to the folder appear automatically in the portfolio.'}
+            {projectBlurb(project, lang)}
           </p>
           {liveUrl && (
             <a
