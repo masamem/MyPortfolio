@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import '@google/model-viewer';
-import { Language } from '../types';
-import { DrivePortfolioProject, PortfolioMedia, projectBlurb } from '../lib/portfolioDrive';
-import { X, Calendar, FolderOpen, ExternalLink, FileText, Box, Play, RotateCcw } from 'lucide-react';
+import {ArrowCounterClockwise, ArrowSquareOut, ArrowUpRight, Cube, FilePdf, X} from '@phosphor-icons/react';
+import {Language} from '../types';
+import {DrivePortfolioProject, PortfolioMedia, projectBlurb} from '../lib/portfolioDrive';
+import {arCategories} from '../lib/copy';
 
 interface ProjectDetailModalProps {
   project: DrivePortfolioProject | null;
@@ -10,18 +11,18 @@ interface ProjectDetailModalProps {
   onClose: () => void;
 }
 
-const ModelPreview: React.FC<{ item: PortfolioMedia; isRTL: boolean }> = ({ item, isRTL }) => {
-  const viewerRef = useRef<HTMLElement & { resetTurntableRotation?: () => void; cameraOrbit?: string }>(null);
+const LIVE_SITES: Record<string, string> = {'rebune media library': 'https://library.rebune.com/'};
 
+function ModelPreview({item, ar}: {item: PortfolioMedia; ar: boolean}) {
+  const viewerRef = useRef<HTMLElement & {resetTurntableRotation?: () => void; cameraOrbit?: string}>(null);
   const resetView = () => {
     const viewer = viewerRef.current;
     if (!viewer) return;
     viewer.resetTurntableRotation?.();
     viewer.cameraOrbit = '0deg 75deg 105%';
   };
-
   return (
-    <div className="relative w-full h-full min-h-72 bg-[radial-gradient(circle_at_center,_#292523_0%,_#151312_55%,_#0d0c0b_100%)]">
+    <>
       <model-viewer
         ref={viewerRef}
         src={item.url}
@@ -40,180 +41,100 @@ const ModelPreview: React.FC<{ item: PortfolioMedia; isRTL: boolean }> = ({ item
         touch-action="pan-y"
         loading="eager"
         reveal="auto"
-        style={{ width: '100%', height: '100%', display: 'block' }}
-      >
-        <div slot="progress-bar" className="absolute inset-x-8 top-1/2 h-1 overflow-hidden rounded-full bg-white/10">
-          <div className="h-full w-1/2 animate-pulse rounded-full bg-[#ccf52b]" />
-        </div>
-        <a
-          slot="poster"
-          href={item.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-gray-300"
-        >
-          <Box className="w-12 h-12 text-[#ccf52b]" />
-          <span className="text-sm font-bold">{isRTL ? 'تحميل المجسم ثلاثي الأبعاد' : 'Load 3D model'}</span>
-        </a>
-      </model-viewer>
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 flex items-end justify-between gap-3 px-4">
-        <span className="rounded-full border border-white/10 bg-black/55 px-3 py-1.5 text-[11px] text-gray-300 backdrop-blur-sm">
-          {isRTL ? 'اسحب للتدوير • مرّر للتكبير' : 'Drag to rotate • Scroll to zoom'}
-        </span>
-        <button
-          type="button"
-          onClick={resetView}
-          className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/65 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-[#ccf52b] hover:text-[#151312]"
-          aria-label={isRTL ? 'إعادة ضبط زاوية العرض' : 'Reset model view'}
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-          {isRTL ? 'إعادة الضبط' : 'Reset'}
+      />
+      <div className="mx-model-tools">
+        <span className="caption-4">{ar ? 'اسحب للتدوير · مرّر للتكبير' : 'Drag to rotate · Scroll to zoom'}</span>
+        <button type="button" className="mx-btn mx-btn-quiet button-sm" onClick={resetView}>
+          <ArrowCounterClockwise aria-hidden />
+          {ar ? 'إعادة الضبط' : 'Reset view'}
         </button>
       </div>
-    </div>
+    </>
   );
-};
+}
 
-const MediaPreview: React.FC<{ item: PortfolioMedia; title: string; isRTL: boolean }> = ({ item, title, isRTL }) => {
-  if (item.type === 'image') {
-    return <img src={item.url} alt={`${title} - ${item.name}`} className="w-full h-full object-contain" loading="lazy" />;
-  }
-
-  if (item.type === 'video') {
-    return (
-      <video
-        src={item.url}
-        controls
-        playsInline
-        preload="metadata"
-        className="w-full h-full object-contain bg-black"
-      />
-    );
-  }
-
-  if (item.type === '3d') {
-    return <ModelPreview item={item} isRTL={isRTL} />;
-  }
-
+function MediaPreview({item, title, ar}: {item: PortfolioMedia; title: string; ar: boolean}) {
+  if (item.type === 'image') return <img src={item.url} alt={`${title}: ${item.name}`} loading="lazy" />;
+  if (item.type === 'video') return <video src={item.url} controls playsInline preload="metadata" />;
+  if (item.type === '3d') return <ModelPreview item={item} ar={ar} />;
   return (
-    <a
-      href={item.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-full h-full min-h-52 flex flex-col items-center justify-center gap-3 bg-white/[0.04] text-gray-300 hover:text-white transition-colors"
-    >
-      {item.type === 'pdf' ? <FileText className="w-10 h-10 text-[#ccf52b]" /> : <Box className="w-10 h-10 text-[#ccf52b]" />}
-      <span className="font-bold text-sm">{item.name}</span>
-      <span className="text-xs text-gray-500">{item.size}</span>
-      <ExternalLink className="w-4 h-4" />
+    <a className="mx-media-file" href={item.url} target="_blank" rel="noopener noreferrer">
+      {item.type === 'pdf' ? <FilePdf aria-hidden /> : <Cube aria-hidden />}
+      <span className="title-4">{item.name}</span>
+      <span className="caption-5">{ar ? 'فتح الملف' : 'Open file'} · {item.size}</span>
     </a>
   );
-};
+}
 
-export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, lang, onClose }) => {
+/** Full screen project sheet. Escape, the close button or a click on the backdrop closes it. */
+export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({project, lang, onClose}) => {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const ar = lang === 'ar';
+
+  useEffect(() => {
+    if (!project) return;
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      opener?.focus();
+    };
+  }, [project, onClose]);
+
   if (!project) return null;
-  const isRTL = lang === 'ar';
-  const visibleMedia = [...project.media].sort((a, b) => Number(b.isCover) - Number(a.isCover));
-  const modifiedYear = project.modifiedTime ? new Date(project.modifiedTime).getFullYear() : '';
-  const liveUrl = project.name.trim().toLowerCase() === 'rebune media library'
-    ? 'https://library.rebune.com/'
-    : null;
+  const media = [...project.media].sort((a, b) => Number(b.isCover) - Number(a.isCover));
+  const year = project.modifiedTime ? new Date(project.modifiedTime).getFullYear() : '';
+  const live = LIVE_SITES[project.name.trim().toLowerCase()];
+  const category = ar ? arCategories[project.category] || project.category : project.category;
 
   return (
-    <div
-      className="fixed inset-0 z-[70] bg-black/85 backdrop-blur-md overflow-y-auto p-3 sm:p-6"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={project.name}
-    >
-      <div
-        className="relative w-full max-w-6xl mx-auto my-4 sm:my-8 bg-[#151312] border border-white/15 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="h-1.5 bg-[#ccf52b]" />
-        <button
-          onClick={onClose}
-          className="absolute top-5 end-5 z-20 p-2.5 rounded-full bg-black/60 border border-white/15 text-gray-300 hover:text-white hover:bg-black/80 transition-all"
-          aria-label={isRTL ? 'إغلاق' : 'Close'}
-        >
-          <X className="w-5 h-5" />
-        </button>
-
-        <div className="p-5 sm:p-8 lg:p-10 border-b border-white/10">
-          <div className="flex flex-wrap items-center gap-2.5 mb-4">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#ccf52b]/15 border border-[#ccf52b]/30 text-[#ccf52b] px-3 py-1 text-xs font-bold uppercase tracking-wider">
-              <FolderOpen className="w-3.5 h-3.5" />
-              {project.subcategory ? `${project.category} · ${project.subcategory}` : project.category}
-            </span>
-            {modifiedYear && (
-              <span className="inline-flex items-center gap-1.5 text-xs text-gray-400">
-                <Calendar className="w-3.5 h-3.5" />
-                {modifiedYear}
-              </span>
-            )}
-            <span className="text-xs text-gray-500">
-              {project.media.length} {isRTL ? 'ملف' : project.media.length === 1 ? 'file' : 'files'}
-            </span>
-          </div>
-
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight pe-12">{project.name}</h2>
-          <p className="mt-3 text-sm sm:text-base text-gray-400 max-w-2xl">
-            {projectBlurb(project, lang)}
+    <div className="mx-viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" onClick={onClose} dir={ar ? 'rtl' : 'ltr'}>
+      <div className="mx-viewer-inner" onClick={(e) => e.stopPropagation()}>
+        <div className="mx-viewer-bar">
+          <button ref={closeRef} type="button" className="mx-viewer-close" onClick={onClose} aria-label={ar ? 'إغلاق المشروع' : 'Close project'}>
+            <X aria-hidden />
+          </button>
+        </div>
+        <header className="mx-viewer-head">
+          <p className="mx-viewer-meta caption-1">
+            <span>{project.subcategory ? `${category} · ${project.subcategory}` : category}</span>
+            {year && <span>{year}</span>}
+            <span>{media.length} {ar ? 'ملف' : media.length === 1 ? 'file' : 'files'}</span>
           </p>
-          {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rebune-live-link mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#c9ff38] px-6 py-3 text-sm font-black uppercase tracking-wide transition-all hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c9ff38]"
-            >
-              {isRTL ? 'زيارة الموقع' : 'Visit live website'}
-              <ExternalLink className="h-4 w-4" />
+          <h2 id="viewer-title" className="heading-2">{project.name}</h2>
+          <p className="body-3">{projectBlurb(project, lang)}</p>
+          {live && (
+            <a className="mx-btn mx-btn-primary button-md" href={live} target="_blank" rel="noopener noreferrer">
+              {ar ? 'زيارة الموقع المباشر' : 'Visit the live site'} <ArrowUpRight aria-hidden />
             </a>
           )}
-        </div>
+        </header>
 
-        <div className="p-5 sm:p-8 lg:p-10">
-          {visibleMedia.length === 0 ? (
-            <div className="py-20 text-center border border-dashed border-white/15 rounded-2xl text-gray-400">
-              {isRTL ? 'هذا المشروع لا يحتوي ملفات مدعومة حتى الآن.' : 'This project does not contain supported media yet.'}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-7">
-              {visibleMedia.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={`group overflow-hidden rounded-2xl border border-white/10 bg-[#0d0c0b] ${index === 0 ? 'md:col-span-2' : ''}`}
-                >
-                  <div className={index === 0 ? 'aspect-video max-h-[70vh]' : 'aspect-[4/3]'}>
-                    <MediaPreview item={item} title={project.name} isRTL={isRTL} />
-                  </div>
-                  <div className="flex items-center justify-between gap-4 p-4 border-t border-white/10">
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-white truncate">{item.name}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{item.extension.toUpperCase()} · {item.size}</p>
-                    </div>
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-[#ccf52b] hover:text-white transition-colors"
-                    >
-                      {item.type === 'video' && <Play className="w-3.5 h-3.5" />}
-                      <span>{isRTL ? 'فتح' : 'Open'}</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
+        {media.length === 0 ? (
+          <div className="mx-empty">
+            <h3 className="heading-5">{ar ? 'لا توجد ملفات بعد.' : 'No files here yet.'}</h3>
+            <p className="body-3">{ar ? 'هذا المشروع لا يحتوي على صور أو فيديوهات مدعومة حتى الآن.' : 'This project has no supported images or videos yet.'}</p>
+          </div>
+        ) : (
+          <div className="mx-viewer-grid">
+            {media.map((item) => (
+              <figure key={item.id} className="mx-media">
+                <div className="mx-media-frame">
+                  <MediaPreview item={item} title={project.name} ar={ar} />
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+                <figcaption className="mx-media-cap caption-4">
+                  <span>{item.name}</span>
+                  <a className="mx-link" href={item.url} target="_blank" rel="noopener noreferrer">
+                    {ar ? 'فتح' : 'Open'} <ArrowSquareOut aria-hidden />
+                  </a>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
-

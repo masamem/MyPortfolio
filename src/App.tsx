@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ServicesPage } from './components/ServicesPage';
 import { StretchPortfolioHome } from './components/StretchPortfolioHome';
+import { LegalPage, NotFoundPage } from './components/SitePages';
 
 export default function App() {
   const [lang, setLang] = useState<Language>(() => {
@@ -11,7 +12,8 @@ export default function App() {
     catch { return 'en'; }
   });
   const toggleLanguage = () => setLang(previous => previous === 'en' ? 'ar' : 'en');
-  const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const isServicesPage = path === '/services';
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -28,6 +30,8 @@ export default function App() {
     return () => cancelAnimationFrame(frame);
   }, [isServicesPage]);
 
+  if (path === '/legal') return <LegalPage lang={lang} onToggleLang={toggleLanguage} />;
+  if (path !== '/' && path !== '/about' && path !== '/index.html' && !isServicesPage) return <NotFoundPage lang={lang} onToggleLang={toggleLanguage} />;
   if (!isServicesPage) return <StretchPortfolioHome lang={lang} onToggleLang={toggleLanguage} />;
   return <div className="min-h-screen bg-[#151312] text-white" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
     <Navbar lang={lang} onToggleLang={toggleLanguage} />

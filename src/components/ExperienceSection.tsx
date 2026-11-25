@@ -1,5 +1,7 @@
 import React from 'react';
+import {ArrowUpRight} from '@phosphor-icons/react';
 import {Language} from '../types';
+import {LINKEDIN, RESUME, t} from '../lib/copy';
 
 type Entry = {
   mark: string;
@@ -18,7 +20,7 @@ const experience: Entry[] = [
     now: true,
     role: {en: 'Graphic Designer', ar: 'مصمم جرافيك'},
     org: {en: 'Rebune International Trading Co.', ar: 'شركة ريبون العالمية للتجارة'},
-    when: {en: 'Feb 2024 — Now', ar: 'فبراير ٢٠٢٤ — الآن'},
+    when: {en: 'Since Feb 2024', ar: 'منذ فبراير ٢٠٢٤'},
     where: {en: 'Riyadh', ar: 'الرياض'},
     text: {
       en: 'Marketing campaigns, packaging concepts and digital assets. Product visuals, social creatives, motion graphics and promotional videos, with the marketing and product teams.',
@@ -29,11 +31,11 @@ const experience: Entry[] = [
     mark: 'FR',
     now: true,
     role: {en: 'Freelance Multimedia Designer', ar: 'مصمم وسائط متعددة مستقل'},
-    org: {en: 'Independent designer & creative consultant', ar: 'مصمم مستقل ومستشار إبداعي'},
-    when: {en: 'Oct 2020 — Now', ar: 'أكتوبر ٢٠٢٠ — الآن'},
-    where: {en: 'Remote & Riyadh', ar: 'عن بُعد والرياض'},
+    org: {en: 'Independent designer and creative consultant', ar: 'مصمم مستقل ومستشار إبداعي'},
+    when: {en: 'Since Oct 2020', ar: 'منذ أكتوبر ٢٠٢٠'},
+    where: {en: 'Remote and Riyadh', ar: 'عن بُعد والرياض'},
     text: {
-      en: 'Logos and brand systems for startups and SMEs. Social campaigns, short-form videos, marketing collateral and presentation decks, from the first brief to final delivery.',
+      en: 'Logos and brand systems for startups and SMEs. Social campaigns, short videos, marketing collateral and presentation decks, from the first brief to final delivery.',
       ar: 'شعارات وأنظمة هوية للشركات الناشئة والصغيرة والمتوسطة. حملات اجتماعية وفيديوهات قصيرة ومواد تسويقية وعروض تقديمية، من الفكرة الأولى حتى التسليم.',
     },
   },
@@ -41,7 +43,7 @@ const experience: Entry[] = [
     mark: 'SK',
     role: {en: 'Graphic Designer Intern', ar: 'متدرب تصميم جرافيك'},
     org: {en: 'Seeka Technology', ar: 'سيكا تكنولوجي'},
-    when: {en: 'Jun — Sep 2018', ar: 'يونيو — سبتمبر ٢٠١٨'},
+    when: {en: 'Jun to Sep 2018', ar: 'يونيو إلى سبتمبر ٢٠١٨'},
     where: {en: 'Kuala Lumpur', ar: 'كوالالمبور'},
     text: {
       en: 'Branding and campaign design, promotional video edits, and wireframes, mockups and assets for web and mobile products.',
@@ -51,8 +53,8 @@ const experience: Entry[] = [
   {
     mark: 'APU',
     role: {en: 'BSc (Hons) Multimedia Technology', ar: 'بكالوريوس (مرتبة الشرف) في تقنية الوسائط المتعددة'},
-    org: {en: 'Asia Pacific University of Technology & Innovation', ar: 'جامعة آسيا والمحيط الهادئ للتكنولوجيا والابتكار'},
-    when: {en: '2016 — 2020', ar: '٢٠١٦ — ٢٠٢٠'},
+    org: {en: 'Asia Pacific University of Technology and Innovation', ar: 'جامعة آسيا والمحيط الهادئ للتكنولوجيا والابتكار'},
+    when: {en: '2016 to 2020', ar: '٢٠١٦ إلى ٢٠٢٠'},
     where: {en: 'Kuala Lumpur', ar: 'كوالالمبور'},
     text: {en: '', ar: ''},
   },
@@ -61,31 +63,36 @@ const experience: Entry[] = [
 export function ExperienceSection({lang}: {lang: Language}) {
   const ar = lang === 'ar';
   const l = ar ? 'ar' : 'en';
+  const c = t(lang).about;
   return (
-    <section id="experience" className="sp-section sp-experience">
-      <p className="sp-kicker">03 · {ar ? 'الخبرة' : 'Experience'}</p>
-      <h2>
-        {ar ? <>أكثر من ٦ سنوات من <em>تحريك الأفكار.</em></> : <>6+ years of <em>making ideas move.</em></>}
-      </h2>
-      <ol className="sp-exp-list">
-        {experience.map((e) => (
-          <li key={e.mark}>
-            <span className="sp-exp-mark" aria-hidden>{e.mark}</span>
-            <div className="sp-exp-main">
-              <h3>
-                {e.role[l]}
-                {e.now && <span className="sp-exp-now">{ar ? 'حالياً' : 'Now'}</span>}
-              </h3>
-              <p className="sp-exp-org">{e.org[l]} · {e.where[l]}</p>
-              {e.text[l] && <p className="sp-exp-text">{e.text[l]}</p>}
-            </div>
-            <span className="sp-exp-when">{e.when[l]}</span>
-          </li>
-        ))}
-      </ol>
-      <a className="sp-exp-cv" href="/downloads/Mugahed_AlMaari_Resume.pdf" target="_blank" rel="noreferrer">
-        {ar ? 'السيرة الذاتية كاملة' : 'Full résumé'} ↗
-      </a>
+    <section id="about" className="mx-section" aria-labelledby="about-title">
+      <div className="mx-wrap mx-about">
+        <div className="mx-about-copy" data-reveal>
+          <p className="mx-eyebrow caption-1">{c.eyebrow}</p>
+          <h2 id="about-title" className="heading-2">{c.title}</h2>
+          <p className="title-2">{c.p1}</p>
+          <p className="body-3">{c.p2}</p>
+          <div className="mx-about-links">
+            <a className="mx-btn mx-btn-quiet button-md" href={RESUME} target="_blank" rel="noopener noreferrer">{c.resume} <ArrowUpRight aria-hidden /></a>
+            <a className="mx-link body-2" href={LINKEDIN} target="_blank" rel="noopener noreferrer">{c.linkedin} <ArrowUpRight aria-hidden /></a>
+          </div>
+        </div>
+        <ol className="mx-exp" data-reveal>
+          {experience.map((e) => (
+            <li key={e.mark} data-now={e.now ? 'true' : undefined}>
+              <span className="mx-exp-mark caption-3" aria-hidden>{e.mark}</span>
+              <div className="mx-exp-main">
+                <div className="mx-exp-top">
+                  <h3 className="title-1">{e.role[l]}</h3>
+                  <span className="mx-exp-when caption-1">{e.when[l]}</span>
+                </div>
+                <p className="mx-exp-org body-6">{e.org[l]} · {e.where[l]}</p>
+                {e.text[l] && <p className="mx-exp-text body-6">{e.text[l]}</p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }
