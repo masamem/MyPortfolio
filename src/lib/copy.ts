@@ -16,8 +16,8 @@ export const RESUME = '/downloads/Mugahed_AlMaari_Resume.pdf';
  * Replace with an offer you actually make (for example a free intro call), or set to ''.
  */
 export const RISK_REVERSAL: Record<Language, string> = {
-  en: '{{risk reversal, e.g. A free 20 minute intro call before any quote}}',
-  ar: '{{عرض يقلل المخاطرة، مثل مكالمة تعارف مجانية}}',
+  en: '',
+  ar: '',
 };
 
 export const copy = {
